@@ -38,6 +38,10 @@
           }
         ?>
       </section>
+      
+      <section id="song">
+        <audio src="assets/audio/chip_like_tuna.mp3" preload="auto" controls />
+      </section>
     </div>
   </div>
 </body>

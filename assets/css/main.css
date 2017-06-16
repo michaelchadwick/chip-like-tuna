@@ -50,3 +50,11 @@ section#controls svg {
 section#controls img:hover {
   color: #ddd;
 }
+section#song {
+  background: #333;
+  clear: both;
+  float: none;
+  margin: 20px auto;
+  padding: 20px;
+  width: 300px;
+}
