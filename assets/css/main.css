@@ -37,15 +37,15 @@ section#screen svg#docking {
 }
 section#controls {
   margin: 16px auto 0;
-  width: 580px;
+  width: 640px;
 }
 section#controls svg {
   background: #fff;
   border: 2px solid #000;
   float: left;
   margin: 10px auto 0;
-  height: 72px;
-  width: 96px;
+  height: 36px;
+  width: 48px;
 }
 section#controls img:hover {
   color: #ddd;

@@ -2,31 +2,36 @@
 <html>
 <head>
   <title>Chip Like Tuna</title>
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="icon" href="favicon.ico">
   <link rel="stylesheet" href="/assets/css/main.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="/assets/js/main.js"></script>
 </head>
 <body>
   <div id="wrap">
     <div id="main">
       <h1>FLV TV</h1>
       <section id="screen">
-        <?php echo file_get_contents("assets/flv-scenes/svg/01-docking.min.svg") ?>
+        <?php echo file_get_contents("assets/flv-scenes/svg/00-flv.min.svg") ?>
       </section>
       <section id="controls">
         <?php
-          $dir = opendir("./assets/flv-scenes/svg");
+          $dir = "./assets/flv-scenes/svg/";
+          $dir_handle = opendir($dir);
           $files = array();
 
-          // Read all the svg files
-          while (($file=readdir($dir)) !== false) {
-            array_push($files, './assets/flv-scenes/svg/' . $file);
+          while (($file=readdir($dir_handle)) !== false) {
+            array_push($files, $dir . $file);
           }
-          closedir($dir);
+          closedir($dir_handle);
           sort($files);
 
-          // Make <dt>s if there are any subdirectories.
           if (sizeof($files) > 0) {
+            $i = 0;
             foreach ($files as $file) {
-              echo "<a href='#'>" . file_get_contents($file) . "</a>\n";
+              if (pathinfo($file)['extension'] == "svg")
+                echo "<a href='#' id='" . $i++ . "'>" . (file_get_contents($file)) . "</a>\n";
             }
           } else {
             echo "<article><p>No svg files found.</p></article>";
