@@ -6,7 +6,8 @@
   <link rel="icon" href="favicon.ico">
   <link rel="stylesheet" href="/assets/css/main.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script src="/assets/js/svg.js"></script>
 </head>
 <body>
   <div id="wrap">
@@ -38,10 +39,8 @@
           }
         ?>
       </section>
-      
-      <section id="song">
-        <audio src="assets/audio/chip_like_tuna.mp3" preload="auto" controls />
-      </section>
+
+      <section id="song"></section>
     </div>
   </div>
 </body>
