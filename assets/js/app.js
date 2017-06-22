@@ -9,263 +9,197 @@ $(function() {
   var SND_STATUS_LOADING = 'loading...';
   var SND_STATUS_LOADED = 'loaded and ready';
   var SND_STATUS_ERROR = 'error decoding file';
-  var SONG_FILE_PATH = 'assets/audio/chip_like_tuna.mp3';
+  //var SOUND_FILE_PATH = 'assets/audio/chip_like_tuna.mp3';
+  var SOUND_FILE_PATH = 'assets/audio/snd00.mp3';
+  var PLAYER_ELEMENT = document.querySelector('.player');
 
-  /* main JS object for app */
-  var ChipLikeTuna = (function () {
-    // private
-    var _soundPlayerArray = []; // holds all the existing SPs
-    var _audioContext = function() {
-      var ac = null;
-      if ( !window.AudioContext && !window.webkitAudioContext ) {
-        console.warn('Web Audio API not supported in this browser');
-      } else {
-        ac = new ( window.AudioContext || window.webkitAudioContext )();
-      }
-      return function() {
-        return ac;
-      };
-    }();
-    var _getSoundChannelsMin = function(sndArr) {
-      var sndChannelsArr = [];
-        sndArr.forEach(function(snd) {
-          sndChannelsArr.push(snd.audioBuffer.numberOfChannels);
-      });
-      return Math.min.apply(Math, sndChannelsArr);
-    }
-
-    // public
-    var getAudioContext = function() {
-      return _audioContext();
-    }
-
-    return {
-      getAudioContext: getAudioContext
-    }
-  })();
-
-  var SoundPlayer = function() {
-    //// Variables
-    var curSP = this;
-    this.soundId = 'chipLikeTuna';
-    this.audioContext = ChipLikeTuna.getAudioContext();
-    this.gainNode = this.audioContext.createGain();
-    this.audioBuffer = null;
-    this.source = null;
-    this.startTime = 0;
-    this.startOffset = 0;
-    this.isPaused = false;
-    this.isStopped = true;
-    this.isPlaying = false;
-
-    //// Methods
-
-    // change the internal gain node value
-    var changeVolume = function(element) {
-      var volume = element.srcElement.value;
-      var volumeMax = element.srcElement.max;
-      var fraction = parseInt(volume) / parseInt(volumeMax);
-
-      curSP.gainNode.gain.value = fraction * fraction;
-    };
-
-    // initialize the volume to the range element's value
-    var initVolume = function(element) {
-      var volume = element.value;
-      var volumeMax = element.max;
-      var fraction = parseInt(volume) / parseInt(volumeMax);
-
-      curSP.gainNode.gain.value = fraction * fraction;
-    }
-
-    // update the volume label
-    var updateVolumeLabel = function(e) {
-      var rangeVolN = e.srcElement;
-      var sId = this.id.split("rngVolume")[1];
-      var lblVolumeId = "lblVolume".concat(sId);
-      var lblVolumeN = document.getElementById(lblVolumeId);
-      var newVol = rangeVolN.value;
-      if (newVol < 100) newVol = "0" + newVol;
-      if (newVol < 10) newVol = "0" + newVol;
-      lblVolumeN.innerText = newVol;
-    };
-
-    // update the current sound status label
-    var updateSoundStatus = function(sId, status) {
-      var curSoundStatusId = "soundStatus".concat(sId);
-      var curSoundStatusN = document.getElementById(curSoundStatusId);
-      curSoundStatusN.innerText = status;
-      var curSoundStatus = document.getElementById("sound" + sId);
-      if (status == SND_STATUS_LOADING) {
-        curSoundStatus.className = '';
-        curSoundStatus.classList.add('loading');
-      } else if (status == SND_STATUS_PAUSED || status == SND_STATUS_STOPPED) {
-        curSoundStatus.className = '';
-        curSoundStatus.classList.add("loaded");
-      } else if (status == SND_STATUS_PLAYING) {
-        curSoundStatus.className = '';
-        curSoundStatus.classList.add("playing");
-      } else if (status == SND_STATUS_LOADED) {
-        curSoundStatus.className = '';
-        curSoundStatus.classList.add("loaded");
-      }
-    };
-
-    // play the sound from a specific startOffset
-    var playSound = function(snd) {
-      snd.startTime = snd.audioContext.currentTime;
-
-      if(!snd.audioContext.createGain) {
-        snd.audioContext.createGain = snd.audioContext.createGainNode;
-      }
-      snd.gainNode = snd.audioContext.createGain();
-      initVolume(snd.rngVolume);
-
-      snd.source = snd.audioContext.createBufferSource();
-      snd.source.buffer = snd.audioBuffer;
-
-      var soundPlayerN = snd;
-      snd.source.onended = function() {
-        var pauseOrStopStatus = soundPlayerN.isPaused ? SND_STATUS_PAUSED : SND_STATUS_STOPPED;
-        if (pauseOrStopStatus == SND_STATUS_STOPPED) {
-          soundPlayerN.isStopped = true;
-          soundPlayerN.isPaused = false;
-          soundPlayerN.isPlaying = false;
-          soundPlayerN.startOffset = 0;
-        }
-        updateSoundStatus(soundPlayerN.soundId, pauseOrStopStatus);
-      };
-
-      snd.source.connect(snd.gainNode);
-      snd.gainNode.connect(snd.audioContext.destination);
-      snd.source.loop = false;
-
-      snd.source.start(0, snd.startOffset % snd.audioBuffer.duration);
-
-      snd.isStopped = false;
-      snd.isPaused = false;
-
-      updateSoundStatus(snd.soundId, SND_STATUS_PLAYING);
-    };
-
-    // pause the sound and record its currentTime
-    var pauseSound = function(snd) {
-      snd.source.stop();
-      snd.isPaused = true;
-      snd.startOffset += snd.audioContext.currentTime - snd.startTime;
-
-      updateSoundStatus(snd.soundId, SND_STATUS_PAUSED);
-    };
-
-    // stop playing the sound
-    var stopSound = function() {
-      curSP.startOffset = 0;
-      curSP.source.stop();
-      curSP.isPlaying = false;
-      curSP.isPaused = false;
-      curSP.isStopped = true;
-
-      updateSoundStatus(curSP.soundId, SND_STATUS_STOPPED);
-    };
-
-    // when the play/pause button is pressed, toggle the current sound's status
-    var togglePlayState = function() {
-      // if playing, pause and capture currentTime; if not, then play from startOffset
-      curSP.isPlaying ? pauseSound(curSP) : playSound(curSP);
-      // flip playing mode status
-      curSP.isPlaying = !curSP.isPlaying;
-    };
-
-    // load audio data into buffer
-    var loadAudioData = function() {
-      var audioCtx = curSP.audioContext;
-      var source = curSP.audioContext.createBufferSource();
-      var sId = curSP.soundId;
-      var request = new XMLHttpRequest();
-      request.open('GET', SONG_FILE_PATH, true);
-      request.responseType = 'arraybuffer';
-
-      request.onloadstart = function() {
-        updateSoundStatus(curSP.soundId, SND_STATUS_LOADING);
-      },
-      request.onload = function() {
-        var audioData = request.response;
-        audioCtx.decodeAudioData(audioData, function(buffer) {
-          //source.buffer = buffer;
-          source.connect(audioCtx.destination);
-          source.loop = false;
-          curSP.audioBuffer = buffer;
-          var btnP = document.getElementById("btnPlay" + sId);
-          var btnS = document.getElementById("btnStop" + sId);
-          btnP.disabled = false;
-          btnS.disabled = false;
-          updateSoundStatus(sId, SND_STATUS_LOADED);
-        },
-        function(e) {
-          console.error("Error with decoding audio data" + e.err);
-        });
-      }
-      request.send();
-    }
-
-    /*******************
-    ** User Interface **
-    *******************/
-    this.soundDiv = document.createElement('div');
-    this.soundHeader = document.createElement('div');
-    this.soundStatus = document.createElement('div');
-    this.rngVolume = document.createElement('input');
-    this.lblVolume = document.createElement('label');
-    this.btnDiv = document.createElement('div');
-    this.btnPlay = document.createElement('button');
-    this.btnStop = document.createElement('button');
-
-    this.soundDiv.classList.add('sound');
-    this.soundDiv.id = "sound" + this.soundId;
-    this.soundHeader.classList.add("sound-header");
-    this.soundHeader.innerText = this.soundId;
-    this.soundStatus.id = "soundStatus" + this.soundId;
-    this.soundStatus.classList.add('sound-status');
-    this.soundStatus.innerText = SND_STATUS_UNLOADED;
-
-    this.rngVolume.id = "rngVolume" + this.soundId;
-    this.rngVolume.type = "range";
-    this.rngVolume.min = 0;
-    this.rngVolume.max = 100;
-    this.rngVolume.value = 75;
-    this.rngVolume.addEventListener('input', changeVolume);
-    this.rngVolume.addEventListener('change', updateVolumeLabel);
-
-    this.lblVolume.id = "lblVolume" + this.soundId;
+  function SoundPlayer ( soundPath, el ) {
+    this.ac = new ( window.AudioContext || webkitAudioContext )();
+    this.gainNode = this.ac.createGain();
+    this.url = soundPath;
+    this.el = el;
+    this.button = el.querySelector('.button');
+    this.track = el.querySelector('.track');
+    this.progress = el.querySelector('.progress');
+    this.progressStatus = el.querySelector('.progressStatus');
+    this.scrubber = el.querySelector('.scrubber');
+    this.message = el.querySelector('.message');
+    this.rngVolume = el.querySelector('.rngVolume');
+    this.lblVolume = el.querySelector('.lblVolume');
     var initVol = this.rngVolume.value;
     if (initVol < 100) initVol = "0" + initVol;
     if (initVol < 10) initVol = "0" + initVol;
     this.lblVolume.innerText = initVol;
+    this.bindEvents();
+    this.fetch();
+  }
 
-    this.btnPlay.id = "btnPlay" + this.soundId;
-    this.btnPlay.innerText = "> / ||";
-    this.btnPlay.addEventListener('click', togglePlayState);
-    this.btnPlay.disabled = true;
-
-    this.btnStop.id = "btnStop" + this.soundId;
-    this.btnStop.innerText = " [] ";
-    this.btnStop.addEventListener('click', stopSound);
-    this.btnStop.disabled = true;
-
-    var divSong = document.getElementById("song");
-    divSong.appendChild(this.soundDiv);
-    this.soundDiv.appendChild(this.soundHeader);
-    this.soundDiv.appendChild(this.soundStatus);
-    this.soundDiv.appendChild(this.rngVolume);
-    this.soundDiv.appendChild(this.lblVolume);
-    this.btnDiv.appendChild(this.btnPlay);
-    this.btnDiv.appendChild(this.btnStop);
-    this.soundDiv.appendChild(this.btnDiv);
-
-    loadAudioData();
+  SoundPlayer.prototype.bindEvents = function() {
+    this.button.addEventListener('click', this.toggle.bind(this));
+    this.scrubber.addEventListener('mousedown', this.onMouseDown.bind(this));
+    this.rngVolume.addEventListener('input', this.changeVolume.bind(this));
+    this.rngVolume.addEventListener('change', this.changeVolumeLabel.bind(this));
+    window.addEventListener('mousemove', this.onDrag.bind(this));
+    window.addEventListener('mouseup', this.onMouseUp.bind(this));
   };
 
-  window.onload = function() {
-    var sp = new SoundPlayer();
+  SoundPlayer.prototype.messageUpdate = function( msg ) {
+    this.message.innerHTML = msg;
   }
+
+  SoundPlayer.prototype.fetch = function() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', this.url, true);
+    xhr.responseType = 'arraybuffer';
+    xhr.onloadstart = function() {
+      this.messageUpdate(SND_STATUS_LOADING);
+    }.bind(this);
+    xhr.onload = function() {
+      this.decode(xhr.response);
+    }.bind(this);
+    xhr.send();
+  };
+
+  SoundPlayer.prototype.decode = function( arrayBuffer ) {
+    this.ac.decodeAudioData(arrayBuffer, function( audioBuffer ) {
+      this.buffer = audioBuffer;
+      this.messageUpdate(SND_STATUS_LOADED);
+      this.draw();
+      //this.play();
+    }.bind(this));
+  };
+
+  SoundPlayer.prototype.connect = function() {
+    if ( this.playing ) {
+      this.pause();
+    }
+    this.source = this.ac.createBufferSource();
+    this.source.buffer = this.buffer;
+    this.source.loop = false;
+    this.source.connect(this.gainNode);
+    this.gainNode.connect(this.ac.destination);
+  };
+
+  SoundPlayer.prototype.play = function( position ) {
+    this.connect();
+    this.position = typeof position === 'number' ? position : this.position || 0;
+    this.startTime = this.ac.currentTime - ( this.position || 0 );
+    this.source.start(this.ac.currentTime, this.position);
+    this.playing = true;
+    this.messageUpdate(SND_STATUS_PLAYING);
+    var soundPlayer = this;
+    
+    this.source.onended = function() {
+      var pauseOrStopStatus = soundPlayer.paused ? SND_STATUS_PAUSED : SND_STATUS_STOPPED;
+      if (pauseOrStopStatus == SND_STATUS_STOPPED) {
+        soundPlayer.stopped = true;
+        soundPlayer.paused = false;
+        soundPlayer.playing = false;
+      }
+      soundPlayer.messageUpdate(pauseOrStopStatus);
+    };
+  };
+
+  SoundPlayer.prototype.pause = function() {
+    if ( this.source ) {
+      this.source.stop(0);
+      this.source = null;
+      this.position = this.ac.currentTime - this.startTime;
+      this.playing = false;
+      this.paused = true;
+      this.messageUpdate(SND_STATUS_PAUSED);
+    }
+  };
+
+  SoundPlayer.prototype.seek = function( time ) {
+    if ( this.playing ) {
+      this.play(time);
+    }
+    else {
+      this.position = time;
+    }
+  };
+
+  SoundPlayer.prototype.changeVolume = function( el ) {
+    var volume = el.srcElement.value;
+    var volumeMax = el.srcElement.max;
+    var fraction = parseInt(volume) / parseInt(volumeMax);
+
+    this.gainNode.gain.value = fraction * fraction;
+  };
+
+  SoundPlayer.prototype.changeVolumeLabel = function( el ) {
+    var rangeVolN = el.srcElement;
+    var newVol = rangeVolN.value;
+    if (newVol < 100) newVol = "0" + newVol;
+    if (newVol < 10) newVol = "0" + newVol;
+    this.lblVolume.innerText = newVol;
+  }
+
+  SoundPlayer.prototype.positionUpdate = function() {
+    this.position = this.playing ? this.ac.currentTime - this.startTime : this.position;
+    if ( this.position >= this.buffer.duration ) {
+      this.position = this.buffer.duration;
+      this.pause();
+    }
+    return this.position;
+  };
+
+  SoundPlayer.prototype.toggle = function() {
+    if ( !this.playing ) {
+      this.play();
+    }
+    else {
+      this.pause();
+    }
+  };
+
+  SoundPlayer.prototype.onMouseDown = function( e ) {
+    this.dragging = true;
+    this.startX = e.pageX;
+    this.startLeft = parseInt(this.scrubber.style.left || 0, 10);
+  };
+
+  SoundPlayer.prototype.onDrag = function( e ) {
+    var width, position;
+    if ( !this.dragging ) {
+      return;
+    }
+    width = this.track.offsetWidth;
+    position = this.startLeft + ( e.pageX - this.startX );
+    position = Math.max(Math.min(width, position), 0);
+    this.scrubber.style.left = position + 'px';
+  };
+
+  SoundPlayer.prototype.onMouseUp = function() {
+    var width, left, time;
+    if ( this.dragging ) {
+      width = this.track.offsetWidth;
+      left = parseInt(this.scrubber.style.left || 0, 10);
+      time = left / width * this.buffer.duration;
+      this.seek(time);
+      this.dragging = false;
+    }
+  };
+
+  SoundPlayer.prototype.draw = function() {
+    var progress = ( this.positionUpdate() / this.buffer.duration ),
+      width = this.track.offsetWidth;
+    if ( this.playing ) {
+      this.button.classList.add('fa-pause');
+      this.button.classList.remove('fa-play');
+      this.progressStatus.innerText = Math.round(progress * 100) + '%';
+    } else {
+      this.button.classList.add('fa-play');
+      this.button.classList.remove('fa-pause');
+    }
+    this.progress.style.width = ( progress * width ) + 'px';
+    if ( !this.dragging ) {
+      this.scrubber.style.left = ( progress * width ) + 'px';
+    }
+    requestAnimationFrame(this.draw.bind(this));
+  };
+
+  // create a new instance of the SoundPlayer and get things started
+  window.SoundPlayer = new SoundPlayer(SOUND_FILE_PATH, PLAYER_ELEMENT);
 });

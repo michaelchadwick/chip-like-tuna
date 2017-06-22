@@ -1,8 +1,8 @@
 $(function() {
   xhr = new XMLHttpRequest();
 
-  $controls = $("#controls a");
-  $controls.on("click", function() {
+  $svgControls = $("#svgControls a");
+  $svgControls.on("click", function() {
     var url = "api/svg.php?id=" + $(this).attr("id");
     xhr.open("GET", url, false);
     xhr.send();

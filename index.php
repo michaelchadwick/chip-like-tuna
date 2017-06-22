@@ -4,10 +4,8 @@
   <title>Chip Like Tuna</title>
   <link rel="shortcut icon" href="favicon.ico">
   <link rel="icon" href="favicon.ico">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="/assets/css/main.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script src="/assets/js/app.js"></script>
-  <script src="/assets/js/svg.js"></script>
 </head>
 <body>
   <div id="wrap">
@@ -16,7 +14,7 @@
       <section id="screen">
         <?php echo file_get_contents("assets/flv-scenes/svg/00-flv.min.svg") ?>
       </section>
-      <section id="controls">
+      <section id="svgControls">
         <?php
           $dir = "./assets/flv-scenes/svg/";
           $dir_handle = opendir($dir);
@@ -40,8 +38,26 @@
         ?>
       </section>
 
-      <section id="song"></section>
+      <div class="player">
+        <div class="controls">
+          <button class="button fa fa-play"></button>
+          <div class="track">
+            <div class="progress"></div>
+            <div class="scrubber"></div>
+          </div>
+          <div class="volume">
+            <input class="rngVolume" type="range" min="0" max="100" value="75" />
+            <label class="lblVolume" for="rngVolume" />
+          </div>
+        </div>
+        <p class="message"></p>
+        <p class="progressStatus">&nbsp;</p>
+      </div>
     </div>
   </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script src="/assets/js/svg.js"></script>
 </body>
 </html>

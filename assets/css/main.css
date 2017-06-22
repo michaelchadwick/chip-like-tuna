@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 body, html {
   width: 100%;
   height: 100%;
@@ -12,41 +15,15 @@ h1 {
   margin: 0 auto;
   padding: 0;
 }
-button {
-  background: #333;
-  border: 1px solid #000;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-  -webkit-box-shadow: 3px 3px 2px 1px #333;
-  box-shadow: 2px 2px 1px 1px #333;
-  color: #fff;
-  cursor: pointer;
-  font-size: 0.8em;
-  font-weight: bold;
-  padding: 5px 4px 4px;
-  text-transform: uppercase;
-  width: 70px;
-}
-button:hover {
-  background: #666;
-}
-button:disabled {
-  background: #aaa;
-  background: linear-gradient(358deg, #ccc, #eee);
-  border: 2px solid #d6d6d6;
-  -webkit-box-shadow: 3px 3px 2px 1px #999;
-  box-shadow: 2px 2px 1px 1px #999;
-  color: #aaa;
-  cursor: auto;
-}
 
 div#wrap {
   margin: 0 auto;
   padding: 20px;
 }
-div#main {
+div#wrap div#main {
   padding: 20px;
 }
+
 section#screen {
   background: #eee;
   border: 5px solid #222;
@@ -63,11 +40,11 @@ section#screen svg {
 section#screen svg#docking {
   fill: #f00;
 }
-section#controls {
+section#svgControls {
   margin: 16px auto 0;
   width: 640px;
 }
-section#controls svg {
+section#svgControls svg {
   background: #fff;
   border: 2px solid #000;
   float: left;
@@ -75,17 +52,78 @@ section#controls svg {
   height: 36px;
   width: 48px;
 }
-section#controls img:hover {
+section#svgControls svg:hover {
   color: #ddd;
 }
-section#song {
-  background: #777;
+
+div.player {
   clear: both;
   float: none;
-  margin: 20px auto;
-  padding: 20px;
+  margin: 0 auto;
   width: 300px;
 }
+div.player .controls {
+  background: #333;
+  padding: 8px;
+}
+div.player .button {
+  color: white;
+  width: 20px;
+  margin: 3px 0 0 0;
+  font-size: 16px;
+  text-align: center;
+  display: inline-block;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+div.player .track {
+  position: relative;
+  width: 236px;
+  margin: 7px 0 0 16px;
+  height: 10px;
+  border: 1px solid #666;
+  display: inline-block;
+  vertical-align: top;
+}
+div.player .progress {
+  position: absolute;
+  width: 0%;
+  height: 100%;
+  background: #f00;
+}
+div.player .scrubber {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  margin: -4px 0 0 -9px;
+  background: #f00;
+  border: solid 3px #ddd;
+  cursor: pointer;
+  box-shadow: 0 0 5px #000, inset 0 0 4px #400;
+}
+div.player .rngVolume {
+  margin: 5px 8px;
+  padding: 0;
+  width: 90px;
+}
+div.player .lblVolume {
+  background: #555;
+  color: #fff;
+  left: -7px;
+  padding: 0 1px;
+  position: relative;
+  top: -3px;
+}
+div.player .message {
+  clear: left;
+  height: 20px;
+  text-align: center;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
 .loaded {
   color: #090;
 }
