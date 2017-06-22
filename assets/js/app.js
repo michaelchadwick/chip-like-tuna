@@ -10,7 +10,7 @@ $(function() {
   var SND_STATUS_LOADED = 'loaded and ready';
   var SND_STATUS_ERROR = 'error decoding file';
   //var SOUND_FILE_PATH = 'assets/audio/chip_like_tuna.mp3';
-  var SOUND_FILE_PATH = 'assets/audio/snd00.mp3';
+  var SOUND_FILE_PATH = 'assets/audio/chip_like_tuna.mp3';
   var PLAYER_ELEMENT = document.querySelector('.player');
 
   function SoundPlayer ( soundPath, el ) {
@@ -30,6 +30,9 @@ $(function() {
     if (initVol < 100) initVol = "0" + initVol;
     if (initVol < 10) initVol = "0" + initVol;
     this.lblVolume.innerText = initVol;
+    this.playing = false;
+    this.paused = false;
+    this.stopped = true;
     this.bindEvents();
     this.fetch();
   }
@@ -86,6 +89,7 @@ $(function() {
     this.startTime = this.ac.currentTime - ( this.position || 0 );
     this.source.start(this.ac.currentTime, this.position);
     this.playing = true;
+    svgUpdateScreen(0);
     this.messageUpdate(SND_STATUS_PLAYING);
     var soundPlayer = this;
     
@@ -188,7 +192,9 @@ $(function() {
     if ( this.playing ) {
       this.button.classList.add('fa-pause');
       this.button.classList.remove('fa-play');
-      this.progressStatus.innerText = Math.round(progress * 100) + '%';
+      var progPercent = Math.round(((progress * 100) * 10)) / 10;
+      this.progressStatus.innerText = progPercent + '%';
+      this.triggerScreenEvent(progPercent);
     } else {
       this.button.classList.add('fa-play');
       this.button.classList.remove('fa-pause');
@@ -199,6 +205,94 @@ $(function() {
     }
     requestAnimationFrame(this.draw.bind(this));
   };
+  
+  SoundPlayer.prototype.triggerScreenEvent = function(p) {
+    switch (p) {
+      // docking
+      case 0.6:
+        svgUpdateScreen(1);
+        break;
+      // road
+      case 12.1:
+        svgUpdateScreen(2);
+        break;
+      // charlotte
+      case 17.2:
+        svgUpdateScreen(3);
+        break;
+      // wondering
+      case 25.5:
+        svgUpdateScreen(4);
+        break;
+      // ladder
+      case 35:
+        svgUpdateScreen(5);
+        break;
+      // fudge
+      case 44.1:
+        svgUpdateScreen(6);
+        break;
+      // tattoo
+      case 52.5:
+        svgUpdateScreen(7);
+        break;
+      // pinto
+      case 59.4:
+        svgUpdateScreen(8);
+        break;
+      // scenes
+      case 70.3:
+        svgUpdateScreen(9);
+        break;
+      // overjoyed
+      case 77.6:
+        svgUpdateScreen(10);
+        break;
+      // beyond
+      case 86.7:
+        svgUpdateScreen(11);
+        break;
+    }
+  }
+  
+  var url;
+  var xhr = new XMLHttpRequest();
+
+  $svgControls = $("#svgControls a");
+  $svgControls.on("click", svgUpdateScreen);
+  
+  function svgUpdateScreen( ev ) {
+    var pic;
+    var picId;
+    console.log('ev', (typeof ev));
+    if (typeof ev == 'number') {
+      picId = ev;
+    } else {
+      pic = ev.target.parentElement;
+      // in case we clicked on the svg itself in the thumbnail
+      // we need to go up one more level
+      if (pic.nodeName == 'svg') {
+        picId = pic.parentElement.id;
+      } else {
+        picId = pic.id;
+      }
+    }
+
+    if (picId) {
+      url = "api/svg.php?id=" + picId;
+      xhr.open("GET", url, true);
+      xhr.send();
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200) {
+            $("section#screen").html(xhr.responseText);
+          }
+        }
+      }
+    } else {
+      console.error('no picId found', picId);
+    }
+  }
 
   // create a new instance of the SoundPlayer and get things started
   window.SoundPlayer = new SoundPlayer(SOUND_FILE_PATH, PLAYER_ELEMENT);

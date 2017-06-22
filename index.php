@@ -29,8 +29,10 @@
           if (sizeof($files) > 0) {
             $i = 0;
             foreach ($files as $file) {
-              if (pathinfo($file)['extension'] == "svg")
-                echo "<a href='#' id='" . $i++ . "'>" . (file_get_contents($file)) . "</a>\n";
+              if (pathinfo($file)['extension'] == "svg") {
+                echo "<a href='#' id='" . $i . "' alt='" . $i . "' title='" . $i . "'>" . (file_get_contents($file)) . "</a>\n";
+                $i++;
+              }
             }
           } else {
             echo "<article><p>No svg files found.</p></article>";
