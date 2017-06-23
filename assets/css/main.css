@@ -36,9 +36,21 @@ section#screen {
 section#screen svg {
   display: block;
 }
-section#screen svg#docking {
-  fill: #f00;
+section#screen svg {
+  /*animation: pulse 0.75s infinite;*/
 }
+@keyframes pulse {
+  0% {
+    fill: #000;
+  }
+  50% {
+    fill: #f00;
+  }
+  100% {
+    fill: #000;
+  }
+}
+
 section#svgControls {
   margin: 16px auto 0;
   width: 100%;
