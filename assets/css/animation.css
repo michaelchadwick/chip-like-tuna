@@ -1,73 +1,73 @@
 section#screen.animated-intro svg { animation: intro 0.4839s ease-out 0s normal infinite none running; }
 section#screen.animated-docking svg { animation: docking 0.4839s ease-out -0.2419s normal infinite none running; }
-section#screen.animated-road svg { animation: road 0.4839s ease-out -0.2419s normal infinite none running; }
-section#screen.animated-charlotte svg { animation: charlotte 0.4167s ease-out -0.2083s normal infinite none running; }
-section#screen.animated-wondering svg { animation: wondering 0.4167s ease-out -0.2083s normal infinite none running; }
-section#screen.animated-ladder svg { animation: ladder 0.6667s ease-out -0.3333s normal infinite none running; }
-section#screen.animated-fudge svg { animation: fudge 0.4138s ease-out -0.2019s normal infinite none running; }
-section#screen.animated-tattoo svg { animation: tattoo 0.4138s ease-out -0.2019s normal infinite none running; }
-section#screen.animated-pinto svg { animation: pinto 0.4839s ease-out -0.2419s normal infinite none running; }
-section#screen.animated-scenes svg { animation: scenes 0.7317s ease-out -0.3658s normal infinite none running; }
+section#screen.animated-road svg { animation: road 0.4139s ease-out -0.2069s normal infinite none running; }
+section#screen.animated-charlotte svg { animation: charlotte 0.6622s ease-out -0.3311s normal infinite none running; }
+section#screen.animated-wondering svg { animation: wondering 0.6622s ease-out -0.3311s normal infinite none running; }
+section#screen.animated-ladder svg { animation: ladder 0.8217s ease-out -0.4108s normal infinite none running; }
+section#screen.animated-fudge svg { animation: fudge 0.5052s ease-out -0.2526s normal infinite none running; }
+section#screen.animated-tattoo svg { animation: tattoo 0.4858s ease-out -0.2429s normal infinite none running; }
+section#screen.animated-pinto svg { animation: pinto 0.3539s ease-out -0.1769s normal infinite none running; }
+section#screen.animated-scenes svg { animation: scenes 0.9017s ease-out -0.4508s normal infinite none running; }
 section#screen.animated-overjoyed svg { animation: overjoyed 0.6316s ease-out -0.3158s normal infinite none running; }
-section#screen.animated-beyond svg { animation: beyond 0.5455s ease-out -0.2727s normal infinite none running; }
+section#screen.animated-beyond svg { animation: beyond 0.5255s ease-out -0.2627s normal infinite none running; }
 
 @keyframes intro {
-  0% { fill: #000; }
-  50% { fill: #F6416C; transform: scale(.9); }
-  100% { fill: #000; transform: scale(1); }
+  0% { fill: #F6416C; transform: scale(.9); }
+  50% { fill: #000;  transform: scale(1); }
+  100% { fill: #F6416C; transform: scale(.9); }
 }
 @keyframes docking {
-  0% { fill: #000; }
-  50% { fill: #92FFC0; transform: scale(.9); }
-  100% { fill: #000; transform: scale(1); }
+  0% { fill: #92FFC0; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #92FFC0; transform: scale(.9); }
 }
 @keyframes road {
-  0% { fill: #000; }
-  50% { fill: #130CB7; transform: scale(.9); }
-  100% { fill: #000; transform: scale(1); }
+  0% { fill: #130CB7; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #130CB7; transform: scale(.9); }
 }
 @keyframes charlotte {
-  0% { fill: #000; }
-  50% { fill: #f127b9; transform: scale(.9); }
-  100% { fill: #000; transform: scale(1); }
+  0% { fill: #f127b9; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #f127b9; transform: scale(.9); }
 }
 @keyframes wondering {
-  0% { fill: #000; }
-  50% { fill: #FDEB71; transform: scale(.9); }
-  100% { fill: #000; transform: scale(1); }
+  0% { fill: #FDEB71; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #FDEB71; transform: scale(.9); }
 }
 @keyframes ladder {
-  0% { fill: #000; }
-  50% { fill: #0396FF; transform: scale(.9); }
-  100% { fill: #000; transform: scale(1); }
+  0% { fill: #0396FF; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #0396FF; transform: scale(.9); }
 }
 @keyframes fudge {
-  0% { fill: #000; }
-  50% { fill: #7367F0; transform: scale(.9); }
-  100% { fill: #000; transform: scale(1); }
+  0% { fill: #7367F0; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #7367F0; transform: scale(.9); }
 }
 @keyframes tattoo {
-  0% { fill: #000; }
-  50% { fill: #9F44D3; transform: scale(.9); }
-  100% { fill: #000; transform: scale(1); }
+  0% { fill: #9F44D3; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #9F44D3; transform: scale(.9); }
 }
 @keyframes pinto {
-  0% { fill: #000; }
-  50% { fill: #E96D71; transform: scale(.9); }
-  100% { fill: #000; transform: scale(1); }
+  0% { fill: #E96D71; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #E96D71; transform: scale(.9); }
 }
 @keyframes scenes {
-  0% { fill: #000; }
-  50% { fill: #28C76F; transform: scale(.9); }
-  100% { fill: #000; transform: scale(1); }
+  0% { fill: #28C76F; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #28C76F; transform: scale(.9); }
 }
 @keyframes overjoyed {
-  0% { fill: #000; }
-  50% { fill: #ff7000; transform: scale(.9); }
-  100% { fill: #000; transform: scale(1); }
+  0% { fill: #ff7000; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #ff7000; transform: scale(.9); }
 }
 @keyframes beyond {
-  0% { fill: #000; }
-  50% { fill: #be2626; transform: scale(.9); }
-  100% { fill: #000; transform: scale(1); }
+  0% { fill: #be2626; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #be2626; transform: scale(.9); }
 }

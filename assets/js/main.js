@@ -88,22 +88,24 @@ $(function() {
     this.startTime = this.ac.currentTime - ( this.position || 0 );
     this.source.start(this.ac.currentTime, this.position);
     this.playing = true;
+    this.paused = false;
     this.messageUpdate(SND_STATUS_PLAYING);
-    CLT.svgAddAnimation('intro');
+    this.triggerScreenEvent(this.startTime);
     var soundPlayer = this;
 
     this.source.onended = function() {
-      var pauseOrStopStatus = soundPlayer.paused ? SND_STATUS_PAUSED : SND_STATUS_STOPPED;
-      if (pauseOrStopStatus == SND_STATUS_STOPPED) {
-        soundPlayer.stopped = true;
-        soundPlayer.paused = false;
-        soundPlayer.playing = false;
+      var soundStatus = soundPlayer.paused ? SND_STATUS_PAUSED : (soundPlayer.playing ? SND_STATUS_PLAYING: SND_STATUS_STOPPED);
+      if (soundStatus == SND_STATUS_STOPPED) {
+        this.stopped = true;
+        this.paused = false;
+        this.playing = false;
       }
-      soundPlayer.messageUpdate(pauseOrStopStatus);
+      soundPlayer.messageUpdate(soundStatus);
     };
   };
 
   SoundPlayer.prototype.pause = function() {
+    console.log('sound paused');
     if ( this.source ) {
       this.source.stop(0);
       this.source = null;
@@ -210,17 +212,17 @@ $(function() {
 
   SoundPlayer.prototype.triggerScreenEvent = function(p) {
     switch (true) {
-      case (p < 0) || (p >= 0 && p < 0.6):
+      case p >= 0 && p < 0.6:
         CLT.svgUpdateScreen('intro');
         CLT.svgAddAnimation('intro');
         break;
       // docking
-      case p >= 0.6 && p < 12.1:
+      case p >= 0.6 && p < 12.2:
         CLT.svgUpdateScreen('docking');
         CLT.svgAddAnimation('docking');
         break;
       // road
-      case p >= 12.1 && p < 17.2:
+      case p >= 12.2 && p < 17.2:
         CLT.svgUpdateScreen('road');
         CLT.svgAddAnimation('road');
         break;
@@ -240,22 +242,22 @@ $(function() {
         CLT.svgAddAnimation('ladder');
         break;
       // fudge
-      case p >= 44.1 && 52.5:
+      case p >= 44.1 && p < 52.6:
         CLT.svgUpdateScreen('fudge');
         CLT.svgAddAnimation('fudge');
         break;
       // tattoo
-      case p >= 52.5 && p < 59.4:
+      case p >= 52.6 && p < 59.4:
         CLT.svgUpdateScreen('tattoo');
         CLT.svgAddAnimation('tattoo');
         break;
       // pinto
-      case p >= 59.4 && p < 70.3:
+      case p >= 59.4 && p < 70.4:
         CLT.svgUpdateScreen('pinto');
         CLT.svgAddAnimation('pinto');
         break;
       // scenes
-      case p >= 70.3 && p < 77.6:
+      case p >= 70.4 && p < 77.6:
         CLT.svgUpdateScreen('scenes');
         CLT.svgAddAnimation('scenes');
         break;
@@ -271,12 +273,10 @@ $(function() {
         break;
       // end
       case p >= 99.9:
-        CLT.svgUpdateScreen(0);
+        CLT.svgUpdateScreen('intro');
         CLT.svgRemoveAnimation();
         this.position = 0;
         break;
-      default:
-        CLT.svgUpdateScreen(0);
     }
   }
 
