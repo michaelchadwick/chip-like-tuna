@@ -1,17 +1,10 @@
 $(function() {
-  /*******************
-    Global Constants
-  ********************/
-  var SND_STATUS_PLAYING = 'playing';
-  var SND_STATUS_STOPPED = 'stopped/finished';
-  var SND_STATUS_PAUSED = 'paused';
-  var SND_STATUS_UNLOADED = 'unloaded';
-  var SND_STATUS_LOADING = 'loading...';
-  var SND_STATUS_LOADED = 'loaded and ready';
-  var SND_STATUS_ERROR = 'error decoding file';
-  //var SOUND_FILE_PATH = 'assets/audio/chip_like_tuna.mp3';
-  var SOUND_FILE_PATH = 'assets/audio/chip_like_tuna.mp3';
-  var PLAYER_ELEMENT = document.querySelector('.player');
+  CLT.screen = $('section#screen');
+  CLT.svgControls = $('#svgControls a');
+  CLT.svgControls.click(CLT.svgUpdateScreen);
+  CLT.has = function(needle) {
+    return RegExp(needle).test(this);
+  }
 
   function SoundPlayer ( soundPath, el ) {
     this.ac = new ( window.AudioContext || webkitAudioContext )();
@@ -19,6 +12,7 @@ $(function() {
     this.url = soundPath;
     this.el = el;
     this.button = el.querySelector('.button');
+    this.button.id = 'btnPlayPause';
     this.track = el.querySelector('.track');
     this.progress = el.querySelector('.progress');
     this.progressStatus = el.querySelector('.progressStatus');
@@ -27,8 +21,10 @@ $(function() {
     this.rngVolume = el.querySelector('.rngVolume');
     this.lblVolume = el.querySelector('.lblVolume');
     var initVol = this.rngVolume.value;
-    if (initVol < 100) initVol = "0" + initVol;
-    if (initVol < 10) initVol = "0" + initVol;
+    if (initVol < 100) {
+      initVol = "0" + initVol;
+      if (initVol < 10) initVol = "0" + initVol;
+    }
     this.lblVolume.innerText = initVol;
     this.playing = false;
     this.paused = false;
@@ -39,6 +35,7 @@ $(function() {
 
   SoundPlayer.prototype.bindEvents = function() {
     this.button.addEventListener('click', this.toggle.bind(this));
+    $('#btnPlayPause').prop('disabled', true);
     this.scrubber.addEventListener('mousedown', this.onMouseDown.bind(this));
     this.rngVolume.addEventListener('input', this.changeVolume.bind(this));
     this.rngVolume.addEventListener('change', this.changeVolumeLabel.bind(this));
@@ -60,6 +57,11 @@ $(function() {
     xhr.onload = function() {
       this.decode(xhr.response);
     }.bind(this);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        console.log('xhr done');
+      }
+    }.bind(this);
     xhr.send();
   };
 
@@ -68,7 +70,8 @@ $(function() {
       this.buffer = audioBuffer;
       this.messageUpdate(SND_STATUS_LOADED);
       this.draw();
-      //this.play();
+      $('#btnPlayPause').prop('disabled', false);
+      console.log('sound loaded');
     }.bind(this));
   };
 
@@ -89,10 +92,9 @@ $(function() {
     this.startTime = this.ac.currentTime - ( this.position || 0 );
     this.source.start(this.ac.currentTime, this.position);
     this.playing = true;
-    svgUpdateScreen(0);
     this.messageUpdate(SND_STATUS_PLAYING);
     var soundPlayer = this;
-    
+
     this.source.onended = function() {
       var pauseOrStopStatus = soundPlayer.paused ? SND_STATUS_PAUSED : SND_STATUS_STOPPED;
       if (pauseOrStopStatus == SND_STATUS_STOPPED) {
@@ -111,6 +113,7 @@ $(function() {
       this.position = this.ac.currentTime - this.startTime;
       this.playing = false;
       this.paused = true;
+      $('section#screen svg').removeClass('animated');
       this.messageUpdate(SND_STATUS_PAUSED);
     }
   };
@@ -135,8 +138,10 @@ $(function() {
   SoundPlayer.prototype.changeVolumeLabel = function( el ) {
     var rangeVolN = el.srcElement;
     var newVol = rangeVolN.value;
-    if (newVol < 100) newVol = "0" + newVol;
-    if (newVol < 10) newVol = "0" + newVol;
+    if (newVol < 100) {
+      newVol = "0" + newVol;
+      if (newVol < 10) newVol = "0" + newVol;
+    }
     this.lblVolume.innerText = newVol;
   }
 
@@ -205,92 +210,56 @@ $(function() {
     }
     requestAnimationFrame(this.draw.bind(this));
   };
-  
+
   SoundPlayer.prototype.triggerScreenEvent = function(p) {
     switch (p) {
+      case 0:
+        CLT.svgUpdateScreen(0);
+        break;
       // docking
       case 0.6:
-        svgUpdateScreen(1);
+        CLT.svgUpdateScreen(1);
         break;
       // road
       case 12.1:
-        svgUpdateScreen(2);
+        CLT.svgUpdateScreen(2);
         break;
       // charlotte
       case 17.2:
-        svgUpdateScreen(3);
+        CLT.svgUpdateScreen(3);
         break;
       // wondering
       case 25.5:
-        svgUpdateScreen(4);
+        CLT.svgUpdateScreen(4);
         break;
       // ladder
       case 35:
-        svgUpdateScreen(5);
+        CLT.svgUpdateScreen(5);
         break;
       // fudge
       case 44.1:
-        svgUpdateScreen(6);
+        CLT.svgUpdateScreen(6);
         break;
       // tattoo
       case 52.5:
-        svgUpdateScreen(7);
+        CLT.svgUpdateScreen(7);
         break;
       // pinto
       case 59.4:
-        svgUpdateScreen(8);
+        CLT.svgUpdateScreen(8);
         break;
       // scenes
       case 70.3:
-        svgUpdateScreen(9);
+        CLT.svgUpdateScreen(9);
         break;
       // overjoyed
       case 77.6:
-        svgUpdateScreen(10);
+        CLT.svgUpdateScreen(10);
         break;
       // beyond
       case 86.7:
-        svgUpdateScreen(11);
+        CLT.svgUpdateScreen(11);
         break;
-    }
-  }
-  
-  var url;
-  var xhr = new XMLHttpRequest();
-
-  $svgControls = $("#svgControls a");
-  $svgControls.on("click", svgUpdateScreen);
-  
-  function svgUpdateScreen( ev ) {
-    var pic;
-    var picId;
-    console.log('ev', (typeof ev));
-    if (typeof ev == 'number') {
-      picId = ev;
-    } else {
-      pic = ev.target.parentElement;
-      // in case we clicked on the svg itself in the thumbnail
-      // we need to go up one more level
-      if (pic.nodeName == 'svg') {
-        picId = pic.parentElement.id;
-      } else {
-        picId = pic.id;
-      }
-    }
-
-    if (picId) {
-      url = "api/svg.php?id=" + picId;
-      xhr.open("GET", url, true);
-      xhr.send();
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-          if (xhr.status === 200) {
-            $("section#screen").html(xhr.responseText);
-          }
-        }
-      }
-    } else {
-      console.error('no picId found', picId);
     }
   }
 

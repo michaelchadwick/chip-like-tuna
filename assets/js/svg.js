@@ -1,15 +1,15 @@
-$(function() {
-  var url;
-  var xhr = new XMLHttpRequest();
+/* svg */
+/* control the svg images on the screen */
 
-  $svgControls = $("#svgControls a");
-  $svgControls.on("click", svgUpdateScreen);
-  
-  function svgUpdateScreen( ev ) {
+if (typeof CLT !== 'undefined') {
+  CLT.ajaxImgRequest = new XMLHttpRequest();
+
+  CLT.svgUpdateScreen = function(ev) {
     var pic;
     var picId;
+    var xhr;
 
-    if (typeof ev === 'number') {
+    if (typeof ev == 'number') {
       picId = ev;
     } else {
       pic = ev.target.parentElement;
@@ -22,19 +22,23 @@ $(function() {
       }
     }
 
-    if (picId) {
-      url = "api/svg.php?id=" + picId;
-      xhr.open("GET", url, true);
+    if (picId != null) {
+      if (RegExp('animated').test(CLT.screen.classList())) {
+        CLT.screen.removeClass();
+      }
+      CLT.screen.addClass('animated' + Math.round(Math.random() * 10));
+      xhr = CLT.ajaxImgRequest;
+      CLT.url = "api/svg.php?id=" + picId;
+      xhr.open("GET", CLT.url, true);
       xhr.send();
       xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-          if (xhr.status === 200) {
-            $("section#screen").html(xhr.responseText);
-          }
+        console.log('readyState', xhr.readyState);
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+          $("section#screen").html(xhr.responseText);
         }
       }
     } else {
       console.error('no picId found', picId);
     }
   }
-});
+};

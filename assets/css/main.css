@@ -1,3 +1,5 @@
+@import url('animation.css');
+
 * {
   box-sizing: border-box;
 }
@@ -36,29 +38,23 @@ section#screen {
 section#screen svg {
   display: block;
 }
-section#screen svg {
-  /*animation: pulse 0.75s infinite;*/
-}
-@keyframes pulse {
-  0% {
-    fill: #000;
-  }
-  50% {
-    fill: #f00;
-  }
-  100% {
-    fill: #000;
-  }
-}
 
 section#svgControls {
   margin: 16px auto 0;
   width: 100%;
 }
 section#svgControls a {
+  background: #fff;
   display: inline-block;
+  height: 36px;
   margin: 0;
   width: 48px;
+}
+section#svgControls a:hover {
+  background: #ddd;
+}
+section#svgControls a.selected {
+  background: #ddd;
 }
 section#svgControls svg {
   background: #fff;
@@ -68,7 +64,8 @@ section#svgControls svg {
   width: 100%;
 }
 section#svgControls svg:hover {
-  color: #ddd;
+  background: #333;
+  fill: #fff;
 }
 
 div.player {
@@ -82,16 +79,20 @@ div.player .controls {
   padding: 8px;
 }
 div.player .button {
-  color: white;
-  width: 20px;
-  margin: 3px 0 0 0;
-  font-size: 16px;
-  text-align: center;
-  display: inline-block;
-  cursor: pointer;
   background: transparent;
   border: none;
+  color: #3dcc5f;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px;
+  margin: 3px 0 0 0;
   outline: none;
+  text-align: center;
+  width: 20px;
+}
+div.player .button:disabled {
+  color: #555;
+  cursor: auto;
 }
 div.player .track {
   position: relative;

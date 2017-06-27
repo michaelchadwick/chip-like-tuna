@@ -58,8 +58,12 @@
     </div>
   </div>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script src="/assets/js/app.js"></script>
-  <script src="/assets/js/svg.js"></script>
+  <script src="/assets/js/vendor/system.js"></script>
+  <script>
+    SystemJS.import('/assets/js/vendor/jquery.min.js')
+      .then(bootstrap => SystemJS.import('/assets/js/bootstrap.js'))
+      .then(svg => SystemJS.import('/assets/js/svg.js'))
+      .then(main => SystemJS.import('/assets/js/main.js'));
+  </script>
 </body>
 </html>
