@@ -1,10 +1,6 @@
 $(function() {
-  CLT.screen = $('section#screen');
   CLT.svgControls = $('#svgControls a');
   CLT.svgControls.click(CLT.svgUpdateScreen);
-  CLT.has = function(needle) {
-    return RegExp(needle).test(this);
-  }
 
   function SoundPlayer ( soundPath, el ) {
     this.ac = new ( window.AudioContext || webkitAudioContext )();
@@ -93,6 +89,7 @@ $(function() {
     this.source.start(this.ac.currentTime, this.position);
     this.playing = true;
     this.messageUpdate(SND_STATUS_PLAYING);
+    CLT.svgAddAnimation('intro');
     var soundPlayer = this;
 
     this.source.onended = function() {
@@ -113,7 +110,7 @@ $(function() {
       this.position = this.ac.currentTime - this.startTime;
       this.playing = false;
       this.paused = true;
-      $('section#screen svg').removeClass('animated');
+      CLT.svgRemoveAnimation();
       this.messageUpdate(SND_STATUS_PAUSED);
     }
   };
@@ -212,54 +209,74 @@ $(function() {
   };
 
   SoundPlayer.prototype.triggerScreenEvent = function(p) {
-    switch (p) {
-      case 0:
-        CLT.svgUpdateScreen(0);
+    switch (true) {
+      case (p < 0) || (p >= 0 && p < 0.6):
+        CLT.svgUpdateScreen('intro');
+        CLT.svgAddAnimation('intro');
         break;
       // docking
-      case 0.6:
-        CLT.svgUpdateScreen(1);
+      case p >= 0.6 && p < 12.1:
+        CLT.svgUpdateScreen('docking');
+        CLT.svgAddAnimation('docking');
         break;
       // road
-      case 12.1:
-        CLT.svgUpdateScreen(2);
+      case p >= 12.1 && p < 17.2:
+        CLT.svgUpdateScreen('road');
+        CLT.svgAddAnimation('road');
         break;
       // charlotte
-      case 17.2:
-        CLT.svgUpdateScreen(3);
+      case p >= 17.2 && p < 25.5:
+        CLT.svgUpdateScreen('charlotte');
+        CLT.svgAddAnimation('charlotte');
         break;
       // wondering
-      case 25.5:
-        CLT.svgUpdateScreen(4);
+      case p >= 25.5 && p < 35:
+        CLT.svgUpdateScreen('wondering');
+        CLT.svgAddAnimation('wondering');
         break;
       // ladder
-      case 35:
-        CLT.svgUpdateScreen(5);
+      case p >= 35 && p < 44.1:
+        CLT.svgUpdateScreen('ladder');
+        CLT.svgAddAnimation('ladder');
         break;
       // fudge
-      case 44.1:
-        CLT.svgUpdateScreen(6);
+      case p >= 44.1 && 52.5:
+        CLT.svgUpdateScreen('fudge');
+        CLT.svgAddAnimation('fudge');
         break;
       // tattoo
-      case 52.5:
-        CLT.svgUpdateScreen(7);
+      case p >= 52.5 && p < 59.4:
+        CLT.svgUpdateScreen('tattoo');
+        CLT.svgAddAnimation('tattoo');
         break;
       // pinto
-      case 59.4:
-        CLT.svgUpdateScreen(8);
+      case p >= 59.4 && p < 70.3:
+        CLT.svgUpdateScreen('pinto');
+        CLT.svgAddAnimation('pinto');
         break;
       // scenes
-      case 70.3:
-        CLT.svgUpdateScreen(9);
+      case p >= 70.3 && p < 77.6:
+        CLT.svgUpdateScreen('scenes');
+        CLT.svgAddAnimation('scenes');
         break;
       // overjoyed
-      case 77.6:
-        CLT.svgUpdateScreen(10);
+      case p >= 77.6 && p < 86.7:
+        CLT.svgUpdateScreen('overjoyed');
+        CLT.svgAddAnimation('overjoyed');
         break;
       // beyond
-      case 86.7:
-        CLT.svgUpdateScreen(11);
+      case p>= 86.7 && p < 99.9:
+        CLT.svgUpdateScreen('beyond');
+        CLT.svgAddAnimation('beyond');
         break;
+      // end
+      case p >= 99.9:
+        CLT.svgUpdateScreen(0);
+        CLT.svgRemoveAnimation();
+        this.position = 0;
+        break;
+      default:
+        CLT.svgUpdateScreen(0);
     }
   }
 

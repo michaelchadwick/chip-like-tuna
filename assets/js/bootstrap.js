@@ -3,6 +3,7 @@
 
 var CLT = {};
 CLT.url = '';
+CLT.screen = $('section#screen');
 CLT.ajaxImgRequest = null;
 
 var SND_STATUS_PLAYING = 'playing';

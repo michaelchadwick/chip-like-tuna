@@ -12,7 +12,7 @@
     <div id="main">
       <h1>FLV TV</h1>
       <section id="screen">
-        <?php echo file_get_contents("assets/flv-scenes/svg/00-flv.min.svg") ?>
+        <?php echo file_get_contents("assets/flv-scenes/svg/00-intro.svg") ?>
       </section>
       <section id="svgControls">
         <?php
@@ -27,11 +27,11 @@
           sort($files);
 
           if (sizeof($files) > 0) {
-            $i = 0;
             foreach ($files as $file) {
+              $pathinfo = pathinfo($file);
               if (pathinfo($file)['extension'] == "svg") {
-                echo "<a href='#' id='" . $i . "' alt='" . $i . "' title='" . $i . "'>" . (file_get_contents($file)) . "</a>\n";
-                $i++;
+                $id = explode('.', explode('-', pathinfo($file)['basename'])[1])[0];
+                echo "<a href='#' id='" . $id . "' alt='" . $id . "' title='" . $id . "'>" . (file_get_contents($file)) . "</a>\n";
               }
             }
           } else {

@@ -9,36 +9,56 @@ if (typeof CLT !== 'undefined') {
     var picId;
     var xhr;
 
-    if (typeof ev == 'number') {
+    if ((typeof ev) === 'string') {
       picId = ev;
     } else {
-      pic = ev.target.parentElement;
-      // in case we clicked on the svg itself in the thumbnail
-      // we need to go up one more level
-      if (pic.nodeName == 'svg') {
-        picId = pic.parentElement.id;
+      if (ev.target == 'svg') {
+        picId = ev.target.id;
       } else {
-        picId = pic.id;
+        pic = ev.target.parentElement;
+        // in case we clicked on the svg itself in the thumbnail
+        // we need to go up one more level
+        if (pic.nodeName == 'svg') {
+          picId = pic.parentElement.id;
+        } else {
+          picId = pic.id;
+        }
       }
     }
 
-    if (picId != null) {
-      if (RegExp('animated').test(CLT.screen.classList())) {
-        CLT.screen.removeClass();
-      }
-      CLT.screen.addClass('animated' + Math.round(Math.random() * 10));
-      xhr = CLT.ajaxImgRequest;
-      CLT.url = "api/svg.php?id=" + picId;
-      xhr.open("GET", CLT.url, true);
-      xhr.send();
-      xhr.onreadystatechange = function() {
-        console.log('readyState', xhr.readyState);
-        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-          $("section#screen").html(xhr.responseText);
+    if (picId != null && (typeof picId == 'string')) {
+      let classExists = RegExp(picId).test(CLT.screen.classList());
+      if (!classExists) {
+        xhr = CLT.ajaxImgRequest;
+        
+        xhr.onload = function() {
+          CLT.svgRemoveAnimation();
+          CLT.screen.addClass(picId);
+        }
+
+        CLT.url = "api/svg.php?id=" + picId;
+        xhr.open("GET", CLT.url, true);
+        xhr.send();
+
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+            CLT.screen.html(xhr.responseText);
+          }
         }
       }
     } else {
       console.error('no picId found', picId);
     }
+  }
+
+  CLT.svgRemoveAnimation = function() {
+    CLT.screen.removeClass();
+  }
+  CLT.svgAddAnimation = function(song) {
+    if (!RegExp('animated-' + song).test(CLT.screen.classList())) {
+      CLT.screen.removeClass();
+      CLT.screen.addClass('animated-' + song);
+    }
+  
   }
 };
