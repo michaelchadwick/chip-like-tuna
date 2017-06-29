@@ -17,6 +17,14 @@ h1 {
   margin: 0 auto;
   padding: 0;
 }
+canvas {
+  image-rendering: optimizeSpeed;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: -o-crisp-edges;
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
+}
 
 div#wrap {
   margin: 0 auto;
@@ -27,7 +35,7 @@ div#wrap div#main {
 }
 
 section#screen {
-  background: #eee;
+  background: #111;
   border: 5px solid #222;
   height: 480px;
   margin: 0 auto;
@@ -37,6 +45,7 @@ section#screen {
 }
 section#screen svg {
   display: block;
+  fill: #000;
 }
 
 section#svgControls {
@@ -119,6 +128,12 @@ div.player .scrubber {
   border: solid 3px #ddd;
   cursor: pointer;
   box-shadow: 0 0 5px #000, inset 0 0 4px #400;
+}
+div.player .scrubber.disabled {
+  background: #555;
+  border: solid 3px #444;
+  box-shadow: none;
+  cursor: auto;
 }
 div.player .rngVolume {
   margin: 5px 8px;

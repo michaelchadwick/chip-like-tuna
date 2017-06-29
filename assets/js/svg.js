@@ -26,13 +26,13 @@ if (typeof CLT !== 'undefined') {
       }
     }
 
-    if (picId != null && (typeof picId == 'string')) {
+    if (picId != null) {
       let classExists = RegExp(picId).test(CLT.screen.classList());
+
       if (!classExists) {
-        //console.log('CLT.screen svg id', CLT.screen.children('svg').id);
         if (CLT.screen.children('svg')[0].id != picId) {
           xhr = CLT.ajaxImgRequest;
-        
+
           xhr.onload = function() {
             CLT.svgRemoveAnimation();
             CLT.screen.addClass(picId);
@@ -48,8 +48,6 @@ if (typeof CLT !== 'undefined') {
             }
           }
         }
-      } else {
-        //console.log('no class change');
       }
     } else {
       console.error('no picId found', picId);
@@ -64,6 +62,6 @@ if (typeof CLT !== 'undefined') {
       CLT.screen.removeClass();
       CLT.screen.addClass('animated-' + song);
     }
-  
+
   }
 };

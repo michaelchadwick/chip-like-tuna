@@ -12,8 +12,12 @@
     <div id="main">
       <h1>FLV TV</h1>
       <section id="screen">
-        <?php echo file_get_contents("assets/flv-scenes/svg/00-intro.svg") ?>
+        <svg></svg>
       </section>
+
+      <button onclick="CLT.startTVNoise();">Start Noise Cycle</button>
+      <button onclick="CLT.stopTVNoise();">Stop Noise Cycle</button>
+
       <section id="svgControls">
         <?php
           $dir = "./assets/flv-scenes/svg/";
@@ -63,6 +67,7 @@
     SystemJS.import('/assets/js/vendor/jquery.min.js')
       .then(bootstrap => SystemJS.import('/assets/js/bootstrap.js'))
       .then(svg => SystemJS.import('/assets/js/svg.js'))
+      .then(noise => SystemJS.import('/assets/js/noise.js'))
       .then(main => SystemJS.import('/assets/js/main.js'));
   </script>
 </body>

@@ -9,10 +9,12 @@ $(function() {
     this.el = el;
     this.button = el.querySelector('.button');
     this.button.id = 'btnPlayPause';
+    this.buttonElem = $('#btnPlayPause');
     this.track = el.querySelector('.track');
     this.progress = el.querySelector('.progress');
     this.progressStatus = el.querySelector('.progressStatus');
     this.scrubber = el.querySelector('.scrubber');
+    this.scrubberElem = $('.scrubber');
     this.message = el.querySelector('.message');
     this.rngVolume = el.querySelector('.rngVolume');
     this.lblVolume = el.querySelector('.lblVolume');
@@ -31,8 +33,8 @@ $(function() {
 
   SoundPlayer.prototype.bindEvents = function() {
     this.button.addEventListener('click', this.toggle.bind(this));
-    $('#btnPlayPause').prop('disabled', true);
-    this.scrubber.addEventListener('mousedown', this.onMouseDown.bind(this));
+    this.buttonElem.prop('disabled', true);
+    this.scrubberElem.addClass('disabled');
     this.rngVolume.addEventListener('input', this.changeVolume.bind(this));
     this.rngVolume.addEventListener('change', this.changeVolumeLabel.bind(this));
     window.addEventListener('mousemove', this.onDrag.bind(this));
@@ -48,15 +50,13 @@ $(function() {
     xhr.open('GET', this.url, true);
     xhr.responseType = 'arraybuffer';
     xhr.onloadstart = function() {
-      this.messageUpdate(SND_STATUS_LOADING);
+      this.messageUpdate(SOUND_STATUS_LOADING);
     }.bind(this);
     xhr.onload = function() {
       this.decode(xhr.response);
     }.bind(this);
     xhr.onreadystatechange = function() {
-      if (xhr.readyState === XMLHttpRequest.DONE) {
-        console.log('xhr done');
-      }
+      if (xhr.readyState === XMLHttpRequest.DONE) { }
     }.bind(this);
     xhr.send();
   };
@@ -64,10 +64,12 @@ $(function() {
   SoundPlayer.prototype.decode = function( arrayBuffer ) {
     this.ac.decodeAudioData(arrayBuffer, function( audioBuffer ) {
       this.buffer = audioBuffer;
-      this.messageUpdate(SND_STATUS_LOADED);
+      this.messageUpdate(SOUND_STATUS_LOADED);
       this.draw();
-      $('#btnPlayPause').prop('disabled', false);
-      console.log('sound loaded');
+      this.buttonElem.prop('disabled', false);
+      this.scrubberElem.removeClass('disabled');
+      this.scrubber.addEventListener('mousedown', this.onMouseDown.bind(this));
+      CLT.startTVNoise();
     }.bind(this));
   };
 
@@ -89,13 +91,14 @@ $(function() {
     this.source.start(this.ac.currentTime, this.position);
     this.playing = true;
     this.paused = false;
-    this.messageUpdate(SND_STATUS_PLAYING);
+    CLT.stopTVNoise();
+    this.messageUpdate(SOUND_STATUS_PLAYING);
     this.triggerScreenEvent(this.startTime);
     var soundPlayer = this;
 
     this.source.onended = function() {
-      var soundStatus = soundPlayer.paused ? SND_STATUS_PAUSED : (soundPlayer.playing ? SND_STATUS_PLAYING: SND_STATUS_STOPPED);
-      if (soundStatus == SND_STATUS_STOPPED) {
+      var soundStatus = soundPlayer.paused ? SOUND_STATUS_PAUSED : (soundPlayer.playing ? SOUND_STATUS_PLAYING: SOUND_STATUS_STOPPED);
+      if (soundStatus == SOUND_STATUS_STOPPED) {
         this.stopped = true;
         this.paused = false;
         this.playing = false;
@@ -113,7 +116,7 @@ $(function() {
       this.playing = false;
       this.paused = true;
       CLT.svgRemoveAnimation();
-      this.messageUpdate(SND_STATUS_PAUSED);
+      this.messageUpdate(SOUND_STATUS_PAUSED);
     }
   };
 
