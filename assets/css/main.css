@@ -42,6 +42,7 @@ section#screen {
   text-align: center;
   width: 640px;
   box-shadow: 4px 4px 12px #111;
+  overflow: hidden;
 }
 section#screen svg {
   display: block;

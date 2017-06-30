@@ -219,13 +219,23 @@ $(function() {
         CLT.svgUpdateScreen('intro');
         CLT.svgAddAnimation('intro');
         break;
-      // docking
-      case p >= 0.6 && p < 12.2:
+      // docking-intro
+      case p >= 0.6 && p < 1.73:
         CLT.svgUpdateScreen('docking');
-        CLT.svgAddAnimation('docking');
+        CLT.svgAddAnimation('docking-intro');
+        break;
+      // docking-main
+      case p >= 1.73 && p < 11:
+        CLT.svgUpdateScreen('docking');
+        CLT.svgAddAnimation('docking-main');
+        break;
+      // docking-main
+      case p >= 11 && p < 12.1:
+        CLT.svgUpdateScreen('docking');
+        CLT.svgAddAnimation('docking-intro');
         break;
       // road
-      case p >= 12.2 && p < 17.2:
+      case p >= 12.1 && p < 17.2:
         CLT.svgUpdateScreen('road');
         CLT.svgAddAnimation('road');
         break;
