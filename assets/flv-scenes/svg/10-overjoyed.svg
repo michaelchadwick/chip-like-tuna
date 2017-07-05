@@ -1,3 +1,3 @@
-<svg xmlns="http://www.w3.org/2000/svg" id="overjoyed" alt="overjoyed" title="overjoyed" width="640" height="480" viewBox="-10 -10 120 120">
+<svg xmlns="http://www.w3.org/2000/svg" id="overjoyed" alt="overjoyed" title="overjoyed" width="100%" height="100%" viewBox="-10 -10 120 120">
   <path d="M90 20h-5v75h5c5.5 0 10-4.5 10-10V30c0-5.5-4.5-10-10-10zM0 30v55c0 5.5 4.5 10 10 10h5V20h-5C4.5 20 0 24.5 0 30zM67 9.5C63.6 8 58.2 5 50 5S36.4 8 33 9.5V20H22v75h56V20H67V9.5zM61 20H39v-6.7c2.7-1 6.5-2.3 11-2.3s8.3 1.2 11 2.3V20z"/>
 </svg>
