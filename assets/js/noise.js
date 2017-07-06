@@ -61,12 +61,12 @@ CLT.startTVNoise = function() {
   noise.autoplay = true;
   noise.controls = false;
   noise.loop = true;
-  noise.volume = 0.5;
+  noise.volume = 0.25;
   noise.addEventListener('timeupdate', function(){
-    var buffer = .44;
+    var buffer = .64;
     if(this.currentTime > this.duration - buffer){
-      this.currentTime = 0
-      this.play()
+      this.currentTime = 0;
+      this.play();
     }}, false);
 }
 CLT.stopTVNoise = function() {
