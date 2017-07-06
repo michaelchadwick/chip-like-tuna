@@ -1,6 +1,8 @@
 /* noise.js */
 /* fancy noise pattern on the tv */
 
+const NOISE_FILE_PATH = CLT.audioPaths.ogg.noise;
+
 CLT.supportsCanvas = !!document.createElement('canvas').getContext;
 if ( CLT.supportsCanvas ) {
   var canvas = document.createElement('canvas'),
@@ -57,7 +59,7 @@ CLT.bringInDaTVNoise = function() {
 
 CLT.startTVNoise = function() {
   CLT.tvNoiseCycleId = setInterval(CLT.bringInDaTVNoise, 80);
-  noise.src = '/assets/audio/noise.ogg';
+  noise.src = NOISE_FILE_PATH;
   noise.autoplay = true;
   noise.controls = false;
   noise.loop = true;

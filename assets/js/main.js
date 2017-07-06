@@ -217,7 +217,7 @@ $(function() {
     if ( this.playing ) {
       this.button.classList.add('fa-pause');
       this.button.classList.remove('fa-play');
-      this.progressStatus.innerText = this.progPercent() + '%';
+      this.progressStatus.innerText = this.progPercent() + ' %';
       this.triggerScreenEvent(this.progPercent());
     } else {
       this.button.classList.add('fa-play');
@@ -313,9 +313,13 @@ $(function() {
 
   SoundPlayer.prototype.progPercent = function() {
     var progress = ( this.positionUpdate() / this.buffer.duration );
-    return ((progress * 1000) / 10);
-    //return ((progress * 100) * 10) / 10;
+    var progress_rounded = round(progress * 100, 2);
+    return progress_rounded;
   };
+
+  function round(value, decimals) {
+    return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+  }
 
   // create a new instance of the SoundPlayer and get things started
   window.SoundPlayer = new SoundPlayer(SOUND_FILE_PATH, PLAYER_ELEMENT);
