@@ -1,6 +1,12 @@
 $(function() {
   CLT.svgControls = $('#svgControls a');
   CLT.svgControls.click(CLT.svgUpdateScreen);
+  $(window).on('load resize', function() {
+    CLT.fixScreenDims();
+  });
+  CLT.fixScreenDims = function() {
+    CLT.screen.height(CLT.screen.width() * 0.5625);
+  }
 
   function SoundPlayer ( soundPath, el ) {
     this.ac = new ( window.AudioContext || webkitAudioContext )();
@@ -58,6 +64,15 @@ $(function() {
     xhr.onreadystatechange = function() {
       if (xhr.readyState === XMLHttpRequest.DONE) { }
     }.bind(this);
+    var that = this;
+    xhr.upload.onprogress = function(ev) {
+      // this won't work until the server sends the file's content length
+      if (ev.lengthComputable) {
+        var percentComplete = ev.loaded / ev.total;
+        //console.log('upload.onprogress percentComplete', percentComplete);
+        //that.messageUpdate('loading ' + percentComplete + '%');
+      }
+    }
     xhr.send();
   };
 
@@ -108,7 +123,6 @@ $(function() {
   };
 
   SoundPlayer.prototype.pause = function() {
-    console.log('sound paused');
     if ( this.source ) {
       this.source.stop(0);
       this.source = null;
@@ -122,9 +136,13 @@ $(function() {
 
   SoundPlayer.prototype.seek = function( time ) {
     if ( this.playing ) {
+      //console.log('this.playing time', time);
+      this.progressStatus.innerText = this.progPercent() + '%';
       this.play(time);
     }
     else {
+      //console.log('NOT this.playing time', time);
+      this.progressStatus.innerText = this.progPercent() + '%';
       this.position = time;
     }
   };
@@ -199,9 +217,8 @@ $(function() {
     if ( this.playing ) {
       this.button.classList.add('fa-pause');
       this.button.classList.remove('fa-play');
-      var progPercent = Math.round(((progress * 100) * 10)) / 10;
-      this.progressStatus.innerText = progPercent + '%';
-      this.triggerScreenEvent(progPercent);
+      this.progressStatus.innerText = this.progPercent() + '%';
+      this.triggerScreenEvent(this.progPercent());
     } else {
       this.button.classList.add('fa-play');
       this.button.classList.remove('fa-pause');
@@ -215,14 +232,15 @@ $(function() {
 
   SoundPlayer.prototype.triggerScreenEvent = function(p) {
     switch (true) {
-      case p >= 0 && p < 0.6:
+      case p >= 0 && p < 0.56:
         CLT.svgUpdateScreen('intro');
         CLT.svgAddAnimation('intro');
         break;
       // docking-intro
-      case p >= 0.6 && p < 1.73:
+      case p >= 0.56 && p < 1.73:
         CLT.svgUpdateScreen('docking');
         CLT.svgAddAnimation('docking-intro');
+        this.triggerScreenEvent(this.progPercent);
         break;
       // docking-main
       case p >= 1.73 && p < 11:
@@ -293,6 +311,13 @@ $(function() {
     }
   }
 
+  SoundPlayer.prototype.progPercent = function() {
+    var progress = ( this.positionUpdate() / this.buffer.duration );
+    return ((progress * 1000) / 10);
+    //return ((progress * 100) * 10) / 10;
+  };
+
   // create a new instance of the SoundPlayer and get things started
   window.SoundPlayer = new SoundPlayer(SOUND_FILE_PATH, PLAYER_ELEMENT);
+  CLT.fixScreenDims();
 });

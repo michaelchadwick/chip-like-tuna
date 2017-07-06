@@ -53,7 +53,6 @@ if (typeof CLT !== 'undefined') {
       console.error('no picId found', picId);
     }
   }
-
   CLT.svgRemoveAnimation = function() {
     CLT.screen.removeClass();
   }
@@ -62,6 +61,5 @@ if (typeof CLT !== 'undefined') {
       CLT.screen.removeClass();
       CLT.screen.addClass('animated-' + song);
     }
-
   }
 };

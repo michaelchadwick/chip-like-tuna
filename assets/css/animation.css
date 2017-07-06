@@ -1,20 +1,46 @@
-section#screen.animated-intro svg { animation: intro 6s ease-out 0s normal 1 none running; }
-section#screen.animated-docking-intro svg { animation: docking-intro 0.4839s ease-out -0.2419s normal infinite none running; }
-section#screen.animated-docking-main svg { animation: docking-main 0.9678s ease-out -0.4839s normal infinite none running; }
-section#screen.animated-road svg { animation: road 0.4139s ease-out -0.2069s normal infinite none running; }
-section#screen.animated-charlotte svg { animation: charlotte 0.6622s ease-out -0.3311s normal infinite none running; }
-section#screen.animated-wondering svg { animation: wondering 0.6622s ease-out -0.3311s normal infinite none running; }
-section#screen.animated-ladder svg { animation: ladder 0.8217s ease-out -0.4108s normal infinite none running; }
-section#screen.animated-fudge svg { animation: fudge 0.5052s ease-out -0.2526s normal infinite none running; }
-section#screen.animated-tattoo svg { animation: tattoo 0.4858s ease-out -0.2429s normal infinite none running; }
-section#screen.animated-pinto svg { animation: pinto 0.3539s ease-out -0.1769s normal infinite none running; }
-section#screen.animated-scenes svg { animation: scenes 0.9017s ease-out -0.4508s normal infinite none running; }
-section#screen.animated-overjoyed svg { animation: overjoyed 0.6316s ease-out -0.3158s normal infinite none running; }
-section#screen.animated-beyond svg { animation: beyond 0.5255s ease-out -0.2627s normal infinite none running; }
+section#screen.animated-intro svg {
+  animation: intro 6s ease-out 0s normal 1 none running;
+}
+section#screen.animated-docking-intro svg {
+  animation: docking-intro 0.4839s ease-out -0.2419s normal infinite none running;
+}
+section#screen.animated-docking-main svg {
+  animation: docking-main 0.9678s ease-out -0.4839s normal infinite none running;
+}
+section#screen.animated-road svg {
+  animation: road 0.4139s ease-out -0.2069s normal infinite none running;
+}
+section#screen.animated-charlotte svg {
+  animation: charlotte 0.6622s ease-out -0.3311s normal infinite none running;
+}
+section#screen.animated-wondering svg {
+  animation: wondering 0.6622s ease-out -0.3311s normal infinite none running;
+}
+section#screen.animated-ladder svg {
+  animation: ladder 0.8217s ease-out -0.4108s normal infinite none running;
+}
+section#screen.animated-fudge svg {
+  animation: fudge 0.5052s ease-out -0.2526s normal infinite none running;
+}
+section#screen.animated-tattoo svg {
+  animation: tattoo 0.4858s ease-out -0.2429s normal infinite none running;
+}
+section#screen.animated-pinto svg {
+  animation: pinto 0.3539s ease-out -0.1769s normal infinite none running;
+}
+section#screen.animated-scenes svg {
+  animation: scenes 0.9017s ease-out -0.4508s normal infinite none running;
+}
+section#screen.animated-overjoyed svg {
+  animation: overjoyed 0.6316s ease-out -0.3158s normal infinite none running;
+}
+section#screen.animated-beyond svg {
+  animation: beyond 0.5255s ease-out -0.2627s normal infinite none running;
+}
 
 @keyframes intro {
   0% { fill: #fff; transform: scale(.9); transform: scale(.01) translateY(0px);}
-  100% { fill: #000; transform: scale(.9); transform: scale(2) translateY(0px); }
+  100% { fill: #000; transform: scale(.9); transform: scale(3) translateY(0px); }
 }
 @keyframes docking-intro {
   0% { fill: #92FFC0; transform: scale(.9); }
