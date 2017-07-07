@@ -136,12 +136,10 @@ $(function() {
 
   SoundPlayer.prototype.seek = function( time ) {
     if ( this.playing ) {
-      //console.log('this.playing time', time);
       this.progressStatus.innerText = this.progPercent() + '%';
       this.play(time);
     }
     else {
-      //console.log('NOT this.playing time', time);
       this.progressStatus.innerText = this.progPercent() + '%';
       this.position = time;
     }
@@ -240,70 +238,69 @@ $(function() {
       case p >= 0.56 && p < 1.73:
         CLT.svgUpdateScreen('docking');
         CLT.svgAddAnimation('docking-intro');
-        this.triggerScreenEvent(this.progPercent);
         break;
       // docking-main
-      case p >= 1.73 && p < 11:
+      case p >= 1.73 && p < 10.96:
         CLT.svgUpdateScreen('docking');
         CLT.svgAddAnimation('docking-main');
         break;
       // docking-main
-      case p >= 11 && p < 12.1:
+      case p >= 10.96 && p < 12.15:
         CLT.svgUpdateScreen('docking');
         CLT.svgAddAnimation('docking-intro');
         break;
       // road
-      case p >= 12.1 && p < 17.2:
+      case p >= 12.15 && p < 17.2:
         CLT.svgUpdateScreen('road');
         CLT.svgAddAnimation('road');
         break;
       // charlotte
-      case p >= 17.2 && p < 25.5:
+      case p >= 17.2 && p < 25.48:
         CLT.svgUpdateScreen('charlotte');
         CLT.svgAddAnimation('charlotte');
         break;
       // wondering
-      case p >= 25.5 && p < 35:
+      case p >= 25.48 && p < 35.01:
         CLT.svgUpdateScreen('wondering');
         CLT.svgAddAnimation('wondering');
         break;
       // ladder
-      case p >= 35 && p < 44.1:
+      case p >= 35.01 && p < 44.15:
         CLT.svgUpdateScreen('ladder');
         CLT.svgAddAnimation('ladder');
         break;
       // fudge
-      case p >= 44.1 && p < 52.6:
+      case p >= 44.15 && p < 52.50:
         CLT.svgUpdateScreen('fudge');
         CLT.svgAddAnimation('fudge');
         break;
       // tattoo
-      case p >= 52.6 && p < 59.4:
+      case p >= 52.50 && p < 59.42:
         CLT.svgUpdateScreen('tattoo');
         CLT.svgAddAnimation('tattoo');
         break;
       // pinto
-      case p >= 59.4 && p < 70.4:
+      case p >= 59.42 && p < 70.31:
         CLT.svgUpdateScreen('pinto');
         CLT.svgAddAnimation('pinto');
         break;
       // scenes
-      case p >= 70.4 && p < 77.6:
+      case p >= 70.31 && p < 77.57:
         CLT.svgUpdateScreen('scenes');
         CLT.svgAddAnimation('scenes');
         break;
       // overjoyed
-      case p >= 77.6 && p < 86.7:
+      case p >= 77.57 && p < 86.71:
         CLT.svgUpdateScreen('overjoyed');
         CLT.svgAddAnimation('overjoyed');
         break;
       // beyond
-      case p>= 86.7 && p < 99.9:
+      case p>= 86.71 && p < 100.00:
         CLT.svgUpdateScreen('beyond');
         CLT.svgAddAnimation('beyond');
         break;
       // end
-      case p >= 99.9:
+      case p >= 100.00:
         CLT.svgUpdateScreen('intro');
         CLT.svgRemoveAnimation();
         this.position = 0;
