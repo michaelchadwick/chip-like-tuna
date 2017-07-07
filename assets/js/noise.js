@@ -63,9 +63,9 @@ CLT.startTVNoise = function() {
   noise.autoplay = true;
   noise.controls = false;
   noise.loop = true;
-  noise.volume = 0.25;
+  noise.volume = 0.1;
   noise.addEventListener('timeupdate', function(){
-    var buffer = .64;
+    var buffer = 0.5;
     if(this.currentTime > this.duration - buffer){
       this.currentTime = 0;
       this.play();
