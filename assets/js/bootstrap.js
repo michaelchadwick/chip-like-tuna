@@ -37,13 +37,15 @@ CLT.audioPaths = {
     'noise':        'assets/audio/ogg/noise.ogg'
   },
   'opus': {
-    '20':           'assets/audio/clt-20-cvbr.opus',
-    '24':           'assets/audio/clt-24-cvbr.opus',
-    '32':           'assets/audio/clt-32-cvbr.opus',
-    '48':           'assets/audio/clt-48-cvbr.opus',
-    '56':           'assets/audio/clt-56-cvbr.opus',
-    '64':           'assets/audio/clt-64-cvbr.opus',
-    '96':           'assets/audio/clt-96-cvbr.opus'
+    'clt': {
+      '20':           'assets/audio/opus/clt-20-cvbr.opus',
+      '24':           'assets/audio/opus/clt-24-cvbr.opus',
+      '32':           'assets/audio/opus/clt-32-cvbr.opus',
+      '48':           'assets/audio/opus/clt-48-cvbr.opus',
+      '56':           'assets/audio/opus/clt-56-cvbr.opus',
+      '64':           'assets/audio/opus/clt-64-cvbr.opus',
+      '96':           'assets/audio/opus/clt-96-cvbr.opus'
+    }
   },
   'wav': {
     'clt':          'assets/audio/wav/clt.wav',
@@ -63,7 +65,7 @@ var NOISE_WIDTH_DEFAULT     = 200;
 var NOISE_HEIGHT_DEFAULT    = 150;
 
 // file paths
-var SOUND_FILE_PATH         = CLT.audioPaths.mp3.misc.test2m;
+var SOUND_FILE_PATH         = CLT.audioPaths.opus.clt['48'];
 
 // html elements
 var PLAYER_ELEMENT          = document.querySelector('.player');
