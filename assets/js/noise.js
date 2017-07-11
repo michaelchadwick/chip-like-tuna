@@ -73,7 +73,7 @@ CLT.startTVNoise = function() {
 }
 CLT.stopTVNoise = function() {
   clearInterval(CLT.tvNoiseCycleId);
-  CLT.screen.css('background', '#ddd');
+  CLT.screen.css('background', '');
   noise.pause();
   noise.currentTime = 0;
 }

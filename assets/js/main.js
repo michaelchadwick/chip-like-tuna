@@ -21,7 +21,8 @@ $(function() {
     this.progressStatus = el.querySelector('.progressStatus');
     this.scrubber = el.querySelector('.scrubber');
     this.scrubberElem = $('.scrubber');
-    this.message = el.querySelector('.message');
+    this.messageDebug = el.querySelector('.messageDebug');
+    this.messageScreen = document.querySelector('.messageScreen');
     this.rngVolume = el.querySelector('.rngVolume');
     this.lblVolume = el.querySelector('.lblVolume');
     var initVol = this.rngVolume.value;
@@ -47,8 +48,11 @@ $(function() {
     window.addEventListener('mouseup', this.onMouseUp.bind(this));
   };
 
-  SoundPlayer.prototype.messageUpdate = function( msg ) {
-    this.message.innerHTML = msg;
+  SoundPlayer.prototype.messageDebugUpdate = function( msg ) {
+    this.messageDebug.innerHTML = msg;
+  }
+  SoundPlayer.prototype.messageScreenUpdate = function( msg ) {
+    this.messageScreen.innerHTML = msg;
   }
 
   SoundPlayer.prototype.fetch = function() {
@@ -56,7 +60,8 @@ $(function() {
     xhr.open('GET', this.url, true);
     xhr.responseType = 'arraybuffer';
     xhr.onloadstart = function() {
-      this.messageUpdate(SOUND_STATUS_LOADING);
+      this.messageDebugUpdate(SOUND_STATUS_LOADING);
+      this.messageScreenUpdate(SOUND_STATUS_LOADING);
     }.bind(this);
     xhr.onload = function() {
       this.decode(xhr.response);
@@ -70,7 +75,7 @@ $(function() {
       if (ev.lengthComputable) {
         var percentComplete = ev.loaded / ev.total;
         //console.log('upload.onprogress percentComplete', percentComplete);
-        //that.messageUpdate('loading ' + percentComplete + '%');
+        //that.messageDebugUpdate('loading ' + percentComplete + '%');
       }
     }
     xhr.send();
@@ -79,7 +84,8 @@ $(function() {
   SoundPlayer.prototype.decode = function( arrayBuffer ) {
     this.ac.decodeAudioData(arrayBuffer, function( audioBuffer ) {
       this.buffer = audioBuffer;
-      this.messageUpdate(SOUND_STATUS_LOADED);
+      this.messageDebugUpdate(SOUND_STATUS_LOADED);
+      this.messageScreenUpdate('');
       this.draw();
       this.buttonElem.prop('disabled', false);
       this.scrubberElem.removeClass('disabled');
@@ -107,7 +113,7 @@ $(function() {
     this.playing = true;
     this.paused = false;
     CLT.stopTVNoise();
-    this.messageUpdate(SOUND_STATUS_PLAYING);
+    this.messageDebugUpdate(SOUND_STATUS_PLAYING);
     this.triggerScreenEvent(this.startTime);
     var soundPlayer = this;
 
@@ -118,7 +124,7 @@ $(function() {
         this.paused = false;
         this.playing = false;
       }
-      soundPlayer.messageUpdate(soundStatus);
+      soundPlayer.messageDebugUpdate(soundStatus);
     };
   };
 
@@ -130,7 +136,7 @@ $(function() {
       this.playing = false;
       this.paused = true;
       CLT.svgRemoveAnimation();
-      this.messageUpdate(SOUND_STATUS_PAUSED);
+      this.messageDebugUpdate(SOUND_STATUS_PAUSED);
     }
   };
 
@@ -245,17 +251,17 @@ $(function() {
         CLT.svgAddAnimation('docking-main');
         break;
       // docking-main
-      case p >= 10.96 && p < 12.15:
+      case p >= 10.96 && p < 12.08:
         CLT.svgUpdateScreen('docking');
         CLT.svgAddAnimation('docking-intro');
         break;
       // road
-      case p >= 12.15 && p < 17.2:
+      case p >= 12.08 && p < 17.15:
         CLT.svgUpdateScreen('road');
         CLT.svgAddAnimation('road');
         break;
       // charlotte
-      case p >= 17.2 && p < 25.48:
+      case p >= 17.15 && p < 25.48:
         CLT.svgUpdateScreen('charlotte');
         CLT.svgAddAnimation('charlotte');
         break;
@@ -265,12 +271,12 @@ $(function() {
         CLT.svgAddAnimation('wondering');
         break;
       // ladder
-      case p >= 35.01 && p < 44.15:
+      case p >= 35.01 && p < 44.12:
         CLT.svgUpdateScreen('ladder');
         CLT.svgAddAnimation('ladder');
         break;
       // fudge
-      case p >= 44.15 && p < 52.50:
+      case p >= 44.12 && p < 52.50:
         CLT.svgUpdateScreen('fudge');
         CLT.svgAddAnimation('fudge');
         break;

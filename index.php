@@ -12,14 +12,11 @@
     <div id="main">
       <h1>FLV TV</h1>
 
-      <?php
-        //$cltFilesize = filesize("assets/audio/clt-192-vbr.mp3");
-        //echo "cltFilesize: " . $cltFilesize;
-        //header('Content-Length: ' . $cltFilesize);
-      ?>
-
       <section id="screen">
         <svg></svg>
+        <div class="messageScreen">
+          <span></span>
+        </div>
       </section>
 
       <button onclick="CLT.startTVNoise();">Start Noise Cycle</button>
@@ -63,7 +60,7 @@
             <label class="lblVolume" for="rngVolume" />
           </div>
         </div>
-        <p class="message"></p>
+        <p class="messageDebug"></p>
         <p class="progressStatus">&nbsp;</p>
       </div>
     </div>
