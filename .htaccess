@@ -1,0 +1,2 @@
+SetOutputFilter DEFLATE
+SetEnvIfNoCase Request_URI \.[mp3|ogg|opus]$ no-gzip dont-vary

@@ -11,9 +11,17 @@
   <div id="wrap">
     <div id="main">
       <h1>FLV TV</h1>
+
       <section id="screen">
-        <?php echo file_get_contents("assets/flv-scenes/svg/00-flv.min.svg") ?>
+        <svg></svg>
+        <div class="messageScreen">
+          <span></span>
+        </div>
       </section>
+
+      <button onclick="CLT.startTVNoise();">Start Noise Cycle</button>
+      <button onclick="CLT.stopTVNoise();">Stop Noise Cycle</button>
+
       <section id="svgControls">
         <?php
           $dir = "./assets/flv-scenes/svg/";
@@ -27,11 +35,11 @@
           sort($files);
 
           if (sizeof($files) > 0) {
-            $i = 0;
             foreach ($files as $file) {
+              $pathinfo = pathinfo($file);
               if (pathinfo($file)['extension'] == "svg") {
-                echo "<a href='#' id='" . $i . "' alt='" . $i . "' title='" . $i . "'>" . (file_get_contents($file)) . "</a>\n";
-                $i++;
+                $id = explode('.', explode('-', pathinfo($file)['basename'])[1])[0];
+                echo "<a href='#' id='" . $id . "' alt='" . $id . "' title='" . $id . "'>" . (file_get_contents($file)) . "</a>\n";
               }
             }
           } else {
@@ -52,14 +60,19 @@
             <label class="lblVolume" for="rngVolume" />
           </div>
         </div>
-        <p class="message"></p>
+        <p class="messageDebug"></p>
         <p class="progressStatus">&nbsp;</p>
       </div>
     </div>
   </div>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script src="/assets/js/app.js"></script>
-  <script src="/assets/js/svg.js"></script>
+  <script src="/assets/js/vendor/system.js"></script>
+  <script>
+    SystemJS.import('/assets/js/vendor/jquery.min.js')
+      .then(bootstrap => SystemJS.import('/assets/js/bootstrap.js'))
+      .then(svg => SystemJS.import('/assets/js/svg.js'))
+      .then(noise => SystemJS.import('/assets/js/noise.js'))
+      .then(main => SystemJS.import('/assets/js/main.js'));
+  </script>
 </body>
 </html>

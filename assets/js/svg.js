@@ -1,40 +1,84 @@
-$(function() {
-  var url;
-  var xhr = new XMLHttpRequest();
+/* svg */
+/* control the svg images on the screen */
 
-  $svgControls = $("#svgControls a");
-  $svgControls.on("click", svgUpdateScreen);
-  
-  function svgUpdateScreen( ev ) {
+if (typeof CLT !== 'undefined') {
+  CLT.ajaxImgRequest = new XMLHttpRequest();
+
+  CLT.svgUpdateScreen = function(ev) {
     var pic;
     var picId;
+    var xhr;
 
-    if (typeof ev === 'number') {
+    // parse request for picId
+    if ((typeof ev) === 'string') {
       picId = ev;
     } else {
-      pic = ev.target.parentElement;
-      // in case we clicked on the svg itself in the thumbnail
-      // we need to go up one more level
-      if (pic.nodeName == 'svg') {
-        picId = pic.parentElement.id;
+      if (ev.target == 'svg') {
+        picId = ev.target.id;
       } else {
-        picId = pic.id;
+        pic = ev.target.parentElement;
+        // in case we clicked on the svg itself in the thumbnail
+        // we need to go up one more level
+        if (pic.nodeName == 'svg') {
+          picId = pic.parentElement.id;
+        } else {
+          picId = pic.id;
+        }
       }
     }
 
-    if (picId) {
-      url = "api/svg.php?id=" + picId;
-      xhr.open("GET", url, true);
-      xhr.send();
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-          if (xhr.status === 200) {
-            $("section#screen").html(xhr.responseText);
+    // if we got a valid picId, call api for new svg image
+    if (picId != null) {
+      let classExists = RegExp(picId).test(CLT.screen.classList());
+      let method = 'GET';
+      let useAsync = true;
+
+      // as long as we aren't currently using this picId, update
+      if (!classExists) {
+        if (CLT.screen.children('svg')[0].id != picId) {
+          xhr = CLT.ajaxImgRequest;
+          CLT.url = "api/svg.php?id=" + picId;
+          xhr.open(method, CLT.url, useAsync);
+
+          xhr.onload = function() {
+            CLT.svgRemoveAnimation();
+            CLT.screen.addClass(picId);
           }
+          xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+              CLT.screen.html(xhr.responseText);
+              //CLT.skipAhead(ev.currentTarget.id);
+            }
+          }
+          xhr.send();
         }
       }
     } else {
       console.error('no picId found', picId);
     }
   }
-});
+  CLT.svgRemoveAnimation = function() {
+    CLT.screen.removeClass();
+  }
+  CLT.svgAddAnimation = function(song) {
+    if (!RegExp('animated-' + song).test(CLT.screen.classList())) {
+      CLT.svgRemoveAnimation();
+      CLT.screen.addClass('animated-' + song);
+    }
+  }
+  // STUB: skip ahead to timecode for song
+  CLT.skipAhead = function(songId) {
+    var width, left, time;
+    var sp = window.SoundPlayer;
+    width = sp.track.offsetWidth;
+    left = parseInt(sp.scrubber.style.left || 0, 10);
+    time = left / width * sp.buffer.duration;
+
+    //sp.seek(time);
+    sp.dragging = sp.dragging ? false : true;
+
+    //position = this.startLeft + ( e.pageX - this.startX );
+    //position = Math.max(Math.min(width, position), 0);
+    //this.scrubber.style.left = position + 'px';
+  }
+};

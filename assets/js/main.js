@@ -1,17 +1,12 @@
 $(function() {
-  /*******************
-    Global Constants
-  ********************/
-  var SND_STATUS_PLAYING = 'playing';
-  var SND_STATUS_STOPPED = 'stopped/finished';
-  var SND_STATUS_PAUSED = 'paused';
-  var SND_STATUS_UNLOADED = 'unloaded';
-  var SND_STATUS_LOADING = 'loading...';
-  var SND_STATUS_LOADED = 'loaded and ready';
-  var SND_STATUS_ERROR = 'error decoding file';
-  //var SOUND_FILE_PATH = 'assets/audio/chip_like_tuna.mp3';
-  var SOUND_FILE_PATH = 'assets/audio/chip_like_tuna.mp3';
-  var PLAYER_ELEMENT = document.querySelector('.player');
+  CLT.svgControls = $('#svgControls a');
+  CLT.svgControls.click(CLT.svgUpdateScreen);
+  $(window).on('load resize', function() {
+    CLT.fixScreenDims();
+  });
+  CLT.fixScreenDims = function() {
+    CLT.screen.height(CLT.screen.width() * 0.5625);
+  }
 
   function SoundPlayer ( soundPath, el ) {
     this.ac = new ( window.AudioContext || webkitAudioContext )();
@@ -19,16 +14,22 @@ $(function() {
     this.url = soundPath;
     this.el = el;
     this.button = el.querySelector('.button');
+    this.button.id = 'btnPlayPause';
+    this.buttonElem = $('#btnPlayPause');
     this.track = el.querySelector('.track');
     this.progress = el.querySelector('.progress');
     this.progressStatus = el.querySelector('.progressStatus');
     this.scrubber = el.querySelector('.scrubber');
-    this.message = el.querySelector('.message');
+    this.scrubberElem = $('.scrubber');
+    this.messageDebug = el.querySelector('.messageDebug');
+    this.messageScreen = document.querySelector('.messageScreen');
     this.rngVolume = el.querySelector('.rngVolume');
     this.lblVolume = el.querySelector('.lblVolume');
     var initVol = this.rngVolume.value;
-    if (initVol < 100) initVol = "0" + initVol;
-    if (initVol < 10) initVol = "0" + initVol;
+    if (initVol < 100) {
+      initVol = "0" + initVol;
+      if (initVol < 10) initVol = "0" + initVol;
+    }
     this.lblVolume.innerText = initVol;
     this.playing = false;
     this.paused = false;
@@ -39,15 +40,19 @@ $(function() {
 
   SoundPlayer.prototype.bindEvents = function() {
     this.button.addEventListener('click', this.toggle.bind(this));
-    this.scrubber.addEventListener('mousedown', this.onMouseDown.bind(this));
+    this.buttonElem.prop('disabled', true);
+    this.scrubberElem.addClass('disabled');
     this.rngVolume.addEventListener('input', this.changeVolume.bind(this));
     this.rngVolume.addEventListener('change', this.changeVolumeLabel.bind(this));
     window.addEventListener('mousemove', this.onDrag.bind(this));
     window.addEventListener('mouseup', this.onMouseUp.bind(this));
   };
 
-  SoundPlayer.prototype.messageUpdate = function( msg ) {
-    this.message.innerHTML = msg;
+  SoundPlayer.prototype.messageDebugUpdate = function( msg ) {
+    this.messageDebug.innerHTML = msg;
+  }
+  SoundPlayer.prototype.messageScreenUpdate = function( msg ) {
+    this.messageScreen.innerHTML = msg;
   }
 
   SoundPlayer.prototype.fetch = function() {
@@ -55,20 +60,37 @@ $(function() {
     xhr.open('GET', this.url, true);
     xhr.responseType = 'arraybuffer';
     xhr.onloadstart = function() {
-      this.messageUpdate(SND_STATUS_LOADING);
+      this.messageDebugUpdate(SOUND_STATUS_LOADING);
+      this.messageScreenUpdate(SOUND_STATUS_LOADING);
     }.bind(this);
     xhr.onload = function() {
       this.decode(xhr.response);
     }.bind(this);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === XMLHttpRequest.DONE) { }
+    }.bind(this);
+    var that = this;
+    xhr.upload.onprogress = function(ev) {
+      // this won't work until the server sends the file's content length
+      if (ev.lengthComputable) {
+        var percentComplete = ev.loaded / ev.total;
+        //console.log('upload.onprogress percentComplete', percentComplete);
+        //that.messageDebugUpdate('loading ' + percentComplete + '%');
+      }
+    }
     xhr.send();
   };
 
   SoundPlayer.prototype.decode = function( arrayBuffer ) {
     this.ac.decodeAudioData(arrayBuffer, function( audioBuffer ) {
       this.buffer = audioBuffer;
-      this.messageUpdate(SND_STATUS_LOADED);
+      this.messageDebugUpdate(SOUND_STATUS_LOADED);
+      this.messageScreenUpdate('');
       this.draw();
-      //this.play();
+      this.buttonElem.prop('disabled', false);
+      this.scrubberElem.removeClass('disabled');
+      this.scrubber.addEventListener('mousedown', this.onMouseDown.bind(this));
+      CLT.startTVNoise();
     }.bind(this));
   };
 
@@ -89,18 +111,20 @@ $(function() {
     this.startTime = this.ac.currentTime - ( this.position || 0 );
     this.source.start(this.ac.currentTime, this.position);
     this.playing = true;
-    svgUpdateScreen(0);
-    this.messageUpdate(SND_STATUS_PLAYING);
+    this.paused = false;
+    CLT.stopTVNoise();
+    this.messageDebugUpdate(SOUND_STATUS_PLAYING);
+    this.triggerScreenEvent(this.startTime);
     var soundPlayer = this;
-    
+
     this.source.onended = function() {
-      var pauseOrStopStatus = soundPlayer.paused ? SND_STATUS_PAUSED : SND_STATUS_STOPPED;
-      if (pauseOrStopStatus == SND_STATUS_STOPPED) {
-        soundPlayer.stopped = true;
-        soundPlayer.paused = false;
-        soundPlayer.playing = false;
+      var soundStatus = soundPlayer.paused ? SOUND_STATUS_PAUSED : (soundPlayer.playing ? SOUND_STATUS_PLAYING: SOUND_STATUS_STOPPED);
+      if (soundStatus == SOUND_STATUS_STOPPED) {
+        this.stopped = true;
+        this.paused = false;
+        this.playing = false;
       }
-      soundPlayer.messageUpdate(pauseOrStopStatus);
+      soundPlayer.messageDebugUpdate(soundStatus);
     };
   };
 
@@ -111,15 +135,18 @@ $(function() {
       this.position = this.ac.currentTime - this.startTime;
       this.playing = false;
       this.paused = true;
-      this.messageUpdate(SND_STATUS_PAUSED);
+      CLT.svgRemoveAnimation();
+      this.messageDebugUpdate(SOUND_STATUS_PAUSED);
     }
   };
 
   SoundPlayer.prototype.seek = function( time ) {
     if ( this.playing ) {
+      this.progressStatus.innerText = this.progPercent() + '%';
       this.play(time);
     }
     else {
+      this.progressStatus.innerText = this.progPercent() + '%';
       this.position = time;
     }
   };
@@ -135,8 +162,10 @@ $(function() {
   SoundPlayer.prototype.changeVolumeLabel = function( el ) {
     var rangeVolN = el.srcElement;
     var newVol = rangeVolN.value;
-    if (newVol < 100) newVol = "0" + newVol;
-    if (newVol < 10) newVol = "0" + newVol;
+    if (newVol < 100) {
+      newVol = "0" + newVol;
+      if (newVol < 10) newVol = "0" + newVol;
+    }
     this.lblVolume.innerText = newVol;
   }
 
@@ -192,9 +221,8 @@ $(function() {
     if ( this.playing ) {
       this.button.classList.add('fa-pause');
       this.button.classList.remove('fa-play');
-      var progPercent = Math.round(((progress * 100) * 10)) / 10;
-      this.progressStatus.innerText = progPercent + '%';
-      this.triggerScreenEvent(progPercent);
+      this.progressStatus.innerText = this.progPercent() + ' %';
+      this.triggerScreenEvent(this.progPercent());
     } else {
       this.button.classList.add('fa-play');
       this.button.classList.remove('fa-pause');
@@ -205,95 +233,98 @@ $(function() {
     }
     requestAnimationFrame(this.draw.bind(this));
   };
-  
+
   SoundPlayer.prototype.triggerScreenEvent = function(p) {
-    switch (p) {
-      // docking
-      case 0.6:
-        svgUpdateScreen(1);
+    switch (true) {
+      case p >= 0 && p < 0.56:
+        CLT.svgUpdateScreen('intro');
+        CLT.svgAddAnimation('intro');
+        break;
+      // docking-intro
+      case p >= 0.56 && p < 1.73:
+        CLT.svgUpdateScreen('docking');
+        CLT.svgAddAnimation('docking-intro');
+        break;
+      // docking-main
+      case p >= 1.73 && p < 10.96:
+        CLT.svgUpdateScreen('docking');
+        CLT.svgAddAnimation('docking-main');
+        break;
+      // docking-main
+      case p >= 10.96 && p < 12.08:
+        CLT.svgUpdateScreen('docking');
+        CLT.svgAddAnimation('docking-intro');
         break;
       // road
-      case 12.1:
-        svgUpdateScreen(2);
+      case p >= 12.08 && p < 17.15:
+        CLT.svgUpdateScreen('road');
+        CLT.svgAddAnimation('road');
         break;
       // charlotte
-      case 17.2:
-        svgUpdateScreen(3);
+      case p >= 17.15 && p < 25.48:
+        CLT.svgUpdateScreen('charlotte');
+        CLT.svgAddAnimation('charlotte');
         break;
       // wondering
-      case 25.5:
-        svgUpdateScreen(4);
+      case p >= 25.48 && p < 35.01:
+        CLT.svgUpdateScreen('wondering');
+        CLT.svgAddAnimation('wondering');
         break;
       // ladder
-      case 35:
-        svgUpdateScreen(5);
+      case p >= 35.01 && p < 44.12:
+        CLT.svgUpdateScreen('ladder');
+        CLT.svgAddAnimation('ladder');
         break;
       // fudge
-      case 44.1:
-        svgUpdateScreen(6);
+      case p >= 44.12 && p < 52.50:
+        CLT.svgUpdateScreen('fudge');
+        CLT.svgAddAnimation('fudge');
         break;
       // tattoo
-      case 52.5:
-        svgUpdateScreen(7);
+      case p >= 52.50 && p < 59.42:
+        CLT.svgUpdateScreen('tattoo');
+        CLT.svgAddAnimation('tattoo');
         break;
       // pinto
-      case 59.4:
-        svgUpdateScreen(8);
+      case p >= 59.42 && p < 70.31:
+        CLT.svgUpdateScreen('pinto');
+        CLT.svgAddAnimation('pinto');
         break;
       // scenes
-      case 70.3:
-        svgUpdateScreen(9);
+      case p >= 70.31 && p < 77.57:
+        CLT.svgUpdateScreen('scenes');
+        CLT.svgAddAnimation('scenes');
         break;
       // overjoyed
-      case 77.6:
-        svgUpdateScreen(10);
+      case p >= 77.57 && p < 86.71:
+        CLT.svgUpdateScreen('overjoyed');
+        CLT.svgAddAnimation('overjoyed');
         break;
       // beyond
-      case 86.7:
-        svgUpdateScreen(11);
+      case p>= 86.71 && p < 100.00:
+        CLT.svgUpdateScreen('beyond');
+        CLT.svgAddAnimation('beyond');
+        break;
+      // end
+      case p >= 100.00:
+        CLT.svgUpdateScreen('intro');
+        CLT.svgRemoveAnimation();
+        this.position = 0;
         break;
     }
   }
-  
-  var url;
-  var xhr = new XMLHttpRequest();
 
-  $svgControls = $("#svgControls a");
-  $svgControls.on("click", svgUpdateScreen);
-  
-  function svgUpdateScreen( ev ) {
-    var pic;
-    var picId;
-    console.log('ev', (typeof ev));
-    if (typeof ev == 'number') {
-      picId = ev;
-    } else {
-      pic = ev.target.parentElement;
-      // in case we clicked on the svg itself in the thumbnail
-      // we need to go up one more level
-      if (pic.nodeName == 'svg') {
-        picId = pic.parentElement.id;
-      } else {
-        picId = pic.id;
-      }
-    }
+  SoundPlayer.prototype.progPercent = function() {
+    var progress = ( this.positionUpdate() / this.buffer.duration );
+    var progress_rounded = round(progress * 100, 2);
+    return progress_rounded;
+  };
 
-    if (picId) {
-      url = "api/svg.php?id=" + picId;
-      xhr.open("GET", url, true);
-      xhr.send();
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-          if (xhr.status === 200) {
-            $("section#screen").html(xhr.responseText);
-          }
-        }
-      }
-    } else {
-      console.error('no picId found', picId);
-    }
+  function round(value, decimals) {
+    return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
   }
 
   // create a new instance of the SoundPlayer and get things started
   window.SoundPlayer = new SoundPlayer(SOUND_FILE_PATH, PLAYER_ELEMENT);
+  CLT.fixScreenDims();
 });

@@ -1,3 +1,5 @@
+@import url('animation.css');
+
 * {
   box-sizing: border-box;
 }
@@ -15,6 +17,14 @@ h1 {
   margin: 0 auto;
   padding: 0;
 }
+canvas {
+  image-rendering: optimizeSpeed;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: -o-crisp-edges;
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
+}
 
 div#wrap {
   margin: 0 auto;
@@ -25,28 +35,46 @@ div#wrap div#main {
 }
 
 section#screen {
-  background: #eee;
+  position: relative;
   border: 5px solid #222;
-  height: 480px;
+  max-height: 960px;
+  height: auto;
   margin: 0 auto;
   text-align: center;
-  width: 640px;
+  width: 90%;
   box-shadow: 4px 4px 12px #111;
+  overflow: hidden;
 }
 section#screen svg {
   display: block;
+  fill: #000;
 }
-section#screen svg#docking {
-  fill: #f00;
+section#screen div.messageScreen {
+  font-size: 3vw;
+  width: 100%;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
 }
+
 section#svgControls {
+  display: none;
   margin: 16px auto 0;
   width: 100%;
 }
 section#svgControls a {
+  background: #fff;
   display: inline-block;
+  height: 36px;
   margin: 0;
   width: 48px;
+}
+section#svgControls a:hover {
+  background: #ddd;
+}
+section#svgControls a.selected {
+  background: #ddd;
 }
 section#svgControls svg {
   background: #fff;
@@ -56,36 +84,45 @@ section#svgControls svg {
   width: 100%;
 }
 section#svgControls svg:hover {
-  color: #ddd;
+  background: #333;
+  fill: #fff;
 }
 
 div.player {
   clear: both;
   float: none;
   margin: 0 auto;
-  width: 400px;
+  width: 80%;
 }
 div.player .controls {
   background: #333;
   padding: 8px;
 }
 div.player .button {
-  color: white;
-  width: 20px;
-  margin: 3px 0 0 0;
-  font-size: 16px;
-  text-align: center;
-  display: inline-block;
-  cursor: pointer;
   background: transparent;
   border: none;
+  color: #3dcc5f;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 6vw;
+  margin: 3px 0 0 0;
   outline: none;
+  text-align: center;
+  width: 100%;
+}
+div.player .button:hover {
+  color: #53dd73;
+}
+div.player .button:disabled {
+  color: #555;
+  cursor: auto;
 }
 div.player .track {
+  background: #000;
   position: relative;
-  width: 236px;
+  width: 80%;
   margin: 7px 0 0 16px;
-  height: 10px;
+  height: 20px;
   border: 1px solid #666;
   display: inline-block;
   vertical-align: top;
@@ -98,19 +135,25 @@ div.player .progress {
 }
 div.player .scrubber {
   position: absolute;
-  width: 18px;
-  height: 18px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  margin: -4px 0 0 -9px;
+  margin: -5px 0 0 -9px;
   background: #f00;
   border: solid 3px #ddd;
   cursor: pointer;
   box-shadow: 0 0 5px #000, inset 0 0 4px #400;
 }
+div.player .scrubber.disabled {
+  background: #555;
+  border: solid 3px #444;
+  box-shadow: none;
+  cursor: auto;
+}
 div.player .rngVolume {
-  margin: 5px 8px;
+  margin: 10px 8px;
   padding: 0;
-  width: 90px;
+  width: 80%;
 }
 div.player .lblVolume {
   background: #555;
@@ -120,7 +163,7 @@ div.player .lblVolume {
   position: relative;
   top: -3px;
 }
-div.player .message {
+div.player .messageDebug {
   clear: left;
   height: 20px;
   text-align: center;
