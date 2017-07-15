@@ -60,10 +60,10 @@ if (typeof CLT !== 'undefined') {
   CLT.svgRemoveAnimation = function() {
     CLT.screen.removeClass();
   }
-  CLT.svgAddAnimation = function(song) {
-    if (!RegExp('animated-' + song).test(CLT.screen.classList())) {
+  CLT.svgAddAnimation = function(animationId) {
+    if (!RegExp('animated-' + animationId).test(CLT.screen.classList())) {
       CLT.svgRemoveAnimation();
-      CLT.screen.addClass('animated-' + song);
+      CLT.screen.addClass('animated-' + animationId);
     }
   }
   // STUB: skip ahead to timecode for song

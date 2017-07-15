@@ -38,6 +38,13 @@ $(function() {
     this.fetch();
   }
 
+  SoundPlayer.prototype.messageDebugUpdate = function( msg ) {
+    this.messageDebug.innerHTML = msg;
+  }
+  SoundPlayer.prototype.messageScreenUpdate = function( msg ) {
+    this.messageScreen.innerHTML = msg;
+  }
+
   SoundPlayer.prototype.bindEvents = function() {
     this.button.addEventListener('click', this.toggle.bind(this));
     this.buttonElem.prop('disabled', true);
@@ -47,14 +54,6 @@ $(function() {
     window.addEventListener('mousemove', this.onDrag.bind(this));
     window.addEventListener('mouseup', this.onMouseUp.bind(this));
   };
-
-  SoundPlayer.prototype.messageDebugUpdate = function( msg ) {
-    this.messageDebug.innerHTML = msg;
-  }
-  SoundPlayer.prototype.messageScreenUpdate = function( msg ) {
-    this.messageScreen.innerHTML = msg;
-  }
-
   SoundPlayer.prototype.fetch = function() {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', this.url, true);
@@ -80,7 +79,6 @@ $(function() {
     }
     xhr.send();
   };
-
   SoundPlayer.prototype.decode = function( arrayBuffer ) {
     this.ac.decodeAudioData(arrayBuffer, function( audioBuffer ) {
       this.buffer = audioBuffer;
@@ -93,7 +91,6 @@ $(function() {
       CLT.startTVNoise();
     }.bind(this));
   };
-
   SoundPlayer.prototype.connect = function() {
     if ( this.playing ) {
       this.pause();
@@ -104,7 +101,6 @@ $(function() {
     this.source.connect(this.gainNode);
     this.gainNode.connect(this.ac.destination);
   };
-
   SoundPlayer.prototype.play = function( position ) {
     this.connect();
     this.position = typeof position === 'number' ? position : this.position || 0;
@@ -127,7 +123,6 @@ $(function() {
       soundPlayer.messageDebugUpdate(soundStatus);
     };
   };
-
   SoundPlayer.prototype.pause = function() {
     if ( this.source ) {
       this.source.stop(0);
@@ -139,7 +134,6 @@ $(function() {
       this.messageDebugUpdate(SOUND_STATUS_PAUSED);
     }
   };
-
   SoundPlayer.prototype.seek = function( time ) {
     if ( this.playing ) {
       this.progressStatus.innerText = this.progPercent() + '%';
@@ -150,7 +144,6 @@ $(function() {
       this.position = time;
     }
   };
-
   SoundPlayer.prototype.changeVolume = function( el ) {
     var volume = el.srcElement.value;
     var volumeMax = el.srcElement.max;
@@ -158,7 +151,6 @@ $(function() {
 
     this.gainNode.gain.value = fraction * fraction;
   };
-
   SoundPlayer.prototype.changeVolumeLabel = function( el ) {
     var rangeVolN = el.srcElement;
     var newVol = rangeVolN.value;
@@ -168,7 +160,6 @@ $(function() {
     }
     this.lblVolume.innerText = newVol;
   }
-
   SoundPlayer.prototype.positionUpdate = function() {
     this.position = this.playing ? this.ac.currentTime - this.startTime : this.position;
     if ( this.position >= this.buffer.duration ) {
@@ -177,7 +168,6 @@ $(function() {
     }
     return this.position;
   };
-
   SoundPlayer.prototype.toggle = function() {
     if ( !this.playing ) {
       this.play();
@@ -186,13 +176,11 @@ $(function() {
       this.pause();
     }
   };
-
   SoundPlayer.prototype.onMouseDown = function( e ) {
     this.dragging = true;
     this.startX = e.pageX;
     this.startLeft = parseInt(this.scrubber.style.left || 0, 10);
   };
-
   SoundPlayer.prototype.onDrag = function( e ) {
     var width, position;
     if ( !this.dragging ) {
@@ -203,7 +191,6 @@ $(function() {
     position = Math.max(Math.min(width, position), 0);
     this.scrubber.style.left = position + 'px';
   };
-
   SoundPlayer.prototype.onMouseUp = function() {
     var width, left, time;
     if ( this.dragging ) {
@@ -214,7 +201,6 @@ $(function() {
       this.dragging = false;
     }
   };
-
   SoundPlayer.prototype.draw = function() {
     var progress = ( this.positionUpdate() / this.buffer.duration ),
       width = this.track.offsetWidth;
@@ -233,93 +219,265 @@ $(function() {
     }
     requestAnimationFrame(this.draw.bind(this));
   };
-
   SoundPlayer.prototype.triggerScreenEvent = function(p) {
     switch (true) {
-      case p >= 0 && p < 0.56:
-        CLT.svgUpdateScreen('intro');
-        CLT.svgAddAnimation('intro');
+      case
+      p >= CLT.markers['logo']['start'] &&
+      p < CLT.markers['logo']['end']:
+        CLT.svgUpdateScreen('logo');
+        CLT.svgAddAnimation('logo');
         break;
-      // docking-intro
-      case p >= 0.56 && p < 1.73:
+
+      case
+      p >= CLT.markers['docking-intro']['start'] &&
+      p < CLT.markers['docking-intro']['end']:
         CLT.svgUpdateScreen('docking');
         CLT.svgAddAnimation('docking-intro');
         break;
-      // docking-main
-      case p >= 1.73 && p < 10.96:
-        CLT.svgUpdateScreen('docking');
-        CLT.svgAddAnimation('docking-main');
+      case
+      p >= CLT.markers['docking-riff1']['start'] &&
+      p < CLT.markers['docking-riff1']['end']:
+        CLT.svgAddAnimation('docking-riff1');
         break;
-      // docking-main
-      case p >= 10.96 && p < 12.08:
-        CLT.svgUpdateScreen('docking');
-        CLT.svgAddAnimation('docking-intro');
+      case
+      p >= CLT.markers['docking-verse']['start'] &&
+      p < CLT.markers['docking-verse']['end']:
+        CLT.svgAddAnimation('docking-verse');
         break;
-      // road
-      case p >= 12.08 && p < 17.15:
+      case
+      p >= CLT.markers['docking-riff2']['start'] &&
+      p < CLT.markers['docking-riff2']['end']:
+        CLT.svgAddAnimation('docking-riff2');
+        break;
+      case
+      p >= CLT.markers['docking-chorus']['start'] &&
+      p < CLT.markers['docking-chorus']['end']:
+        CLT.svgAddAnimation('docking-chorus');
+        break;
+      case
+      p >= CLT.markers['docking-outro']['start'] &&
+      p < CLT.markers['docking-outro']['end']:
+        CLT.svgAddAnimation('docking-outro');
+        break;
+
+      case
+      p >= CLT.markers['road-verse1']['start'] &&
+      p < CLT.markers['road-verse1']['end']:
         CLT.svgUpdateScreen('road');
-        CLT.svgAddAnimation('road');
+        CLT.svgAddAnimation('road-verse1');
         break;
-      // charlotte
-      case p >= 17.15 && p < 25.48:
+      case
+      p >= CLT.markers['road-chorus']['start'] &&
+      p < CLT.markers['road-chorus']['end']:
+        CLT.svgAddAnimation('road-chorus');
+        break;
+      case
+      p >= CLT.markers['road-verse2']['start'] &&
+      p < CLT.markers['road-verse2']['end']:
+        CLT.svgAddAnimation('road-verse2');
+        break;
+
+      case
+      p >= CLT.markers['charlotte-intro']['start'] &&
+      p < CLT.markers['charlotte-intro']['end']:
         CLT.svgUpdateScreen('charlotte');
-        CLT.svgAddAnimation('charlotte');
+        CLT.svgAddAnimation('charlotte-intro');
         break;
-      // wondering
-      case p >= 25.48 && p < 35.01:
+      case
+      p >= CLT.markers['charlotte-verse']['start'] &&
+      p < CLT.markers['charlotte-verse']['end']:
+        CLT.svgAddAnimation('charlotte-verse');
+        break;
+      case
+      p >= CLT.markers['charlotte-chorus']['start'] &&
+      p < CLT.markers['charlotte-chorus']['end']:
+        CLT.svgAddAnimation('charlotte-chorus');
+        break;
+
+      case
+      p >= CLT.markers['wondering-intro']['start'] &&
+      p < CLT.markers['wondering-intro']['end']:
         CLT.svgUpdateScreen('wondering');
-        CLT.svgAddAnimation('wondering');
+        CLT.svgAddAnimation('wondering-intro');
         break;
-      // ladder
-      case p >= 35.01 && p < 44.12:
+      case
+      p >= CLT.markers['wondering-prechorus']['start'] &&
+      p < CLT.markers['wondering-prechorus']['end']:
+        CLT.svgAddAnimation('wondering-prechorus');
+        break;
+      case
+      p >= CLT.markers['wondering-chorus']['start'] &&
+      p < CLT.markers['wondering-chorus']['end']:
+        CLT.svgAddAnimation('wondering-chorus');
+        break;
+
+      case
+      p >= CLT.markers['ladder-intro']['start'] &&
+      p < CLT.markers['ladder-intro']['end']:
         CLT.svgUpdateScreen('ladder');
-        CLT.svgAddAnimation('ladder');
+        CLT.svgAddAnimation('ladder-intro');
         break;
-      // fudge
-      case p >= 44.12 && p < 52.50:
+      case
+      p >= CLT.markers['ladder-riff1']['start'] &&
+      p < CLT.markers['ladder-riff1']['end']:
+        CLT.svgAddAnimation('ladder-riff1');
+        break;
+      case
+      p >= CLT.markers['ladder-riff1to2']['start'] &&
+      p < CLT.markers['ladder-riff1to2']['end']:
+        CLT.svgAddAnimation('ladder-riff1to2');
+        break;
+      case
+      p >= CLT.markers['ladder-riff2']['start'] &&
+      p < CLT.markers['ladder-riff2']['end']:
+        CLT.svgAddAnimation('ladder-riff2');
+        break;
+
+      case
+      p >= CLT.markers['fudge-intro']['start'] &&
+      p < CLT.markers['fudge-intro']['end']:
         CLT.svgUpdateScreen('fudge');
-        CLT.svgAddAnimation('fudge');
+        CLT.svgAddAnimation('fudge-intro');
         break;
-      // tattoo
-      case p >= 52.50 && p < 59.42:
+      case
+      p >= CLT.markers['fudge-prechorus']['start'] &&
+      p < CLT.markers['fudge-prechorus']['end']:
+        CLT.svgAddAnimation('fudge-prechorus');
+        break;
+      case
+      p >= CLT.markers['fudge-bridge']['start'] &&
+      p < CLT.markers['fudge-bridge']['end']:
+        CLT.svgAddAnimation('fudge-bridge');
+        break;
+      case
+      p >= CLT.markers['fudge-outro']['start'] &&
+      p < CLT.markers['fudge-outro']['end']:
+        CLT.svgAddAnimation('fudge-outro');
+        break;
+
+      case
+      p >= CLT.markers['tattoo-verse1']['start'] &&
+      p < CLT.markers['tattoo-verse1']['end']:
         CLT.svgUpdateScreen('tattoo');
-        CLT.svgAddAnimation('tattoo');
+        CLT.svgAddAnimation('tattoo-verse1');
         break;
-      // pinto
-      case p >= 59.42 && p < 70.31:
+      case
+      p >= CLT.markers['tattoo-chorus1']['start'] &&
+      p < CLT.markers['tattoo-chorus1']['end']:
+        CLT.svgAddAnimation('tattoo-chorus1');
+        break;
+      case
+      p >= CLT.markers['tattoo-verse2']['start'] &&
+      p < CLT.markers['tattoo-verse2']['end']:
+        CLT.svgAddAnimation('tattoo-verse2');
+        break;
+      case
+      p >= CLT.markers['tattoo-chorus2']['start'] &&
+      p < CLT.markers['tattoo-chorus2']['end']:
+        CLT.svgAddAnimation('tattoo-chorus2');
+        break;
+
+      case
+      p >= CLT.markers['pinto-intro']['start'] &&
+      p < CLT.markers['pinto-intro']['end']:
         CLT.svgUpdateScreen('pinto');
-        CLT.svgAddAnimation('pinto');
+        CLT.svgAddAnimation('pinto-intro');
         break;
-      // scenes
-      case p >= 70.31 && p < 77.57:
+      case
+      p >= CLT.markers['pinto-verse']['start'] &&
+      p < CLT.markers['pinto-verse']['end']:
+        CLT.svgAddAnimation('pinto-verse');
+        break;
+      case
+      p >= CLT.markers['pinto-chorus']['start'] &&
+      p < CLT.markers['pinto-chorus']['end']:
+        CLT.svgAddAnimation('pinto-chorus');
+        break;
+      case
+      p >= CLT.markers['pinto-solo']['start'] &&
+      p < CLT.markers['pinto-solo']['end']:
+        CLT.svgAddAnimation('pinto-solo');
+        break;
+
+      case
+      p >= CLT.markers['scenes-verse1']['start'] &&
+      p < CLT.markers['scenes-verse1']['end']:
         CLT.svgUpdateScreen('scenes');
-        CLT.svgAddAnimation('scenes');
+        CLT.svgAddAnimation('scenes-verse1');
         break;
-      // overjoyed
-      case p >= 77.57 && p < 86.71:
+      case
+      p >= CLT.markers['scenes-chorus']['start'] &&
+      p < CLT.markers['scenes-chorus']['end']:
+        CLT.svgAddAnimation('scenes-chorus');
+        break;
+      case
+      p >= CLT.markers['scenes-verse2']['start'] &&
+      p < CLT.markers['scenes-verse2']['end']:
+        CLT.svgAddAnimation('scenes-verse2');
+        break;
+
+      case
+      p >= CLT.markers['overjoyed-intro']['start'] &&
+      p < CLT.markers['overjoyed-intro']['end']:
         CLT.svgUpdateScreen('overjoyed');
-        CLT.svgAddAnimation('overjoyed');
+        CLT.svgAddAnimation('overjoyed-intro');
         break;
-      // beyond
-      case p>= 86.71 && p < 100.00:
+      case
+      p >= CLT.markers['overjoyed-verse']['start'] &&
+      p < CLT.markers['overjoyed-verse']['end']:
+        CLT.svgAddAnimation('overjoyed-verse');
+        break;
+      case
+      p >= CLT.markers['overjoyed-chorus']['start'] &&
+      p < CLT.markers['overjoyed-chorus']['end']:
+        CLT.svgAddAnimation('overjoyed-chorus');
+        break;
+      case
+      p >= CLT.markers['overjoyed-outro']['start'] &&
+      p < CLT.markers['overjoyed-outro']['end']:
+        CLT.svgAddAnimation('overjoyed-outro');
+        break;
+
+      case
+      p >= CLT.markers['beyond-verse']['start'] &&
+      p < CLT.markers['beyond-verse']['end']:
         CLT.svgUpdateScreen('beyond');
-        CLT.svgAddAnimation('beyond');
+        CLT.svgAddAnimation('beyond-verse');
         break;
+      case
+      p >= CLT.markers['beyond-riff']['start'] &&
+      p < CLT.markers['beyond-riff']['end']:
+        CLT.svgAddAnimation('beyond-riff');
+        break;
+      case
+      p >= CLT.markers['beyond-prechorus']['start'] &&
+      p < CLT.markers['beyond-prechorus']['end']:
+        CLT.svgAddAnimation('beyond-prechorus');
+        break;
+      case
+      p >= CLT.markers['beyond-chorus']['start'] &&
+      p < CLT.markers['beyond-chorus']['end']:
+        CLT.svgAddAnimation('beyond-chorus');
+        break;
+      case
+      p >= CLT.markers['beyond-outro']['start'] &&
+      p < CLT.markers['beyond-outro']['end']:
+        CLT.svgAddAnimation('beyond-outro');
+        break;
+
       // end
       case p >= 100.00:
-        CLT.svgUpdateScreen('intro');
+        CLT.svgUpdateScreen('logo');
         CLT.svgRemoveAnimation();
         this.position = 0;
         break;
     }
   }
-
   SoundPlayer.prototype.progPercent = function() {
     var progress = ( this.positionUpdate() / this.buffer.duration );
     var progress_rounded = round(progress * 100, 2);
     return progress_rounded;
   };
-
   function round(value, decimals) {
     return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
   }

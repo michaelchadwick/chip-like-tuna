@@ -70,6 +70,7 @@
   <script>
     SystemJS.import('/assets/js/vendor/jquery.min.js')
       .then(bootstrap => SystemJS.import('/assets/js/bootstrap.js'))
+      .then(markers => SystemJS.import('/assets/js/markers.js'))
       .then(svg => SystemJS.import('/assets/js/svg.js'))
       .then(noise => SystemJS.import('/assets/js/noise.js'))
       .then(main => SystemJS.import('/assets/js/main.js'));

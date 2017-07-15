@@ -1,148 +1,442 @@
+/* animation styles and keyframes */
 section#screen {
   background-color: #000;
   transition: background-color 2s ease;
 }
-section#screen.animated-intro {
-  background-color: #fff;
+section#screen.animated-logo { background-color: #fff; }
+section#screen.animated-logo svg {
+  animation: logo 6s ease-out 0s normal 1 none running;
 }
-section#screen.animated-intro svg {
-  animation: intro 6s ease-out 0s normal 1 none running;
-}
-section#screen.animated-docking-intro {
-  background-color: #92BBC0;
-}
-section#screen.animated-docking-intro svg {
-  animation: docking-intro 0.4839s ease-out -0.2419s normal infinite none running;
-}
-section#screen.animated-docking-main {
-  background-color: #9222C0;
-}
-section#screen.animated-docking-main svg {
-  animation: docking-main 0.9678s ease-out -0.4839s normal infinite none running;
-}
-section#screen.animated-road {
-  background-color: #a68c3d;
-}
-section#screen.animated-road svg {
-  animation: road 0.4139s ease-out -0.2069s normal infinite none running;
-}
-section#screen.animated-charlotte {
-  background-color: #cf3d3d;
-}
-section#screen.animated-charlotte svg {
-  animation: charlotte 0.6622s ease-out -0.3311s normal infinite none running;
-}
-section#screen.animated-wondering {
-  background-color: #3f40d9;
-}
-section#screen.animated-wondering svg {
-  animation: wondering 0.6622s ease-out -0.3311s normal infinite none running;
-}
-section#screen.animated-ladder {
-  background-color: #1a233c;
-}
-section#screen.animated-ladder svg {
-  animation: ladder 0.8217s ease-out -0.4108s normal infinite none running;
-}
-section#screen.animated-fudge {
-  background-color: #3e320e;
-}
-section#screen.animated-fudge svg {
-  animation: fudge 0.5052s ease-out -0.2526s normal infinite none running;
-}
-section#screen.animated-tattoo {
-  background-color: #ac9a4d;
-}
-section#screen.animated-tattoo svg {
-  animation: tattoo 0.4858s ease-out -0.2429s normal infinite none running;
-}
-section#screen.animated-pinto {
-  background-color: #0c3c1c;
-}
-section#screen.animated-pinto svg {
-  animation: pinto 0.3539s ease-out -0.1769s normal infinite none running;
-}
-section#screen.animated-scenes {
-  background-color: #a1540e;
-}
-section#screen.animated-scenes svg {
-  animation: scenes 0.9017s ease-out -0.4508s normal infinite none running;
-}
-section#screen.animated-overjoyed {
-  background-color: #933884;
-}
-section#screen.animated-overjoyed svg {
-  animation: overjoyed 0.6316s ease-out -0.3158s normal infinite none running;
-}
-section#screen.animated-beyond {
-  background-color: #314bb6;
-}
-section#screen.animated-beyond svg {
-  animation: beyond 0.5255s ease-out -0.2627s normal infinite none running;
-}
-
-@keyframes intro {
+@keyframes logo {
   0% { fill: #fff; transform: scale(.9); transform: scale(.01) translateY(0px);}
   100% { fill: #000; transform: scale(.9); transform: scale(3) translateY(0px); }
+}
+
+/******* DOCKING *******/
+
+section#screen.animated-docking-intro { background-color: #92BBC0; }
+section#screen.animated-docking-intro svg {
+  animation: docking-intro 0.4839s ease-out -0.2419s normal infinite none running;
 }
 @keyframes docking-intro {
   0% { fill: #92FFC0; transform: scale(.9); }
   50% { fill: #000; transform: scale(1); }
   100% { fill: #92FFC0; transform: scale(.9); }
 }
-@keyframes docking-main {
+section#screen.animated-docking-riff1 { background-color: #9222C0; }
+section#screen.animated-docking-riff1 svg {
+  animation: docking-riff1 0.9678s ease-out -0.4839s normal infinite none running;
+}
+@keyframes docking-riff1 {
   0% { fill: #000; transform: scale(1) rotateZ(-20deg); }
   25% { fill: #92FFC0; transform: scale(.7) rotateZ(0deg); }
   50% { fill: #000; transform: scale(1) rotateZ(20deg); }
   75% { fill: #92FFC0; transform: scale(.7) rotateZ(0deg); }
   100% { fill: #000; transform: scale(1) rotateZ(-20deg); }
 }
-@keyframes road {
+section#screen.animated-docking-verse { background-color: #9222C0; }
+section#screen.animated-docking-verse svg {
+  animation: docking-verse 0.9678s ease-out -0.4839s normal infinite none running;
+}
+@keyframes docking-verse {
+  0% { fill: #000; transform: scale(1) rotateZ(-20deg); }
+  25% { fill: #92FFC0; transform: scale(.7) rotateZ(0deg); }
+  50% { fill: #000; transform: scale(1) rotateZ(20deg); }
+  75% { fill: #92FFC0; transform: scale(.7) rotateZ(0deg); }
+  100% { fill: #000; transform: scale(1) rotateZ(-20deg); }
+}
+section#screen.animated-docking-riff2 { background-color: #9222C0; }
+section#screen.animated-docking-riff2 svg {
+  animation: docking-riff2 0.9678s ease-out -0.4839s normal infinite none running;
+}
+@keyframes docking-riff2 {
+  0% { fill: #000; transform: scale(1) rotateZ(-20deg); }
+  25% { fill: #92FFC0; transform: scale(.7) rotateZ(0deg); }
+  50% { fill: #000; transform: scale(1) rotateZ(20deg); }
+  75% { fill: #92FFC0; transform: scale(.7) rotateZ(0deg); }
+  100% { fill: #000; transform: scale(1) rotateZ(-20deg); }
+}
+section#screen.animated-docking-chorus { background-color: #9222C0; }
+section#screen.animated-docking-chorus svg {
+  animation: docking-chorus 0.9678s ease-out -0.4839s normal infinite none running;
+}
+@keyframes docking-chorus {
+  0% { fill: #000; transform: scale(1) rotateZ(-20deg); }
+  25% { fill: #92FFC0; transform: scale(.7) rotateZ(0deg); }
+  50% { fill: #000; transform: scale(1) rotateZ(20deg); }
+  75% { fill: #92FFC0; transform: scale(.7) rotateZ(0deg); }
+  100% { fill: #000; transform: scale(1) rotateZ(-20deg); }
+}
+section#screen.animated-docking-outro { background-color: #9222C0; }
+section#screen.animated-docking-outro svg {
+  animation: docking-outro 0.9678s ease-out -0.4839s normal infinite none running;
+}
+@keyframes docking-outro {
+  0% { fill: #000; transform: scale(1) rotateZ(-20deg); }
+  25% { fill: #92FFC0; transform: scale(.7) rotateZ(0deg); }
+  50% { fill: #000; transform: scale(1) rotateZ(20deg); }
+  75% { fill: #92FFC0; transform: scale(.7) rotateZ(0deg); }
+  100% { fill: #000; transform: scale(1) rotateZ(-20deg); }
+}
+
+/******* ROAD *******/
+
+section#screen.animated-road-verse1 { background-color: #a68c3d; }
+section#screen.animated-road-verse1 svg {
+  animation: road-verse1 0.4139s ease-out -0.2069s normal infinite none running;
+}
+@keyframes road-verse1 {
   0% { fill: #130CB7; transform: scale(.9); }
   50% { fill: #000; transform: scale(1); }
   100% { fill: #130CB7; transform: scale(.9); }
 }
-@keyframes charlotte {
-  0% { fill: #f127b9; transform: scale(.9); }
-  50% { fill: #000; transform: scale(1); }
-  100% { fill: #f127b9; transform: scale(.9); }
+section#screen.animated-road-chorus { background-color: #a68c3d; }
+section#screen.animated-road-chorus svg {
+  animation: road-chorus 0.4139s ease-out -0.2069s normal infinite none running;
 }
-@keyframes wondering {
+@keyframes road-chorus {
+  0% { fill: #130CB7; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #130CB7; transform: scale(.9); }
+}
+section#screen.animated-road-verse2 { background-color: #a68c3d; }
+section#screen.animated-road-verse2 svg {
+  animation: road-verse2 0.4139s ease-out -0.2069s normal infinite none running;
+}
+@keyframes road-verse2 {
+  0% { fill: #130CB7; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #130CB7; transform: scale(.9); }
+}
+
+/******* CHARLOTTE *******/
+
+section#screen.animated-charlotte-intro { background-color: #cf3d3d; }
+section#screen.animated-charlotte-intro svg {
+  animation: charlotte-intro 0.6622s ease-out -0.3311s normal infinite none running;
+}
+@keyframes charlotte-intro {
+  0% { fill: #7127b9; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #7127b9; transform: scale(.9); }
+}
+section#screen.animated-charlotte-verse { background-color: #cf3d3d; }
+section#screen.animated-charlotte-verse svg {
+  animation: charlotte-verse 0.6622s ease-out -0.3311s normal infinite none running;
+}
+@keyframes charlotte-verse {
+  0% { fill: #7127b9; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #7127b9; transform: scale(.9); }
+}
+section#screen.animated-charlotte-chorus { background-color: #cf3d3d; }
+section#screen.animated-charlotte-chorus svg {
+  animation: charlotte-chorus 0.6622s ease-out -0.3311s normal infinite none running;
+}
+@keyframes charlotte-chorus {
+  0% { fill: #7127b9; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #7127b9; transform: scale(.9); }
+}
+
+/******* WONDERING *******/
+
+section#screen.animated-wondering-intro { background-color: #3f40d9; }
+section#screen.animated-wondering-intro svg {
+  animation: wondering-intro 0.6622s ease-out -0.3311s normal infinite none running;
+}
+@keyframes wondering-intro {
   0% { fill: #FDEB71; transform: scale(.9); }
   50% { fill: #000; transform: scale(1); }
   100% { fill: #FDEB71; transform: scale(.9); }
 }
-@keyframes ladder {
+section#screen.animated-wondering-prechorus { background-color: #3f40d9; }
+section#screen.animated-wondering-prechorus svg {
+  animation: wondering-prechorus 0.6622s ease-out -0.3311s normal infinite none running;
+}
+@keyframes wondering-prechorus {
+  0% { fill: #FDEB71; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #FDEB71; transform: scale(.9); }
+}
+section#screen.animated-wondering-chorus { background-color: #3f40d9; }
+section#screen.animated-wondering-chorus svg {
+  animation: wondering-chorus 0.6622s ease-out -0.3311s normal infinite none running;
+}
+@keyframes wondering-chorus {
+  0% { fill: #FDEB71; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #FDEB71; transform: scale(.9); }
+}
+
+/******* LADDER *******/
+
+section#screen.animated-ladder-intro { background-color: #1a233c; }
+section#screen.animated-ladder-intro svg {
+  animation: ladder-intro 0.8217s ease-out -0.4108s normal infinite none running;
+}
+@keyframes ladder-intro {
   0% { fill: #0396FF; transform: scale(.9); }
   50% { fill: #000; transform: scale(1); }
   100% { fill: #0396FF; transform: scale(.9); }
 }
-@keyframes fudge {
+section#screen.animated-ladder-riff1 { background-color: #1a233c; }
+section#screen.animated-ladder-riff1 svg {
+  animation: ladder-riff1 0.8217s ease-out -0.4108s normal infinite none running;
+}
+@keyframes ladder-riff1 {
+  0% { fill: #0396FF; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #0396FF; transform: scale(.9); }
+}
+section#screen.animated-ladder-riff1to2 { background-color: #1a233c; }
+section#screen.animated-ladder-riff1to2 svg {
+  animation: ladder-riff1to2 0.8217s ease-out -0.4108s normal infinite none running;
+}
+@keyframes ladder-riff1to2 {
+  0% { fill: #0396FF; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #0396FF; transform: scale(.9); }
+}
+section#screen.animated-ladder-riff2 { background-color: #1a233c; }
+section#screen.animated-ladder-riff2 svg {
+  animation: ladder-riff2 0.8217s ease-out -0.4108s normal infinite none running;
+}
+@keyframes ladder-riff2 {
+  0% { fill: #0396FF; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #0396FF; transform: scale(.9); }
+}
+
+/******* FUDGE *******/
+
+section#screen.animated-fudge-intro { background-color: #3e320e; }
+section#screen.animated-fudge-intro svg {
+  animation: fudge-intro 0.5052s ease-out -0.2526s normal infinite none running;
+}
+@keyframes fudge-intro {
   0% { fill: #7367F0; transform: scale(.9); }
   50% { fill: #000; transform: scale(1); }
   100% { fill: #7367F0; transform: scale(.9); }
 }
-@keyframes tattoo {
-  0% { fill: #9F44D3; transform: scale(.9); }
-  50% { fill: #000; transform: scale(1); }
-  100% { fill: #9F44D3; transform: scale(.9); }
+section#screen.animated-fudge-prechorus { background-color: #3e320e; }
+section#screen.animated-fudge-prechorus svg {
+  animation: fudge-prechorus 0.5052s ease-out -0.2526s normal infinite none running;
 }
-@keyframes pinto {
+@keyframes fudge-prechorus {
+  0% { fill: #7367F0; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #7367F0; transform: scale(.9); }
+}
+section#screen.animated-fudge-bridge { background-color: #3e320e; }
+section#screen.animated-fudge-bridge svg {
+  animation: fudge-bridge 0.5052s ease-out -0.2526s normal infinite none running;
+}
+@keyframes fudge-bridge {
+  0% { fill: #7367F0; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #7367F0; transform: scale(.9); }
+}
+section#screen.animated-fudge-outro { background-color: #3e320e; }
+section#screen.animated-fudge-outro svg {
+  animation: fudge-outro 0.5052s ease-out -0.2526s normal infinite none running;
+}
+@keyframes fudge-outro {
+  0% { fill: #7367F0; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #7367F0; transform: scale(.9); }
+}
+
+/******* TATTOO *******/
+
+section#screen.animated-tattoo-verse1 { background-color: #ac9a4d; }
+section#screen.animated-tattoo-verse1 svg {
+  animation: tattoo-verse1 0.4858s ease-out -0.2429s normal infinite none running;
+}
+@keyframes tattoo-verse1 {
+  0% { fill: #EF44D3; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #EF44D3; transform: scale(.9); }
+}
+section#screen.animated-tattoo-chorus1 { background-color: #ac9a4d; }
+section#screen.animated-tattoo-chorus1 svg {
+  animation: tattoo-chorus1 0.4858s ease-out -0.2429s normal infinite none running;
+}
+@keyframes tattoo-chorus1 {
+  0% { fill: #EF44D3; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #EF44D3; transform: scale(.9); }
+}
+section#screen.animated-tattoo-verse2 { background-color: #ac9a4d; }
+section#screen.animated-tattoo-verse2 svg {
+  animation: tattoo-verse2 0.4858s ease-out -0.2429s normal infinite none running;
+}
+@keyframes tattoo-verse2 {
+  0% { fill: #EF44D3; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #EF44D3; transform: scale(.9); }
+}
+section#screen.animated-tattoo-chorus2 { background-color: #ac9a4d; }
+section#screen.animated-tattoo-chorus2 svg {
+  animation: tattoo-chorus2 0.4858s ease-out -0.2429s normal infinite none running;
+}
+@keyframes tattoo-chorus2 {
+  0% { fill: #EF44D3; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #EF44D3; transform: scale(.9); }
+}
+
+/******* PINTO *******/
+
+section#screen.animated-pinto-intro { background-color: #0c3c1c; }
+section#screen.animated-pinto-intro svg {
+  animation: pinto-intro 0.3539s ease-out -0.1769s normal infinite none running;
+}
+@keyframes pinto-intro {
   0% { fill: #E96D71; transform: scale(.9); }
   50% { fill: #000; transform: scale(1); }
   100% { fill: #E96D71; transform: scale(.9); }
 }
-@keyframes scenes {
+section#screen.animated-pinto-verse { background-color: #0c3c1c; }
+section#screen.animated-pinto-verse svg {
+  animation: pinto-verse 0.7078s ease-out -0.3538s normal infinite none running;
+}
+@keyframes pinto-verse {
+  0% { fill: #E96D71; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #E96D71; transform: scale(.9); }
+}
+section#screen.animated-pinto-chorus { background-color: #0c3c1c; }
+section#screen.animated-pinto-chorus svg {
+  animation: pinto-chorus 0.3539s ease-out -0.1769s normal infinite none running;
+}
+@keyframes pinto-chorus {
+  0% { fill: #E96D71; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #E96D71; transform: scale(.9); }
+}
+section#screen.animated-pinto-solo { background-color: #0c3c1c; }
+section#screen.animated-pinto-solo svg {
+  animation: pinto-solo 0.3539s ease-out -0.1769s normal infinite none running;
+}
+@keyframes pinto-solo {
+  0% { fill: #E96D71; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #E96D71; transform: scale(.9); }
+}
+
+/******* SCENES *******/
+
+section#screen.animated-scenes-verse1 { background-color: #a1540e; }
+section#screen.animated-scenes-verse1 svg {
+  animation: scenes-verse1 0.9017s ease-out -0.4508s normal infinite none running;
+}
+@keyframes scenes-verse1 {
   0% { fill: #28C76F; transform: scale(.9); }
   50% { fill: #000; transform: scale(1); }
   100% { fill: #28C76F; transform: scale(.9); }
 }
-@keyframes overjoyed {
+section#screen.animated-scenes-chorus { background-color: #a1540e; }
+section#screen.animated-scenes-chorus svg {
+  animation: scenes-chorus 0.4509s ease-out -0.2204s normal infinite none running;
+}
+@keyframes scenes-chorus {
+  0% { fill: #28C76F; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #28C76F; transform: scale(.9); }
+}
+section#screen.animated-scenes-verse2 { background-color: #a1540e; }
+section#screen.animated-scenes-verse2 svg {
+  animation: scenes-verse2 0.9017s ease-out -0.4508s normal infinite none running;
+}
+@keyframes scenes-verse2 {
+  0% { fill: #28C76F; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #28C76F; transform: scale(.9); }
+}
+
+/******* OVERJOYED *******/
+
+section#screen.animated-overjoyed-intro { background-color: #933884; }
+section#screen.animated-overjoyed-intro svg {
+  animation: overjoyed-intro 0.6316s ease-out -0.3158s normal infinite none running;
+}
+@keyframes overjoyed-intro {
   0% { fill: #ff7000; transform: scale(.9); }
   50% { fill: #000; transform: scale(1); }
   100% { fill: #ff7000; transform: scale(.9); }
 }
-@keyframes beyond {
+section#screen.animated-overjoyed-verse { background-color: #933884; }
+section#screen.animated-overjoyed-verse svg {
+  animation: overjoyed-verse 0.6316s ease-out -0.3158s normal infinite none running;
+}
+@keyframes overjoyed-verse {
+  0% { fill: #ff7000; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #ff7000; transform: scale(.9); }
+}
+section#screen.animated-overjoyed-chorus { background-color: #933884; }
+section#screen.animated-overjoyed-chorus svg {
+  animation: overjoyed-chorus 0.6316s ease-out -0.3158s normal infinite none running;
+}
+@keyframes overjoyed-chorus {
+  0% { fill: #ff7000; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #ff7000; transform: scale(.9); }
+}
+section#screen.animated-overjoyed-outro { background-color: #933884; }
+section#screen.animated-overjoyed-outro svg {
+  animation: overjoyed-outro 0.6316s ease-out -0.3158s normal infinite none running;
+}
+@keyframes overjoyed-outro {
+  0% { fill: #ff7000; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #ff7000; transform: scale(.9); }
+}
+
+/******* BEYOND *******/
+
+section#screen.animated-beyond-verse { background-color: #314bb6; }
+section#screen.animated-beyond-verse svg {
+  animation: beyond-verse 0.5255s ease-out -0.2627s normal infinite none running;
+}
+@keyframes beyond-verse {
+  0% { fill: #be2626; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #be2626; transform: scale(.9); }
+}
+section#screen.animated-beyond-riff { background-color: #314bb6; }
+section#screen.animated-beyond-riff svg {
+  animation: beyond-riff 0.5255s ease-out -0.2627s normal infinite none running;
+}
+@keyframes beyond-riff {
+  0% { fill: #be2626; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #be2626; transform: scale(.9); }
+}
+section#screen.animated-beyond-prechorus { background-color: #314bb6; }
+section#screen.animated-beyond-prechorus svg {
+  animation: beyond-prechorus 0.5255s ease-out -0.2627s normal infinite none running;
+}
+@keyframes beyond-prechorus {
+  0% { fill: #be2626; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #be2626; transform: scale(.9); }
+}
+section#screen.animated-beyond-chorus { background-color: #314bb6; }
+section#screen.animated-beyond-chorus svg {
+  animation: beyond-chorus 0.5255s ease-out -0.2627s normal infinite none running;
+}
+@keyframes beyond-chorus {
+  0% { fill: #be2626; transform: scale(.9); }
+  50% { fill: #000; transform: scale(1); }
+  100% { fill: #be2626; transform: scale(.9); }
+}
+section#screen.animated-beyond-outro { background-color: #314bb6; }
+section#screen.animated-beyond-outro svg {
+  animation: beyond-outro 0.5255s ease-out -0.2627s normal infinite none running;
+}
+@keyframes beyond-outro {
   0% { fill: #be2626; transform: scale(.9); }
   50% { fill: #000; transform: scale(1); }
   100% { fill: #be2626; transform: scale(.9); }

@@ -1,6 +1,6 @@
-<?php
+  <?php
   $images = array(
-    'intro'     => '../assets/flv-scenes/svg/00-intro.svg',
+    'logo'      => '../assets/flv-scenes/svg/00-logo.svg',
     'docking'   => '../assets/flv-scenes/svg/01-docking.svg',
     'road'      => '../assets/flv-scenes/svg/02-road.svg',
     'charlotte' => '../assets/flv-scenes/svg/03-charlotte.svg',
@@ -16,7 +16,7 @@
 
   if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
     $svgID = $_GET['id'];
-  
+
     echo file_get_contents($images[$svgID]);
   }
 ?>
