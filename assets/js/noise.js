@@ -28,11 +28,9 @@ CLT.generateTVNoise = function(opacity, density) {
       ctx.fillRect(x, y, 1, 1);
     }
   }
-
-  $('section#screen').css(
+  CLT.screen.css(
     'background', 'url(' + canvas.toDataURL('image/png') + ') center center repeat #' + '888'
   );
-
   if (typeof applyTVNoise == 'function') {
     applyTVNoise();
   }
@@ -58,15 +56,15 @@ CLT.bringInDaTVNoise = function() {
 }
 
 CLT.startTVNoise = function() {
-  CLT.tvNoiseCycleId = setInterval(CLT.bringInDaTVNoise, 80);
+  CLT.tvNoiseCycleId = setInterval(CLT.bringInDaTVNoise, 140);
   noise.src = NOISE_FILE_PATH;
   noise.autoplay = true;
   noise.controls = false;
   noise.loop = true;
   noise.volume = 0.1;
-  noise.addEventListener('timeupdate', function(){
-    var buffer = 0.5;
-    if(this.currentTime > this.duration - buffer){
+  noise.addEventListener('timeupdate', function() {
+    var buffer = 0.35;
+    if(this.currentTime > this.duration - buffer) {
       this.currentTime = 0;
       this.play();
     }}, false);
