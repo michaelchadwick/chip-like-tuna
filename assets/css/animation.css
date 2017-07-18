@@ -1,7 +1,7 @@
 /* animation styles and keyframes */
 section#screen {
   background-color: #000;
-  transition: background-color 2s ease;
+  transition: background-color 1.25s ease;
 }
 section#screen.animated-logo { background-color: #fff; }
 section#screen.animated-logo svg {
@@ -9,19 +9,19 @@ section#screen.animated-logo svg {
 }
 @keyframes logo {
   0% { fill: #fff; transform: scale(.9); transform: scale(.01) translateY(0px);}
-  100% { fill: #000; transform: scale(.9); transform: scale(3) translateY(0px); }
+  100% { fill: #000; transform: scale(.9); transform: scale(5) translateY(0px);}
 }
 
 /******* DOCKING *******/
 
-section#screen.animated-docking-intro { background-color: #92BBC0; }
+section#screen.animated-docking-intro { background-color: #9222C0; }
 section#screen.animated-docking-intro svg {
-  animation: docking-intro 0.4839s ease-out -0.2419s normal infinite none running;
+  animation: docking-intro 10s ease-out -0.2419s normal infinite none running;
 }
 @keyframes docking-intro {
-  0% { fill: #92FFC0; transform: scale(.9); }
-  50% { fill: #000; transform: scale(1); }
-  100% { fill: #92FFC0; transform: scale(.9); }
+  0%, 100% { transform: translate(-1000px, 0) rotateZ(0deg); opacity: 0 }
+  70% { fill: #92FFC0; transform: translate(0, 0); opacity: 1 }
+  90% { fill: #928FC0; transform: translate(2000px, -1000px) rotateZ(-70deg); }
 }
 section#screen.animated-docking-riff1 { background-color: #9222C0; }
 section#screen.animated-docking-riff1 svg {
@@ -36,54 +36,52 @@ section#screen.animated-docking-riff1 svg {
 }
 section#screen.animated-docking-verse { background-color: #9222C0; }
 section#screen.animated-docking-verse svg {
-  animation: docking-verse 0.9678s ease-out -0.4839s normal infinite none running;
+  animation: docking-verse 1.9356s ease-out -0.4839s normal infinite none running;
 }
 @keyframes docking-verse {
-  0% { fill: #000; transform: scale(1) rotateZ(-20deg); }
+  0% { fill: #000; transform: scale(1.5) rotateZ(-20deg); }
   25% { fill: #92FFC0; transform: scale(.7) rotateZ(0deg); }
-  50% { fill: #000; transform: scale(1) rotateZ(20deg); }
-  75% { fill: #92FFC0; transform: scale(.7) rotateZ(0deg); }
-  100% { fill: #000; transform: scale(1) rotateZ(-20deg); }
+  50% { fill: #000; transform: scale(1.5) rotateZ(20deg); }
+  66% { fill: #92FFC0; transform: scale(.7) rotateZ(0deg); }
+  77% { fill: #000; transform: scale(.7) rotateZ(-20deg); }
+  88% { fill: #92FFC0; transform: scale(.7) rotateZ(0deg); }
+  100% { fill: #000; transform: scale(1.5) rotateZ(-20deg); }
 }
 section#screen.animated-docking-riff2 { background-color: #9222C0; }
 section#screen.animated-docking-riff2 svg {
-  animation: docking-riff2 0.9678s ease-out -0.4839s normal infinite none running;
+  animation: docking-riff2 2s ease-out -0.4839s normal infinite none running;
 }
 @keyframes docking-riff2 {
-  0% { fill: #000; transform: scale(1) rotateZ(-20deg); }
-  25% { fill: #92FFC0; transform: scale(.7) rotateZ(0deg); }
-  50% { fill: #000; transform: scale(1) rotateZ(20deg); }
-  75% { fill: #92FFC0; transform: scale(.7) rotateZ(0deg); }
-  100% { fill: #000; transform: scale(1) rotateZ(-20deg); }
+  0% { fill: #000; transform: scale(1) rotateZ(0deg); }
+  25% { fill: #92FFC0; transform: scale(.7) rotateZ(90deg); }
+  50% { fill: #000; transform: scale(1) rotateZ(180deg); }
+  75% { fill: #92FFC0; transform: scale(.7) rotateZ(270deg); }
+  100% { fill: #000; transform: scale(1) rotateZ(360deg); }
 }
 section#screen.animated-docking-chorus { background-color: #9222C0; }
 section#screen.animated-docking-chorus svg {
-  animation: docking-chorus 0.9678s ease-out -0.4839s normal infinite none running;
+  animation: docking-chorus 4s ease-out -0.4839s normal infinite none running;
 }
 @keyframes docking-chorus {
-  0% { fill: #000; transform: scale(1) rotateZ(-20deg); }
-  25% { fill: #92FFC0; transform: scale(.7) rotateZ(0deg); }
-  50% { fill: #000; transform: scale(1) rotateZ(20deg); }
-  75% { fill: #92FFC0; transform: scale(.7) rotateZ(0deg); }
-  100% { fill: #000; transform: scale(1) rotateZ(-20deg); }
+  0%, 100% { fill: #92FFC0; transform: translate(0, 0); opacity: 1; }
+  33% { fill: #000; transform: translateX(1500px); opacity: 0 }
+  66% { fill: #92FFC0; transform: translateX(-1500px); opacity: 1; }
 }
 section#screen.animated-docking-outro { background-color: #9222C0; }
 section#screen.animated-docking-outro svg {
-  animation: docking-outro 0.9678s ease-out -0.4839s normal infinite none running;
+  animation: docking-outro 10s ease-out -0.2419s normal infinite none running;
 }
 @keyframes docking-outro {
-  0% { fill: #000; transform: scale(1) rotateZ(-20deg); }
-  25% { fill: #92FFC0; transform: scale(.7) rotateZ(0deg); }
-  50% { fill: #000; transform: scale(1) rotateZ(20deg); }
-  75% { fill: #92FFC0; transform: scale(.7) rotateZ(0deg); }
-  100% { fill: #000; transform: scale(1) rotateZ(-20deg); }
+  0% { transform: translate(-1000px, -2000px) rotateZ(-70deg); opacity: 0 }
+  50% { fill: #92FFC0; transform: translate(0, 0) rotateZ(0); opacity: 1 }
+  100% { fill: #928FC0; transform: translate(2000px, 0); }
 }
 
 /******* ROAD *******/
 
 section#screen.animated-road-verse1 { background-color: #a68c3d; }
 section#screen.animated-road-verse1 svg {
-  animation: road-verse1 0.4139s ease-out -0.2069s normal infinite none running;
+  animation: road-verse1 0.8278s ease-out -0.2069s normal infinite none running;
 }
 @keyframes road-verse1 {
   0% { fill: #130CB7; transform: scale(.9); }
@@ -101,7 +99,7 @@ section#screen.animated-road-chorus svg {
 }
 section#screen.animated-road-verse2 { background-color: #a68c3d; }
 section#screen.animated-road-verse2 svg {
-  animation: road-verse2 0.4139s ease-out -0.2069s normal infinite none running;
+  animation: road-verse2 0.8278s ease-out -0.2069s normal infinite none running;
 }
 @keyframes road-verse2 {
   0% { fill: #130CB7; transform: scale(.9); }
@@ -122,7 +120,7 @@ section#screen.animated-charlotte-intro svg {
 }
 section#screen.animated-charlotte-verse { background-color: #cf3d3d; }
 section#screen.animated-charlotte-verse svg {
-  animation: charlotte-verse 0.6622s ease-out -0.3311s normal infinite none running;
+  animation: charlotte-verse 0.6422s ease-out -0.3151s normal infinite none running;
 }
 @keyframes charlotte-verse {
   0% { fill: #7127b9; transform: scale(.9); }
@@ -146,22 +144,22 @@ section#screen.animated-wondering-intro svg {
   animation: wondering-intro 0.6622s ease-out -0.3311s normal infinite none running;
 }
 @keyframes wondering-intro {
-  0% { fill: #FDEB71; transform: scale(.9); }
-  50% { fill: #000; transform: scale(1); }
-  100% { fill: #FDEB71; transform: scale(.9); }
+  0% { fill: #FDEB71; transform: scale(.9); opacity: 0.2 }
+  50% { fill: #000; transform: scale(1); opacity: 0 }
+  100% { fill: #FDEB71; transform: scale(.9); opacity: 0.2 }
 }
 section#screen.animated-wondering-prechorus { background-color: #3f40d9; }
 section#screen.animated-wondering-prechorus svg {
   animation: wondering-prechorus 0.6622s ease-out -0.3311s normal infinite none running;
 }
 @keyframes wondering-prechorus {
-  0% { fill: #FDEB71; transform: scale(.9); }
-  50% { fill: #000; transform: scale(1); }
-  100% { fill: #FDEB71; transform: scale(.9); }
+  0% { fill: #FDEB71; transform: scale(.9); opacity: 0.5 }
+  50% { fill: #000; transform: scale(1); opacity: 0.35 }
+  100% { fill: #FDEB71; transform: scale(.9); opacity: 0.5 }
 }
 section#screen.animated-wondering-chorus { background-color: #3f40d9; }
 section#screen.animated-wondering-chorus svg {
-  animation: wondering-chorus 0.6622s ease-out -0.3311s normal infinite none running;
+  animation: wondering-chorus 1.3244s ease-out -0.3311s normal infinite none running;
 }
 @keyframes wondering-chorus {
   0% { fill: #FDEB71; transform: scale(.9); }
@@ -176,43 +174,43 @@ section#screen.animated-ladder-intro svg {
   animation: ladder-intro 0.8217s ease-out -0.4108s normal infinite none running;
 }
 @keyframes ladder-intro {
-  0% { fill: #0396FF; transform: scale(.9); }
-  50% { fill: #000; transform: scale(1); }
-  100% { fill: #0396FF; transform: scale(.9); }
+  0% { fill: #0396FF; transform: scale(.6); }
+  50% { fill: #1a233c; transform: scale(.7); }
+  100% { fill: #0396FF; transform: scale(.6); }
 }
 section#screen.animated-ladder-riff1 { background-color: #1a233c; }
 section#screen.animated-ladder-riff1 svg {
   animation: ladder-riff1 0.8217s ease-out -0.4108s normal infinite none running;
 }
 @keyframes ladder-riff1 {
-  0% { fill: #0396FF; transform: scale(.9); }
-  50% { fill: #000; transform: scale(1); }
-  100% { fill: #0396FF; transform: scale(.9); }
+  0% { fill: #0396FF; transform: scale(.8); }
+  50% { fill: #0e1526; transform: scale(.9); }
+  100% { fill: #0396FF; transform: scale(.8); }
 }
 section#screen.animated-ladder-riff1to2 { background-color: #1a233c; }
 section#screen.animated-ladder-riff1to2 svg {
   animation: ladder-riff1to2 0.8217s ease-out -0.4108s normal infinite none running;
 }
 @keyframes ladder-riff1to2 {
-  0% { fill: #0396FF; transform: scale(.9); }
-  50% { fill: #000; transform: scale(1); }
-  100% { fill: #0396FF; transform: scale(.9); }
+  0% { fill: #0396FF; transform: scale(1); }
+  50% { fill: #070a14; transform: scale(1.2); }
+  100% { fill: #0396FF; transform: scale(1); }
 }
 section#screen.animated-ladder-riff2 { background-color: #1a233c; }
 section#screen.animated-ladder-riff2 svg {
   animation: ladder-riff2 0.8217s ease-out -0.4108s normal infinite none running;
 }
 @keyframes ladder-riff2 {
-  0% { fill: #0396FF; transform: scale(.9); }
-  50% { fill: #000; transform: scale(1); }
-  100% { fill: #0396FF; transform: scale(.9); }
+  0% { fill: #0396FF; transform: scale(1.5); }
+  50% { fill: #000; transform: scale(1.25); }
+  100% { fill: #0396FF; transform: scale(1.5); }
 }
 
 /******* FUDGE *******/
 
 section#screen.animated-fudge-intro { background-color: #3e320e; }
 section#screen.animated-fudge-intro svg {
-  animation: fudge-intro 0.5052s ease-out -0.2526s normal infinite none running;
+  animation: fudge-intro 0.4852s ease-out -0.2526s normal infinite none running;
 }
 @keyframes fudge-intro {
   0% { fill: #7367F0; transform: scale(.9); }
@@ -221,7 +219,7 @@ section#screen.animated-fudge-intro svg {
 }
 section#screen.animated-fudge-prechorus { background-color: #3e320e; }
 section#screen.animated-fudge-prechorus svg {
-  animation: fudge-prechorus 0.5052s ease-out -0.2526s normal infinite none running;
+  animation: fudge-prechorus 0.4852s ease-out -0.2526s normal infinite none running;
 }
 @keyframes fudge-prechorus {
   0% { fill: #7367F0; transform: scale(.9); }
@@ -230,21 +228,22 @@ section#screen.animated-fudge-prechorus svg {
 }
 section#screen.animated-fudge-bridge { background-color: #3e320e; }
 section#screen.animated-fudge-bridge svg {
-  animation: fudge-bridge 0.5052s ease-out -0.2526s normal infinite none running;
+  animation: fudge-bridge 0.4852s ease-out -0.2526s normal infinite none running;
 }
 @keyframes fudge-bridge {
-  0% { fill: #7367F0; transform: scale(.9); }
-  50% { fill: #000; transform: scale(1); }
-  100% { fill: #7367F0; transform: scale(.9); }
+  0%, 100% { fill: #7367F0; transform: scale(.8) rotateZ(-35deg); }
+  25% { fill: #000; transform: scale(1) rotateZ(0); }
+  50% { fill: #000; transform: scale(.8) rotateZ(35deg); }
+  75% { fill: #000; transform: scale(1) rotateZ(0); }
 }
 section#screen.animated-fudge-outro { background-color: #3e320e; }
 section#screen.animated-fudge-outro svg {
-  animation: fudge-outro 0.5052s ease-out -0.2526s normal infinite none running;
+  animation: fudge-outro 15s ease-out -0.2526s normal infinite none running;
 }
 @keyframes fudge-outro {
-  0% { fill: #7367F0; transform: scale(.9); }
-  50% { fill: #000; transform: scale(1); }
-  100% { fill: #7367F0; transform: scale(.9); }
+  0% { fill: #7367F0; transform: scale(1); }
+  50% { fill: #000; transform: scale(0.5); }
+  100% { fill: #3e320e; transform: scale(0); }
 }
 
 /******* TATTOO *******/
@@ -263,9 +262,10 @@ section#screen.animated-tattoo-chorus1 svg {
   animation: tattoo-chorus1 0.4858s ease-out -0.2429s normal infinite none running;
 }
 @keyframes tattoo-chorus1 {
-  0% { fill: #EF44D3; transform: scale(.9); }
-  50% { fill: #000; transform: scale(1); }
-  100% { fill: #EF44D3; transform: scale(.9); }
+  0%, 100% { fill: #EF44D3; transform: translate(0, 0); }
+  25% { fill: #000; transform: translate(50px, 0); }
+  50% { fill: #EF44D3; transform: translate(0, 0); }
+  75% { fill: #000; transform: translate(-50px, 0); }
 }
 section#screen.animated-tattoo-verse2 { background-color: #ac9a4d; }
 section#screen.animated-tattoo-verse2 svg {
@@ -281,16 +281,17 @@ section#screen.animated-tattoo-chorus2 svg {
   animation: tattoo-chorus2 0.4858s ease-out -0.2429s normal infinite none running;
 }
 @keyframes tattoo-chorus2 {
-  0% { fill: #EF44D3; transform: scale(.9); }
-  50% { fill: #000; transform: scale(1); }
-  100% { fill: #EF44D3; transform: scale(.9); }
+  0%, 100% { fill: #EF44D3; transform: translate(0, 0); }
+  25% { fill: #000; transform: translate(50px, -50px); }
+  50% { fill: #EF44D3; transform: translate(0, 0); }
+  75% { fill: #000; transform: translate(-50px, 50px); }
 }
 
 /******* PINTO *******/
 
 section#screen.animated-pinto-intro { background-color: #0c3c1c; }
 section#screen.animated-pinto-intro svg {
-  animation: pinto-intro 0.3539s ease-out -0.1769s normal infinite none running;
+  animation: pinto-intro 0.7078s ease-out -0.1769s normal infinite none running;
 }
 @keyframes pinto-intro {
   0% { fill: #E96D71; transform: scale(.9); }
@@ -308,21 +309,21 @@ section#screen.animated-pinto-verse svg {
 }
 section#screen.animated-pinto-chorus { background-color: #0c3c1c; }
 section#screen.animated-pinto-chorus svg {
-  animation: pinto-chorus 0.3539s ease-out -0.1769s normal infinite none running;
+  animation: pinto-chorus 0.3839s ease-out -0.1969s normal infinite none running;
 }
 @keyframes pinto-chorus {
-  0% { fill: #E96D71; transform: scale(.9); }
-  50% { fill: #000; transform: scale(1); }
-  100% { fill: #E96D71; transform: scale(.9); }
+  0% { fill: #E96D71; transform: scale(1); }
+  50% { fill: #000; transform: scale(0.6); }
+  100% { fill: #E96D71; transform: scale(1); }
 }
 section#screen.animated-pinto-solo { background-color: #0c3c1c; }
 section#screen.animated-pinto-solo svg {
   animation: pinto-solo 0.3539s ease-out -0.1769s normal infinite none running;
 }
 @keyframes pinto-solo {
-  0% { fill: #E96D71; transform: scale(.9); }
-  50% { fill: #000; transform: scale(1); }
-  100% { fill: #E96D71; transform: scale(.9); }
+  0% { fill: #e9bf6e; transform: scale(1); }
+  50% { fill: #000; transform: scale(0.76); }
+  100% { fill: #e9bf6e; transform: scale(1); }
 }
 
 /******* SCENES *******/

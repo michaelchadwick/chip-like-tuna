@@ -56,7 +56,7 @@
             <div class="scrubber"></div>
           </div>
           <div class="volume">
-            <input class="rngVolume" type="range" min="0" max="100" value="75" />
+            <input class="rngVolume" type="range" min="0" max="100" value="50" />
             <label class="lblVolume" for="rngVolume" />
           </div>
         </div>
