@@ -63,15 +63,15 @@ $(function () {
     xhr.open('GET', this.url, true)
     xhr.responseType = 'arraybuffer'
     xhr.onloadstart = function () {
-      this.messageDebugUpdate(SOUND_STATUS_LOADING)
-      this.messageScreenUpdate(SOUND_STATUS_LOADING)
+      this.messageDebugUpdate(CLT.SOUND_STATUS_LOADING)
+      this.messageScreenUpdate(CLT.SOUND_STATUS_LOADING)
     }.bind(this)
     xhr.onload = function () {
       this.decode(xhr.response)
     }.bind(this)
     xhr.onreadystatechange = function () {
       if (xhr.readyState === window.XMLHttpRequest.DONE) { }
-    }.bind(this)
+    }
     /* this won't work until the server sends the file's content length
     var that = this
     xhr.upload.onprogress = function (ev) {
@@ -86,7 +86,7 @@ $(function () {
   SoundPlayer.prototype.decode = function (arrayBuffer) {
     this.ac.decodeAudioData(arrayBuffer, function (audioBuffer) {
       this.buffer = audioBuffer
-      this.messageDebugUpdate(SOUND_STATUS_LOADED)
+      this.messageDebugUpdate(CLT.SOUND_STATUS_LOADED)
       this.messageScreenUpdate('')
       this.draw()
       this.buttonElem.prop('disabled', false)
@@ -113,13 +113,17 @@ $(function () {
     this.playing = true
     this.paused = false
     CLT.stopTVNoise()
-    this.messageDebugUpdate(SOUND_STATUS_PLAYING)
+    this.messageDebugUpdate(CLT.SOUND_STATUS_PLAYING)
     this.triggerScreenEvent(this.startTime)
     var soundPlayer = this
 
     this.source.onended = function () {
-      var soundStatus = soundPlayer.paused ? SOUND_STATUS_PAUSED : (soundPlayer.playing ? SOUND_STATUS_PLAYING : SOUND_STATUS_STOPPED)
-      if (soundStatus === SOUND_STATUS_STOPPED) {
+      var soundStatus = soundPlayer.paused
+        ? CLT.SOUND_STATUS_PAUSED
+        : (soundPlayer.playing
+          ? CLT.SOUND_STATUS_PLAYING
+          : CLT.SOUND_STATUS_STOPPED)
+      if (soundStatus === CLT.SOUND_STATUS_STOPPED) {
         this.stopped = true
         this.paused = false
         this.playing = false
@@ -135,7 +139,7 @@ $(function () {
       this.playing = false
       this.paused = true
       CLT.svgRemoveAnimation()
-      this.messageDebugUpdate(SOUND_STATUS_PAUSED)
+      this.messageDebugUpdate(CLT.SOUND_STATUS_PAUSED)
     }
   }
   SoundPlayer.prototype.seek = function (time) {
@@ -516,6 +520,6 @@ $(function () {
   }
 
   // create a new instance of the SoundPlayer and get things started
-  window.SoundPlayer = new SoundPlayer(SOUND_FILE_PATH, PLAYER_ELEMENT)
+  window.SoundPlayer = new SoundPlayer(CLT.SOUND_FILE_PATH, CLT.PLAYER_ELEMENT)
   CLT.fixScreenDims()
 })

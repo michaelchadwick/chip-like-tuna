@@ -58,22 +58,22 @@ CLT.audioPaths = {
 }
 
 // status messages
-var SOUND_STATUS_PLAYING  = 'playing'
-var SOUND_STATUS_STOPPED  = 'stopped/finished'
-var SOUND_STATUS_PAUSED   = 'paused'
-var SOUND_STATUS_UNLOADED = 'unloaded'
-var SOUND_STATUS_LOADING  = 'loading...'
-var SOUND_STATUS_LOADED   = 'loaded and ready'
-var SOUND_STATUS_ERROR    = 'error decoding file'
-var NOISE_WIDTH_DEFAULT   = 200
-var NOISE_HEIGHT_DEFAULT  = 150
+CLT.SOUND_STATUS_PLAYING = 'playing'
+CLT.SOUND_STATUS_STOPPED = 'stopped/finished'
+CLT.SOUND_STATUS_PAUSED = 'paused'
+CLT.SOUND_STATUS_UNLOADED = 'unloaded'
+CLT.SOUND_STATUS_LOADING = 'loading...'
+CLT.SOUND_STATUS_LOADED = 'loaded and ready'
+CLT.SOUND_STATUS_ERROR = 'error decoding file'
+CLT.NOISE_WIDTH_DEFAULT = 200
+CLT.NOISE_HEIGHT_DEFAULT = 150
 
 // file paths
-var SOUND_FILE_PATH       = CLT.audioPaths.opus.clt['48']
-// var SOUND_FILE_PATH    = CLT.audioPaths.mp3.misc['test2m'];
+CLT.SOUND_FILE_PATH = CLT.audioPaths.opus.clt['48']
+// var SOUND_FILE_PATH = CLT.audioPaths.mp3.misc['test2m'];
 
 // html elements
-var PLAYER_ELEMENT        = document.querySelector('.player')
+CLT.PLAYER_ELEMENT = document.querySelector('.player')
 
 // jQuery extension to get class names from an element
 $.fn.classList = function () {
