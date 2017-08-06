@@ -1,11 +1,15 @@
 /* bootstrap */
 /* set up main JS object */
+/* global $ */
 
-var CLT = {};
-CLT.url = '';
-CLT.screen = $('section#screen');
-CLT.ajaxImgRequest = null;
-CLT.tvNoiseCycleId = null;
+// main object
+var CLT = {}
+
+// global variables
+CLT.url = ''
+CLT.screen = $('section#screen')
+CLT.ajaxImgRequest = null
+CLT.tvNoiseCycleId = null
 CLT.audioPaths = {
   'mp3': {
     'clt': {
@@ -51,25 +55,27 @@ CLT.audioPaths = {
     'clt':          'assets/audio/wav/clt.wav',
     'noise':        'assets/audio/wav/noise.wav'
   }
-};
+}
 
 // status messages
-var SOUND_STATUS_PLAYING    = 'playing';
-var SOUND_STATUS_STOPPED    = 'stopped/finished';
-var SOUND_STATUS_PAUSED     = 'paused';
-var SOUND_STATUS_UNLOADED   = 'unloaded';
-var SOUND_STATUS_LOADING    = 'loading...';
-var SOUND_STATUS_LOADED     = 'loaded and ready';
-var SOUND_STATUS_ERROR      = 'error decoding file';
-var NOISE_WIDTH_DEFAULT     = 200;
-var NOISE_HEIGHT_DEFAULT    = 150;
+var SOUND_STATUS_PLAYING  = 'playing'
+var SOUND_STATUS_STOPPED  = 'stopped/finished'
+var SOUND_STATUS_PAUSED   = 'paused'
+var SOUND_STATUS_UNLOADED = 'unloaded'
+var SOUND_STATUS_LOADING  = 'loading...'
+var SOUND_STATUS_LOADED   = 'loaded and ready'
+var SOUND_STATUS_ERROR    = 'error decoding file'
+var NOISE_WIDTH_DEFAULT   = 200
+var NOISE_HEIGHT_DEFAULT  = 150
 
 // file paths
-var SOUND_FILE_PATH         = CLT.audioPaths.opus.clt['48'];
-//var SOUND_FILE_PATH         = CLT.audioPaths.mp3.misc['test2m'];
+var SOUND_FILE_PATH       = CLT.audioPaths.opus.clt['48']
+// var SOUND_FILE_PATH    = CLT.audioPaths.mp3.misc['test2m'];
 
 // html elements
-var PLAYER_ELEMENT          = document.querySelector('.player');
+var PLAYER_ELEMENT        = document.querySelector('.player')
 
 // jQuery extension to get class names from an element
-$.fn.classList = function() {return this[0].className.split(/\s+/);};
+$.fn.classList = function () {
+  return this[0].className.split(/\s+/)
+}

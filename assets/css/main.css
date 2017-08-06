@@ -13,6 +13,9 @@ body, html {
   font-size: 16px;
   font-family: monospace;
 }
+a {
+  color: #3dcc5f;
+}
 h1 {
   margin: 0 auto;
   padding: 0;
@@ -168,6 +171,14 @@ div.player .messageDebug {
   height: 20px;
   text-align: center;
   font-family: Helvetica, Arial, sans-serif;
+}
+
+footer {
+  font-family: sans-serif;
+  font-size: 14px;
+  margin: 0 auto;
+  text-align: center;
+  width: 60%;
 }
 
 .loaded {

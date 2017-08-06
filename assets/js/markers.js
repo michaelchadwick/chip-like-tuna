@@ -1,3 +1,7 @@
+/* markers */
+/* percentage time codes */
+/* global CLT */
+
 CLT.markers =
 {
   'logo':                 { 'start': 0.00, 'end': 0.56 },

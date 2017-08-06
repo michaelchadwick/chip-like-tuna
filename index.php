@@ -64,6 +64,10 @@
         <p class="progressStatus">&nbsp;</p>
       </div>
     </div>
+
+    <footer>
+      SVGs designed by <strong>Freepik</strong> from <a href='http://flaticon.com'>Flaticon</a>, except for <em>Sea Waves</em> and <em>Suitcase</em> by <strong>Daniel Bruce</strong>, and <em>Pixel Window</em> by <strong>Pixelvisualization</strong>
+    </footer>
   </div>
 
   <script src="/assets/js/vendor/system.js"></script>
