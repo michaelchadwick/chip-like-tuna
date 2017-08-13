@@ -2,6 +2,7 @@
 /* percentage time codes */
 /* global CLT */
 
+/* eslint-disable key-spacing */
 CLT.markers =
 {
   'logo':                 { 'start': 0.00, 'end': 0.56 },
@@ -49,3 +50,4 @@ CLT.markers =
   'beyond-chorus':        { 'start': 93.19, 'end': 95.78 },
   'beyond-outro':         { 'start': 95.78, 'end': 100.00 }
 }
+/* eslint-disable key-spacing */

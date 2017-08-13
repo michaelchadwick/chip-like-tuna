@@ -5,11 +5,12 @@
 // main object
 var CLT = {}
 
-// global variables
+// CLT properties
 CLT.url = ''
 CLT.screen = $('section#screen')
 CLT.ajaxImgRequest = null
 CLT.tvNoiseCycleId = null
+/* eslint-disable key-spacing */
 CLT.audioPaths = {
   'mp3': {
     'clt': {
@@ -56,6 +57,7 @@ CLT.audioPaths = {
     'noise':        'assets/audio/wav/noise.wav'
   }
 }
+/* eslint-disable key-spacing */
 
 // status messages
 CLT.SOUND_STATUS_PLAYING = 'playing'
