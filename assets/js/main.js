@@ -2,14 +2,18 @@
 /* global CLT, $ */
 
 $(function () {
+  // CLT properties
+  CLT.sectionNoiseControls = $('#noiseControls')
   CLT.svgControls = $('#svgControls a')
-  CLT.svgControls.click(CLT.svgUpdateScreen)
-  $(window).on('load resize', function () {
-    CLT.fixScreenDims()
-  })
+  CLT.btnNoiseStart = $('button#btnNoiseStart')
+  CLT.btnNoiseStop = $('button#btnNoiseStop')
+
   CLT.fixScreenDims = function () {
     CLT.screen.height(CLT.screen.width() * 0.5625)
   }
+
+  CLT.svgControls.click(CLT.svgUpdateScreen)
+  $(window).on('load resize', CLT.fixScreenDims)
 
   function SoundPlayer (soundPath, el) {
     this.ac = new (window.AudioContext || window.webkitAudioContext)()
@@ -50,6 +54,8 @@ $(function () {
   }
 
   SoundPlayer.prototype.bindEvents = function () {
+    CLT.btnNoiseStart.click(CLT.startTVNoise)
+    CLT.btnNoiseStop.click(CLT.stopTVNoise)
     this.button.addEventListener('click', this.toggle.bind(this))
     this.buttonElem.prop('disabled', true)
     this.scrubberElem.addClass('disabled')
@@ -113,6 +119,7 @@ $(function () {
     this.playing = true
     this.paused = false
     CLT.stopTVNoise()
+    CLT.sectionNoiseControls.hide()
     this.messageDebugUpdate(CLT.SOUND_STATUS_PLAYING)
     this.triggerScreenEvent(this.startTime)
     var soundPlayer = this
@@ -515,11 +522,15 @@ $(function () {
     var progressRounded = round(progress * 100, 2)
     return (isNaN(progressRounded)) ? 0 : progressRounded
   }
+
+  // helper function
   function round (value, decimals) {
     return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals)
   }
 
   // create a new instance of the SoundPlayer and get things started
   window.SoundPlayer = new SoundPlayer(CLT.SOUND_FILE_PATH, CLT.PLAYER_ELEMENT)
+
+  // initial screen dim fix
   CLT.fixScreenDims()
 })

@@ -4,63 +4,115 @@
   box-sizing: border-box;
 }
 body, html {
-  width: 100%;
-  height: 100%;
   background: #555;
+  color: #fff;
+  font-family: monospace;
+  font-size: 16px;
+  height: 100%;
   margin: 0 auto;
   text-align: center;
-  color: #fff;
-  font-size: 16px;
-  font-family: monospace;
+  width: 100%;
 }
 a {
   color: #3dcc5f;
+}
+button {
+  border: none;
+  color: #fff;
+  float: left;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  padding: 5px;
+  width: 50%;
+}
+button:hover {
+  cursor: pointer;
+}
+button#btnNoiseStart {
+  background-color: #060;
+}
+button#btnNoiseStart:hover {
+  background-color: #090;
+}
+button#btnNoiseStop {
+  background-color: #600;
+}
+button#btnNoiseStop:hover {
+  background-color: #900;
 }
 h1 {
   margin: 0 auto;
   padding: 0;
 }
 canvas {
+  -ms-interpolation-mode: nearest-neighbor;
   image-rendering: optimizeSpeed;
   image-rendering: -moz-crisp-edges;
   image-rendering: -webkit-optimize-contrast;
   image-rendering: -o-crisp-edges;
   image-rendering: crisp-edges;
-  -ms-interpolation-mode: nearest-neighbor;
 }
 
 div#wrap {
   margin: 0 auto;
-  padding: 0 20px 20px;
-}
-div#wrap div#main {
-  padding: 20px;
+  padding: 0;
 }
 
+@media (min-width: 768px) {
+  div#wrap {
+    padding: 0 20px 20px;
+  }
+  div#wrap div#main {
+    padding: 20px;
+  }
+}
+
+footer {
+  background: #222;
+  color: #bbb;
+  font-family: sans-serif;
+  font-size: 12px;
+  margin: 0 auto;
+  padding: 10px 30px;
+  text-align: center;
+  width: 100%;
+}
+
+/**
+ * TV SCREEN
+ */
 section#screen {
-  position: relative;
-  border: 5px solid #222;
-  max-height: 960px;
   height: auto;
   margin: 0 auto;
-  text-align: center;
-  width: 90%;
-  box-shadow: 4px 4px 12px #111;
+  max-height: 960px;
   overflow: hidden;
+  position: relative;
+  text-align: center;
+  width: 100%;
 }
 section#screen svg {
   display: block;
   fill: #000;
 }
-section#screen div.messageScreen {
-  font-size: 3vw;
-  width: 100%;
-  position: absolute;
-  text-align: center;
-  top: 50%;
-  transform: translateY(-50%);
+
+@media (min-width: 768px) {
+  section#screen {
+    border: 5px solid #222;
+    box-shadow: 4px 4px 12px #111;
+  }
+  section#screen div.messageScreen {
+    font-size: 3vw;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+  }
 }
 
+/**
+ * TV CONTROLS
+ */
 section#svgControls {
   display: none;
   margin: 16px auto 0;
@@ -82,8 +134,8 @@ section#svgControls a.selected {
 section#svgControls svg {
   background: #fff;
   border: 2px solid #000;
-  margin: 0 auto;
   height: 36px;
+  margin: 0 auto;
   width: 100%;
 }
 section#svgControls svg:hover {
@@ -91,95 +143,95 @@ section#svgControls svg:hover {
   fill: #fff;
 }
 
+/**
+ * AUDIO PLAYER
+ */
 div.player {
   clear: both;
   float: none;
   margin: 0 auto;
-  width: 80%;
-}
-div.player .controls {
-  background: #333;
-  padding: 8px;
-}
-div.player .button {
-  background: transparent;
-  border: none;
-  color: #3dcc5f;
-  cursor: pointer;
-  display: inline-block;
-  font-size: 6vw;
-  margin: 3px 0 0 0;
-  outline: none;
-  text-align: center;
   width: 100%;
 }
-div.player .button:hover {
-  color: #53dd73;
-}
-div.player .button:disabled {
-  color: #555;
-  cursor: auto;
-}
-div.player .track {
-  background: #000;
-  position: relative;
-  width: 80%;
-  margin: 7px 0 0 16px;
-  height: 20px;
-  border: 1px solid #666;
-  display: inline-block;
-  vertical-align: top;
-}
-div.player .progress {
-  position: absolute;
-  width: 0%;
-  height: 100%;
-  background: #800;
-}
-div.player .scrubber {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  margin: -1px 0 0 -9px;
-  background: #f00;
-  border: solid 3px #ddd;
-  cursor: pointer;
-  box-shadow: 0 0 5px #000, inset 0 0 4px #400;
-}
-div.player .scrubber.disabled {
-  background: #555;
-  border: solid 3px #444;
-  box-shadow: none;
-  cursor: auto;
-}
-div.player .rngVolume {
-  margin: 10px 8px;
-  padding: 0;
-  width: 80%;
-}
-div.player .lblVolume {
-  background: #555;
-  color: #fff;
-  left: -7px;
-  padding: 0 1px;
-  position: relative;
-  top: -3px;
-}
-div.player .messageDebug {
-  clear: left;
-  height: 20px;
-  text-align: center;
-  font-family: Helvetica, Arial, sans-serif;
-}
-
-footer {
-  font-family: sans-serif;
-  font-size: 14px;
-  margin: 0 auto;
-  text-align: center;
-  width: 60%;
-}
+  div.player .controls {
+    background: #333;
+    padding: 8px;
+  }
+  div.player .button {
+    background: transparent;
+    border: none;
+    color: #3dcc5f;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 6vw;
+    margin: 3px 0 0 0;
+    outline: none;
+    text-align: center;
+    width: 100%;
+  }
+  div.player .button:hover {
+    color: #53dd73;
+  }
+  div.player .button:disabled {
+    color: #555;
+    cursor: auto;
+  }
+  div.player .track {
+    background: #000;
+    border: 1px solid #666;
+    display: inline-block;
+    height: 20px;
+    margin: 7px 0 0 16px;
+    position: relative;
+    vertical-align: top;
+    width: 80%;
+  }
+  div.player .progress {
+    background: #800;
+    height: 100%;
+    position: absolute;
+    width: 0%;
+  }
+  div.player .scrubber {
+    background: #f00;
+    border: solid 3px #ddd;
+    border-radius: 50%;
+    box-shadow: 0 0 5px #000, inset 0 0 4px #400;
+    cursor: pointer;
+    height: 24px;
+    margin: -3px 0 0 -12px;
+    opacity: 1.0;
+    position: absolute;
+    width: 24px;
+  }
+  div.player .scrubber:hover {
+    opacity: 0.85;
+  }
+  div.player .scrubber.disabled {
+    background: #444;
+    border: solid 3px #333;
+    box-shadow: none;
+    cursor: auto;
+    opacity: 0.75;
+  }
+  div.player .rngVolume {
+    margin: 10px 8px;
+    padding: 0;
+    width: 80%;
+  }
+  div.player .lblVolume {
+    background: #555;
+    color: #fff;
+    left: -7px;
+    padding: 0 1px;
+    position: relative;
+    top: -3px;
+  }
+  div.player .messageDebug {
+    clear: left;
+    font-family: Helvetica, Arial, sans-serif;
+    height: 20px;
+    text-align: center;
+  }
 
 .loaded {
   color: #090;

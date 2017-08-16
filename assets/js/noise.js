@@ -2,7 +2,7 @@
 /* fancy noise pattern on the tv */
 /* global CLT */
 
-const NOISE_FILE_PATH = CLT.audioPaths.ogg.noise
+var NOISE_FILE_PATH = CLT.audioPaths.ogg.noise
 
 CLT.supportsCanvas = !!document.createElement('canvas').getContext
 if (CLT.supportsCanvas) {

@@ -19,32 +19,34 @@
         </div>
       </section>
 
-      <button onclick="CLT.startTVNoise();">Start Noise Cycle</button>
-      <button onclick="CLT.stopTVNoise();">Stop Noise Cycle</button>
+      <section id="noiseControls">
+        <button class="button noise" id="btnNoiseStart">Start Noise Cycle</button>
+        <button class="button noise" id="btnNoiseStop">Stop Noise Cycle</button>
+      </section>
 
       <section id="svgControls">
         <?php
-          $dir = "./assets/flv-scenes/svg/";
-          $dir_handle = opendir($dir);
-          $files = array();
+        $dir = "./assets/flv-scenes/svg/";
+        $dir_handle = opendir($dir);
+        $files = array();
 
-          while (($file=readdir($dir_handle)) !== false) {
-            array_push($files, $dir . $file);
-          }
-          closedir($dir_handle);
-          sort($files);
+        while (($file=readdir($dir_handle)) !== false) {
+          array_push($files, $dir . $file);
+        }
+        closedir($dir_handle);
+        sort($files);
 
-          if (sizeof($files) > 0) {
-            foreach ($files as $file) {
-              $pathinfo = pathinfo($file);
-              if (pathinfo($file)['extension'] == "svg") {
-                $id = explode('.', explode('-', pathinfo($file)['basename'])[1])[0];
-                echo "<a href='#' id='" . $id . "' alt='" . $id . "' title='" . $id . "'>" . (file_get_contents($file)) . "</a>\n";
-              }
+        if (sizeof($files) > 0) {
+          foreach ($files as $file) {
+            $pathinfo = pathinfo($file);
+            if (pathinfo($file)['extension'] == "svg") {
+              $id = explode('.', explode('-', pathinfo($file)['basename'])[1])[0];
+              echo "<a href='#' id='" . $id . "' alt='" . $id . "' title='" . $id . "'>" . (file_get_contents($file)) . "</a>\n";
             }
-          } else {
-            echo "<article><p>No svg files found.</p></article>";
           }
+        } else {
+          echo "<article><p>No svg files found.</p></article>";
+        }
         ?>
       </section>
 
