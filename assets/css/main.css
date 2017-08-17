@@ -20,8 +20,6 @@ button {
   border: none;
   color: #fff;
   float: left;
-  margin-bottom: 10px;
-  margin-top: 10px;
   padding: 5px;
   width: 50%;
 }
@@ -107,6 +105,22 @@ section#screen svg {
     top: 50%;
     transform: translateY(-50%);
     width: 100%;
+  }
+}
+
+/**
+ * NOISE CONTROLS
+ */
+section#noiseControls {
+  bottom: 23px;
+  margin: 0 auto;
+  position: relative;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  section#noiseControls {
+    bottom: 28px;
+    width: 99%;
   }
 }
 
