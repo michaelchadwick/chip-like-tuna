@@ -68,7 +68,8 @@
     </div>
 
     <footer>
-      SVGs designed by <strong>Freepik</strong> from <a href='http://flaticon.com'>Flaticon</a>, except for <em>Sea Waves</em> and <em>Suitcase</em> by <strong>Daniel Bruce</strong>, and <em>Pixel Window</em> by <strong>Pixelvisualization</strong>
+      <p><a href="http://flylikevenus.com">Fly Like Venus</a> is a rock band from San Diego, CA. Buy <a href="http://flylikevenus.bandcamp.com">Scenes</a> now!</p>
+      <p>Acknowledgements: SVGs designed by <strong>Freepik</strong> from <a href='http://flaticon.com'>Flaticon</a>, except for <em>Sea Waves</em> and <em>Suitcase</em> by <strong>Daniel Bruce</strong>, and <em>Pixel Window</em> by <strong>Pixelvisualization</strong></p>
     </footer>
   </div>
 

@@ -63,7 +63,7 @@ div#wrap {
     padding: 0 20px 20px;
   }
   div#wrap div#main {
-    padding: 20px;
+    padding: 20px 20px 10px;
   }
 }
 

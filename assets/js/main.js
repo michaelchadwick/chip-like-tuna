@@ -134,6 +134,7 @@ $(function () {
         this.stopped = true
         this.paused = false
         this.playing = false
+        this.position = 0
       }
       soundPlayer.messageDebugUpdate(soundStatus)
     }
