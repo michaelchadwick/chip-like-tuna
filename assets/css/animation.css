@@ -8,8 +8,9 @@ section#screen.animated-logo svg {
   animation: logo 6s ease-out 0s normal 1 none running;
 }
 @keyframes logo {
-  0% { fill: #fff; transform: scale(.9); transform: scale(.01) translateY(0px);}
-  100% { fill: #000; transform: scale(.9); transform: scale(5) translateY(0px);}
+  0% { fill: #fff; transform: scale(.9); transform: scale(.01) translateY(0px); }
+  90% { fill: #000; transform: scale(.9); transform: scale(3) translateY(0px); }
+  100% { fill: #fff; transform: scale(3); transform: scale(.01) translateY(0px); }
 }
 
 /******* DOCKING *******/
@@ -65,7 +66,7 @@ section#screen.animated-docking-chorus svg {
 @keyframes docking-chorus {
   0%, 100% { fill: #92FFC0; transform: translate(0, 0); opacity: 1; }
   33% { fill: #000; transform: translateX(1500px); opacity: 0 }
-  66% { fill: #92FFC0; transform: translateX(-1500px); opacity: 1; }
+  66% { fill: #92FFC0; transform: translateX(-1500px); opacity: 0; }
 }
 section#screen.animated-docking-outro { background-color: #9222C0; }
 section#screen.animated-docking-outro svg {
@@ -90,12 +91,12 @@ section#screen.animated-road-verse1 svg {
 }
 section#screen.animated-road-chorus { background-color: #a68c3d; }
 section#screen.animated-road-chorus svg {
-  animation: road-chorus 0.4139s ease-out -0.2069s normal infinite none running;
+  animation: road-chorus 3s ease-out -0.2069s normal infinite none running;
 }
 @keyframes road-chorus {
-  0% { fill: #130CB7; transform: scale(.9); }
-  50% { fill: #000; transform: scale(1); }
-  100% { fill: #130CB7; transform: scale(.9); }
+  0% { fill: #130CB7; transform: translateY(500px); }
+  50% { fill: #000; transform: translateY(0); }
+  100% { fill: #130CB7; transform: translateY(-500px); }
 }
 section#screen.animated-road-verse2 { background-color: #a68c3d; }
 section#screen.animated-road-verse2 svg {
@@ -120,21 +121,21 @@ section#screen.animated-charlotte-intro svg {
 }
 section#screen.animated-charlotte-verse { background-color: #cf3d3d; }
 section#screen.animated-charlotte-verse svg {
-  animation: charlotte-verse 0.6422s ease-out -0.3151s normal infinite none running;
+  animation: charlotte-verse 2.49688s ease-out -0.3151s normal infinite none running;
 }
 @keyframes charlotte-verse {
-  0% { fill: #7127b9; transform: scale(.9); }
-  50% { fill: #000; transform: scale(1); }
-  100% { fill: #7127b9; transform: scale(.9); }
+  0%, 100% { fill: #7127b9; transform: translate(-300px, 300px); }
+  25% { fill: #000; transform: translate(300px, 300px); }
+  50% { fill: #7127b9; transform: translate(-300px, -300px); }
+  75% { fill: #000; transform: translate(300px, -300px); }
 }
 section#screen.animated-charlotte-chorus { background-color: #cf3d3d; }
 section#screen.animated-charlotte-chorus svg {
-  animation: charlotte-chorus 0.6622s ease-out -0.3311s normal infinite none running;
+  animation: charlotte-chorus 1.3244s ease-out -0.3311s normal infinite none running;
 }
 @keyframes charlotte-chorus {
-  0% { fill: #7127b9; transform: scale(.9); }
-  50% { fill: #000; transform: scale(1); }
-  100% { fill: #7127b9; transform: scale(.9); }
+  0% { fill: #7127b9; transform: scale(.25); }
+  100% { fill: #000; transform: scale(1); }
 }
 
 /******* WONDERING *******/
@@ -420,25 +421,24 @@ section#screen.animated-beyond-prechorus svg {
   animation: beyond-prechorus 0.5255s ease-out -0.2627s normal infinite none running;
 }
 @keyframes beyond-prechorus {
-  0% { fill: #be2626; transform: scale(.9); }
-  50% { fill: #000; transform: scale(1); }
-  100% { fill: #be2626; transform: scale(.9); }
+  0% { fill: #be2626; transform: scale(.8); }
+  50% { fill: #000; transform: scale(1.25); }
+  100% { fill: #be2626; transform: scale(.8); }
 }
 section#screen.animated-beyond-chorus { background-color: #314bb6; }
 section#screen.animated-beyond-chorus svg {
   animation: beyond-chorus 0.5255s ease-out -0.2627s normal infinite none running;
 }
 @keyframes beyond-chorus {
-  0% { fill: #be2626; transform: scale(.9); }
-  50% { fill: #000; transform: scale(1); }
-  100% { fill: #be2626; transform: scale(.9); }
+  0% { fill: #be2626; transform: scale(.7); }
+  50% { fill: #000; transform: scale(1.5); }
+  100% { fill: #be2626; transform: scale(.7); }
 }
 section#screen.animated-beyond-outro { background-color: #314bb6; }
 section#screen.animated-beyond-outro svg {
-  animation: beyond-outro 0.5255s ease-out -0.2627s normal infinite none running;
+  animation: beyond-outro 28s ease-out -0.2s normal 1 none running;
 }
 @keyframes beyond-outro {
-  0% { fill: #be2626; transform: scale(.9); }
-  50% { fill: #000; transform: scale(1); }
-  100% { fill: #be2626; transform: scale(.9); }
+  0% { fill: #be2626; transform: scale(3); }
+  100% { fill: #314bb6; transform: scale(.01); }
 }
