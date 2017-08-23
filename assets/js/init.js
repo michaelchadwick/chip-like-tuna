@@ -1,4 +1,4 @@
-/* bootstrap */
+/* init */
 /* set up main JS object */
 /* global $ */
 
@@ -67,12 +67,13 @@ CLT.SOUND_STATUS_UNLOADED = 'unloaded'
 CLT.SOUND_STATUS_LOADING = 'loading...'
 CLT.SOUND_STATUS_LOADED = 'loaded and ready'
 CLT.SOUND_STATUS_ERROR = 'error decoding file'
+CLT.SOUND_STATUS_I_AM_ERROR = 'i am error'
 CLT.NOISE_WIDTH_DEFAULT = 200
 CLT.NOISE_HEIGHT_DEFAULT = 150
 
 // file paths
 CLT.SOUND_FILE_PATH = CLT.audioPaths.opus.clt['48']
-// var SOUND_FILE_PATH = CLT.audioPaths.mp3.misc['test2m'];
+// CLT.SOUND_FILE_PATH = CLT.audioPaths.mp3.misc['test2m'];
 
 // html elements
 CLT.PLAYER_ELEMENT = document.querySelector('.player')
@@ -81,3 +82,16 @@ CLT.PLAYER_ELEMENT = document.querySelector('.player')
 $.fn.classList = function () {
   return this[0].className.split(/\s+/)
 }
+// jQuery extension to parse url querystring
+$.QueryString = (function (a) {
+  if (a === '') return {}
+  var b = {}
+  for (var i = 0; i < a.length; ++i) {
+    var p = a[i].split('=', 2)
+    if (p.length !== 2) {
+      continue
+    }
+    b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, ' '))
+  }
+  return b
+})(window.location.search.substr(1).split('&'))

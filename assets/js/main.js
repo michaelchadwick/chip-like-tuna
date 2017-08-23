@@ -2,34 +2,44 @@
 /* global CLT, $ */
 
 $(function () {
+  // if admin passed, show debug stuff
+  if ($.QueryString.admin == 1) {
+    $('.debug').show()
+  }
   // CLT properties
-  CLT.sectionNoiseControls = $('#noiseControls')
-  CLT.svgControls = $('#svgControls a')
+  CLT.noiseControlsDiv = $('section#noiseControls')
   CLT.btnNoiseStart = $('button#btnNoiseStart')
   CLT.btnNoiseStop = $('button#btnNoiseStop')
 
   CLT.fixScreenDims = function () {
     CLT.screen.height(CLT.screen.width() * 0.5625)
+    $('button#btnPlayPause').css('top', CLT.screen.height() * 0.45 + 'px')
   }
 
-  CLT.svgControls.click(CLT.svgUpdateScreen)
-  $(window).on('load resize', CLT.fixScreenDims)
+  // event handlers
+  CLT.screen.on('mouseenter mouseleave', function (evt) {
+    $('div.player .playButton').toggle()
+  })
+  $(window).on('load resize', function () {
+    CLT.fixScreenDims()
+  })
 
+  // main html5 audio object
   function SoundPlayer (soundPath, el) {
     this.ac = new (window.AudioContext || window.webkitAudioContext)()
     this.gainNode = this.ac.createGain()
     this.url = soundPath
     this.el = el
-    this.button = el.querySelector('.button')
-    this.button.id = 'btnPlayPause'
-    this.buttonElem = $('#btnPlayPause')
+    this.playButton = el.querySelector('.playButton')
+    this.playButton.id = 'btnPlayPause'
+    this.buttonElem = $('button#btnPlayPause')
     this.track = el.querySelector('.track')
     this.progress = el.querySelector('.progress')
-    this.progressStatus = el.querySelector('.progressStatus')
+    this.progressStatus = el.querySelector('#progressStatus')
     this.scrubber = el.querySelector('.scrubber')
     this.scrubberElem = $('.scrubber')
-    this.messageDebug = el.querySelector('.messageDebug')
-    this.messageScreen = document.querySelector('.messageScreen')
+    this.messageDebug = el.querySelector('#messageDebug')
+    this.messageScreen = document.querySelector('#messageScreen')
     this.rngVolume = el.querySelector('.rngVolume')
     this.lblVolume = el.querySelector('.lblVolume')
     var initVol = this.rngVolume.value
@@ -56,7 +66,7 @@ $(function () {
   SoundPlayer.prototype.bindEvents = function () {
     CLT.btnNoiseStart.click(CLT.startTVNoise)
     CLT.btnNoiseStop.click(CLT.stopTVNoise)
-    this.button.addEventListener('click', this.toggle.bind(this))
+    this.playButton.addEventListener('click', this.toggle.bind(this))
     this.buttonElem.prop('disabled', true)
     this.scrubberElem.addClass('disabled')
     this.rngVolume.addEventListener('input', this.changeVolume.bind(this))
@@ -72,12 +82,15 @@ $(function () {
       this.messageDebugUpdate(CLT.SOUND_STATUS_LOADING)
       this.messageScreenUpdate(CLT.SOUND_STATUS_LOADING)
     }.bind(this)
-    xhr.onload = function () {
-      this.decode(xhr.response)
+    xhr.onload = function (evt) {
+      if (evt.total > 0) {
+        this.decode(xhr.response)
+      } else {
+        this.messageDebugUpdate(`${CLT.SOUND_STATUS_ERROR}:${CLT.SOUND_FILE_PATH}`)
+        this.messageScreenUpdate(CLT.SOUND_STATUS_I_AM_ERROR)
+        CLT.screen.css('background', '#400')
+      }
     }.bind(this)
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === window.XMLHttpRequest.DONE) { }
-    }
     /* this won't work until the server sends the file's content length
     var that = this
     xhr.upload.onprogress = function (ev) {
@@ -119,7 +132,7 @@ $(function () {
     this.playing = true
     this.paused = false
     CLT.stopTVNoise()
-    CLT.sectionNoiseControls.hide()
+    CLT.noiseControlsDiv.hide()
     this.messageDebugUpdate(CLT.SOUND_STATUS_PLAYING)
     this.triggerScreenEvent(this.startTime)
     var soundPlayer = this
@@ -218,14 +231,14 @@ $(function () {
     var progress = (this.positionUpdate() / this.buffer.duration)
     var width = this.track.offsetWidth
     if (this.playing) {
-      this.button.classList.add('fa-pause')
-      this.button.classList.remove('fa-play')
+      this.playButton.classList.add('fa-pause')
+      this.playButton.classList.remove('fa-play')
       this.triggerScreenEvent(this.progPercent())
+      this.progressStatus.innerText = this.progPercent() + ' %'
     } else {
-      this.button.classList.add('fa-play')
-      this.button.classList.remove('fa-pause')
+      this.playButton.classList.add('fa-play')
+      this.playButton.classList.remove('fa-pause')
     }
-    this.progressStatus.innerText = this.progPercent() + ' %'
     this.progress.style.width = (progress * width) + 'px'
     if (!this.dragging) {
       this.scrubber.style.left = (progress * width) + 'px'

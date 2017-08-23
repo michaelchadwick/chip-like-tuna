@@ -6,10 +6,10 @@
 body, html {
   background: #555;
   color: #fff;
-  font-family: monospace;
+  font-family: 'Press Start 2P';
   font-size: 16px;
   height: 100%;
-  margin: 0 auto;
+  margin: 2px auto;
   text-align: center;
   width: 100%;
 }
@@ -26,21 +26,15 @@ button {
 button:hover {
   cursor: pointer;
 }
-button#btnNoiseStart {
-  background-color: #060;
-}
-button#btnNoiseStart:hover {
-  background-color: #090;
-}
-button#btnNoiseStop {
-  background-color: #600;
-}
-button#btnNoiseStop:hover {
-  background-color: #900;
-}
 h1 {
+  font-size: 18px;
   margin: 0 auto;
   padding: 0;
+}
+@media (min-width: 768px) {
+  h1 {
+    font-size: 30px;
+  }
 }
 canvas {
   -ms-interpolation-mode: nearest-neighbor;
@@ -55,25 +49,37 @@ div#wrap {
   margin: 0 auto;
   padding: 0;
 }
-
+div#wrap div#main {
+  padding: 0 0 10px;
+}
 @media (min-width: 768px) {
   div#wrap {
     padding: 0 20px 20px;
   }
   div#wrap div#main {
-    padding: 20px 20px 10px;
+    padding: 10px 0 10px;
   }
 }
 
 footer {
   background: #222;
   color: #bbb;
-  font-family: sans-serif;
-  font-size: 12px;
+  font-size: 0.5em;
+  line-height: 1.8em;
   margin: 0 auto;
-  padding: 10px 30px;
-  text-align: center;
+  padding: 10px 20px;
+  text-align: left;
   width: 100%;
+}
+footer div {
+  margin: 10px 0;
+}
+@media (min-width: 768px) {
+  footer {
+    font-size: 0.65em;
+    padding: 10px 75px;
+    text-align: center;
+  }
 }
 
 /**
@@ -92,19 +98,21 @@ section#screen svg {
   display: block;
   fill: #000;
 }
-
+section#screen div#messageScreen {
+  font-size: 3vw;
+  position: absolute;
+  text-align: center;
+  top: 45%;
+  transform: translateY(-45%);
+  width: 100%;
+}
 @media (min-width: 768px) {
   section#screen {
     border: 5px solid #222;
     box-shadow: 4px 4px 12px #111;
   }
-  section#screen div.messageScreen {
-    font-size: 3vw;
-    position: absolute;
-    text-align: center;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 100%;
+  section#screen div#messageScreen {
+
   }
 }
 
@@ -119,11 +127,28 @@ section#noiseControls {
 }
 @media (min-width: 768px) {
   section#noiseControls {
-    bottom: 28px;
-    width: 99%;
+    border-left: 3px solid #222;
+    border-right: 3px solid #222;
+    border-top: 3px solid #222;
+    bottom: 32px;
+    width: 100%;
   }
 }
-
+section#noiseControls button {
+  height: 25px;
+}
+section#noiseControls button#btnNoiseStart {
+  background-color: #060;
+}
+section#noiseControls button#btnNoiseStart:hover {
+  background-color: #090;
+}
+section#noiseControls button#btnNoiseStop {
+  background-color: #600;
+}
+section#noiseControls button#btnNoiseStop:hover {
+  background-color: #900;
+}
 /**
  * TV CONTROLS
  */
@@ -170,7 +195,7 @@ div.player {
     background: #333;
     padding: 8px;
   }
-  div.player .button {
+  div.player .playButton {
     background: transparent;
     border: none;
     color: #3dcc5f;
@@ -182,10 +207,17 @@ div.player {
     text-align: center;
     width: 100%;
   }
-  div.player .button:hover {
+  div.player .playButton.superImposed {
+    display: none;
+    font-size: 12vw;
+    left: 0;
+    position: fixed;
+    top: 300px;
+  }
+  div.player .playButton:hover {
     color: #53dd73;
   }
-  div.player .button:disabled {
+  div.player .playButton:disabled {
     color: #555;
     cursor: auto;
   }
@@ -228,21 +260,19 @@ div.player {
     opacity: 0.75;
   }
   div.player .rngVolume {
-    margin: 10px 8px;
+    margin: 10px;
     padding: 0;
     width: 80%;
   }
   div.player .lblVolume {
-    background: #555;
+    background: #333;
     color: #fff;
-    left: -7px;
-    padding: 0 1px;
+    padding: 2px;
     position: relative;
-    top: -3px;
+    top: 1px;
   }
   div.player .messageDebug {
     clear: left;
-    font-family: Helvetica, Arial, sans-serif;
     height: 20px;
     text-align: center;
   }
@@ -258,4 +288,7 @@ div.player {
 }
 .playing {
   color: #009;
+}
+.debug {
+  display: none;
 }
