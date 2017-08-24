@@ -86,8 +86,6 @@
       <div>[<a href="?admin=1">admin version</a>]</div>
       <?php } ?>
     </footer>
-    
-    
   </div>
 
   <script src="/assets/js/vendor/system.js"></script>

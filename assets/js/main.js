@@ -3,23 +3,23 @@
 
 $(function () {
   // if admin passed, show debug stuff
-  if ($.QueryString.admin == 1) {
+  if ($.QueryString.admin > 0) {
     $('.debug').show()
   }
   // CLT properties
   CLT.noiseControlsDiv = $('section#noiseControls')
+  if ($.QueryString.noise <= 0) {
+    CLT.noiseControlsDiv.hide()
+  }
   CLT.btnNoiseStart = $('button#btnNoiseStart')
   CLT.btnNoiseStop = $('button#btnNoiseStop')
+  CLT.btnPlayPause = $('button#btnPlayPause')
 
   CLT.fixScreenDims = function () {
     CLT.screen.height(CLT.screen.width() * 0.5625)
-    $('button#btnPlayPause').css('top', CLT.screen.height() * 0.45 + 'px')
+    $('div.player .playButton.superImposed').css('height', CLT.screen.height() + 'px')
   }
 
-  // event handlers
-  CLT.screen.on('mouseenter mouseleave', function (evt) {
-    $('div.player .playButton').toggle()
-  })
   $(window).on('load resize', function () {
     CLT.fixScreenDims()
   })
@@ -64,8 +64,10 @@ $(function () {
   }
 
   SoundPlayer.prototype.bindEvents = function () {
-    CLT.btnNoiseStart.click(CLT.startTVNoise)
-    CLT.btnNoiseStop.click(CLT.stopTVNoise)
+    if ($.QueryString.noise > 0) {
+      CLT.btnNoiseStart.click(CLT.startTVNoise)
+      CLT.btnNoiseStop.click(CLT.stopTVNoise)
+    }
     this.playButton.addEventListener('click', this.toggle.bind(this))
     this.buttonElem.prop('disabled', true)
     this.scrubberElem.addClass('disabled')
@@ -111,7 +113,7 @@ $(function () {
       this.buttonElem.prop('disabled', false)
       this.scrubberElem.removeClass('disabled')
       this.scrubber.addEventListener('mousedown', this.onMouseDown.bind(this))
-      CLT.startTVNoise()
+      if ($.QueryString.noise > 0) { CLT.startTVNoise() }
     }.bind(this))
   }
   SoundPlayer.prototype.connect = function () {
@@ -131,8 +133,10 @@ $(function () {
     this.source.start(this.ac.currentTime, this.position)
     this.playing = true
     this.paused = false
-    CLT.stopTVNoise()
-    CLT.noiseControlsDiv.hide()
+    if ($.QueryString.noise > 0) {
+      CLT.stopTVNoise()
+      CLT.noiseControlsDiv.hide()
+    }
     this.messageDebugUpdate(CLT.SOUND_STATUS_PLAYING)
     this.triggerScreenEvent(this.startTime)
     var soundPlayer = this
@@ -196,6 +200,9 @@ $(function () {
     return this.position
   }
   SoundPlayer.prototype.toggle = function () {
+    if (this.position === this.buffer.duration) {
+      this.position = 0
+    }
     if (!this.playing) {
       this.play()
     } else {
@@ -537,13 +544,33 @@ $(function () {
     return (isNaN(progressRounded)) ? 0 : progressRounded
   }
 
-  // helper function
+  // helper functions
   function round (value, decimals) {
     return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals)
+  }
+  function hidePlayButton () {
+    $('div.player .playButton').removeClass('visible')
+    window.clearTimeout(playButtonTimeout)
   }
 
   // create a new instance of the SoundPlayer and get things started
   window.SoundPlayer = new SoundPlayer(CLT.SOUND_FILE_PATH, CLT.PLAYER_ELEMENT)
+
+  if ($('button#btnPlayPause').hasClass('superImposed')) {
+    var $button = $('div.player .playButton.superImposed')
+    var playButtonTimeout
+
+    $button.on('click', function (evt) {
+      window.SoundPlayer.toggle()
+    })
+    $button.on('mouseenter mousemove', function (evt) {
+      $(evt.target).css('cursor', 'pointer')
+      $button.addClass('visible')
+    })
+    $button.on('mouseleave', function (evt) {
+      hidePlayButton()
+    })
+  }
 
   // initial screen dim fix
   CLT.fixScreenDims()

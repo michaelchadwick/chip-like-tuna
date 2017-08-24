@@ -1,40 +1,44 @@
 /* noise.js */
 /* fancy noise pattern on the tv */
-/* global CLT */
+/* global CLT, $ */
 
 var NOISE_FILE_PATH = CLT.audioPaths.ogg.noise
 
 CLT.supportsCanvas = !!document.createElement('canvas').getContext
-if (CLT.supportsCanvas) {
+if (CLT.supportsCanvas && $.QueryString.noise > 0) {
   var canvas = document.createElement('canvas')
   var ctx = canvas.getContext('2d')
   var noise = document.createElement('audio')
 }
 
 CLT.generateTVNoise = function (opacity, density) {
-  if (!CLT.supportsCanvas) { return false }
-
-  var x
-  var y
-  var number
-
-  density = Math.floor(density) || 1
-
-  canvas.width = 200
-  canvas.height = 150
-
-  for (x = 0; x < canvas.width; x += density) {
-    for (y = 0; y < canvas.height; y += density) {
-      number = Math.floor(Math.random() * 256)
-      ctx.fillStyle = 'rgba(' + number + ',' + number + ',' + number + ',' + opacity + ')'
-      ctx.fillRect(x, y, 1, 1)
-    }
+  if (!CLT.supportsCanvas) {
+    return false
   }
-  CLT.screen.css(
-    'background', 'url(' + canvas.toDataURL('image/png') + ') center center repeat #' + '888'
-  )
-  if (typeof applyTVNoise === 'function') {
-    CLT.applyTVNoise()
+
+  if ($.QueryString.noise > 0) {
+    var x
+    var y
+    var number
+
+    density = Math.floor(density) || 1
+
+    canvas.width = 200
+    canvas.height = 150
+
+    for (x = 0; x < canvas.width; x += density) {
+      for (y = 0; y < canvas.height; y += density) {
+        number = Math.floor(Math.random() * 256)
+        ctx.fillStyle = 'rgba(' + number + ',' + number + ',' + number + ',' + opacity + ')'
+        ctx.fillRect(x, y, 1, 1)
+      }
+    }
+    CLT.screen.css(
+      'background', 'url(' + canvas.toDataURL('image/png') + ') center center repeat #' + '888'
+    )
+    if (typeof applyTVNoise === 'function') {
+      CLT.applyTVNoise()
+    }
   }
 }
 
@@ -53,8 +57,10 @@ CLT.applyTVNoise = function () {
 }
 
 CLT.bringInDaTVNoise = function () {
-  CLT.generateTVNoise(0.35, 0.001)
-  CLT.applyTVNoise()
+  if ($.QueryString.noise > 0) {
+    CLT.generateTVNoise(0.35, 0.001)
+    CLT.applyTVNoise()
+  }
 }
 
 CLT.startTVNoise = function () {

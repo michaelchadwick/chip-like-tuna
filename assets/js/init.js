@@ -72,8 +72,8 @@ CLT.NOISE_WIDTH_DEFAULT = 200
 CLT.NOISE_HEIGHT_DEFAULT = 150
 
 // file paths
-CLT.SOUND_FILE_PATH = CLT.audioPaths.opus.clt['48']
-// CLT.SOUND_FILE_PATH = CLT.audioPaths.mp3.misc['test2m'];
+// CLT.SOUND_FILE_PATH = CLT.audioPaths.opus.clt['48']
+CLT.SOUND_FILE_PATH = CLT.audioPaths.mp3.misc['test2m']
 
 // html elements
 CLT.PLAYER_ELEMENT = document.querySelector('.player')
