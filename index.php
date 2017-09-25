@@ -80,11 +80,11 @@
         Acknowledgements: SVGs designed by <strong>Freepik</strong> from <a href='http://flaticon.com'>Flaticon</a>, except for <em>Sea Waves</em> and <em>Suitcase</em> by <strong>Daniel Bruce</strong>, and <em>Pixel Window</em> by <strong>Pixelvisualization</strong>
       </div>
 
-      <?php if ($admin) { ?>
-      <div>[<a href="?admin=0">display version</a>]</div>
-      <?php } else { ?>
-      <div>[<a href="?admin=1">admin version</a>]</div>
-      <?php } ?>
+      <?php //if ($admin) { ?>
+      <!--<div>[<a href="?admin=0">display version</a>]</div>-->
+      <?php //} else { ?>
+      <!--<div>[<a href="?admin=1">admin version</a>]</div>-->
+      <?php //} ?>
     </footer>
   </div>
 
