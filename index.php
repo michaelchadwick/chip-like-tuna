@@ -90,12 +90,12 @@
 
   <script src="./assets/js/vendor/system.min.js"></script>
   <script>
-    SystemJS.import('./assets/js/vendor/jquery.min.js')
-      .then(init => SystemJS.import('./assets/js/init.js'))
-      .then(markers => SystemJS.import('./assets/js/markers.js'))
-      .then(svg => SystemJS.import('./assets/js/svg.js'))
-      .then(noise => SystemJS.import('./assets/js/noise.js'))
-      .then(main => SystemJS.import('./assets/js/main.js'));
+    System.import('./assets/js/vendor/jquery.min.js')
+      .then(init => System.import('./assets/js/init.js'))
+      .then(markers => System.import('./assets/js/markers.js'))
+      .then(svg => System.import('./assets/js/svg.js'))
+      .then(noise => System.import('./assets/js/noise.js'))
+      .then(main => System.import('./assets/js/main.js'));
   </script>
 </body>
 </html>
