@@ -1,21 +1,12 @@
 {
-  "name": "chipliketuna.win",
+  "name": "chip-like-tuna",
   "version": "1.0.0",
-  "description": "FLV music video",
-  "main": "index.html",
+  "description": "Fly Like Venus demake music videos",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/michaelchadwick/chipliketuna.win.git"
-  },
   "author": "Michael Chadwick",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/michaelchadwick/chipliketuna.win/issues"
-  },
-  "homepage": "https://github.com/michaelchadwick/chipliketuna.win#readme",
   "devDependencies": {
     "standard": "^10.0.3"
   }
