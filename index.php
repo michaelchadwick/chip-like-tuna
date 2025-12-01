@@ -88,7 +88,7 @@
     </footer>
   </div>
 
-  <script src="./assets/js/vendor/system.js"></script>
+  <script src="./assets/js/vendor/system.min.js"></script>
   <script>
     SystemJS.import('./assets/js/vendor/jquery.min.js')
       .then(init => SystemJS.import('./assets/js/init.js'))
