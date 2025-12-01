@@ -8,7 +8,7 @@
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
   <!-- for site text -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Press+Start+2P">
-  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="./assets/css/main.css">
 </head>
 <body>
   <?php $admin = (isset($_GET['admin']) && $_GET['admin'] == 1) ? true : false; ?>
@@ -88,14 +88,14 @@
     </footer>
   </div>
 
-  <script src="/assets/js/vendor/system.js"></script>
+  <script src="./assets/js/vendor/system.js"></script>
   <script>
-    SystemJS.import('/assets/js/vendor/jquery.min.js')
-      .then(init => SystemJS.import('/assets/js/init.js'))
-      .then(markers => SystemJS.import('/assets/js/markers.js'))
-      .then(svg => SystemJS.import('/assets/js/svg.js'))
-      .then(noise => SystemJS.import('/assets/js/noise.js'))
-      .then(main => SystemJS.import('/assets/js/main.js'));
+    SystemJS.import('./assets/js/vendor/jquery.min.js')
+      .then(init => SystemJS.import('./assets/js/init.js'))
+      .then(markers => SystemJS.import('./assets/js/markers.js'))
+      .then(svg => SystemJS.import('./assets/js/svg.js'))
+      .then(noise => SystemJS.import('./assets/js/noise.js'))
+      .then(main => SystemJS.import('./assets/js/main.js'));
   </script>
 </body>
 </html>
