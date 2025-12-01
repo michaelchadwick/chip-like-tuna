@@ -2,7 +2,7 @@
 /* fancy noise pattern on the tv */
 /* global CLT, $ */
 
-var NOISE_FILE_PATH = CLT.audioPaths.ogg.noise
+var NOISE_FILE_PATH = CLT.audioPaths.noise.ogg
 
 CLT.supportsCanvas = !!document.createElement('canvas').getContext
 if (CLT.supportsCanvas && $.QueryString.noise > 0) {
@@ -29,12 +29,17 @@ CLT.generateTVNoise = function (opacity, density) {
     for (x = 0; x < canvas.width; x += density) {
       for (y = 0; y < canvas.height; y += density) {
         number = Math.floor(Math.random() * 256)
-        ctx.fillStyle = 'rgba(' + number + ',' + number + ',' + number + ',' + opacity + ')'
+        ctx.fillStyle =
+          'rgba(' + number + ',' + number + ',' + number + ',' + opacity + ')'
         ctx.fillRect(x, y, 1, 1)
       }
     }
     CLT.screen.css(
-      'background', 'url(' + canvas.toDataURL('image/png') + ') center center repeat #' + '888'
+      'background',
+      'url(' +
+        canvas.toDataURL('image/png') +
+        ') center center repeat #' +
+        '888'
     )
     if (typeof applyTVNoise === 'function') {
       CLT.applyTVNoise()
@@ -70,13 +75,17 @@ CLT.startTVNoise = function () {
   noise.controls = false
   noise.loop = true
   noise.volume = 0.1
-  noise.addEventListener('timeupdate', function () {
-    var buffer = 0.35
-    if (this.currentTime > this.duration - buffer) {
-      this.currentTime = 0
-      this.play()
-    }
-  }, false)
+  noise.addEventListener(
+    'timeupdate',
+    function () {
+      var buffer = 0.35
+      if (this.currentTime > this.duration - buffer) {
+        this.currentTime = 0
+        this.play()
+      }
+    },
+    false
+  )
 }
 CLT.stopTVNoise = function () {
   clearInterval(CLT.tvNoiseCycleId)

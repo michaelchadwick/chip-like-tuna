@@ -30,7 +30,7 @@
 
       <section id="svgControls">
         <?php
-        $dir = "./assets/flv-scenes/svg/";
+        $dir = "./assets/svg/flv-scenes";
         $dir_handle = opendir($dir);
         $files = array();
 

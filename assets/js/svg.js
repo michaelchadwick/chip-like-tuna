@@ -11,7 +11,7 @@ if (typeof CLT !== 'undefined') {
     var xhr
 
     // parse request for picId
-    if ((typeof ev) === 'string') {
+    if (typeof ev === 'string') {
       picId = ev
     } else {
       if (ev.target === 'svg') {
@@ -46,7 +46,10 @@ if (typeof CLT !== 'undefined') {
             CLT.screen.addClass(picId)
           }
           xhr.onreadystatechange = function () {
-            if (xhr.readyState === window.XMLHttpRequest.DONE && xhr.status === 200) {
+            if (
+              xhr.readyState === window.XMLHttpRequest.DONE &&
+              xhr.status === 200
+            ) {
               CLT.screen.html(xhr.responseText)
               // CLT.skipAhead(ev.currentTarget.id)
             }
